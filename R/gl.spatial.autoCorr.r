@@ -356,7 +356,7 @@ gl.spatial.autoCorr <- function(x = NULL,
       if (Dgen_method == "grm") {
         Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
           } else {
-                          verbose = 0)
+                          verbose = 0
           }
     }
     if ((dt == "SNP" &
