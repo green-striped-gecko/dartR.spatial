@@ -692,7 +692,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     cat(report("Completed:", funname, "\n"))
   }
   
-  ex# RETURN
+  # RETURN
   return(invisible(res))
   
 }
