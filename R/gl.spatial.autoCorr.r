@@ -356,7 +356,6 @@ gl.spatial.autoCorr <- function(x = NULL,
       if (Dgen_method == "grm") {
         Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
           } else {
-            Dgen <- gl.dist.ind(x_temp, method = Dgen_method, plot.out = FALSE,
                           verbose = 0)
           }
     }
@@ -577,7 +576,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     }
     
       if (is.null(plot_colors_pop)) {
-        plot_colors_pop <- discrete_palette
+        plot_colors_pop <- dartR.base::gl.colors("dis")
       }
       
       if (is(plot_colors_pop, "function")) {
