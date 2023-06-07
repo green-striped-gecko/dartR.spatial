@@ -216,7 +216,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     ))
     return(-1)
   }
-    pkg <- "dismo"
+  pkg <- "dismo"
   if (!(requireNamespace(pkg, quietly = TRUE))) {
     cat(error(
       "Package",
@@ -225,7 +225,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     ))
     return(-1)
   }
-
+  
   # SET VERBOSITY
   verbose <- gl.check.verbosity(verbose)
   
@@ -271,74 +271,74 @@ gl.spatial.autoCorr <- function(x = NULL,
   
   #### if a genlight object is provided ####
   if (!is.null(x) & is(x, "genlight")) {
- 
-  pop_list <- seppop(x)
-  
-  Dgen_list <- list()
-  Dgeo_list <- list()
-  
-  for (i in seq_along(pop_list)) {
     
-    if (verbose > 2) {
-      cat(
-        report(paste("  Analysing population",names(pop_list[i]),"\n")
-        )
-      )
-    }
+    pop_list <- seppop(x)
     
-    x_temp <- pop_list[[i]]
+    Dgen_list <- list()
+    Dgeo_list <- list()
     
-  # check coordinates (if no Dgen and Dgeo is provided)
-    coords <- NULL
-    if (is(coordinates, "character")) {
-      if (coordinates == "latlon") {
-        if (is.null(x_temp@other$latlon))
-          stop(error(
-            "Cannot find coordinates in x@other$latlon"
-          ))
-        coords <- dismo::Mercator(x_temp@other$latlon[, c("lon", "lat")])
-        coordstring <-"x@other$latlon (Mercator transformed)"
-      }
+    for (i in seq_along(pop_list)) {
       
-      if (coordinates == "xy") {
-        if (is.null(x_temp@other$xy))
-          stop(error("Cannot find coordinates in x@other$xy"))
-        coords <- x_temp@other$xy
-        coordstring <-"x@other$xy"
-      }
-    }
-    
-    if (is(coordinates, "data.frame")) {
-      if (length(setdiff(colnames(coordinates), c("lat", "lon"))) == 0) {
-        coords <- dismo::Mercator(coordinates[, c("lon", "lat")])
-        coordstring <-"data.frame lat/lon (Mercator transformed)"
-      }
-      
-      if (length(setdiff(colnames(coordinates), c("x", "y"))) == 0) {
-        coords <- coordinates[, c("x", "y")]
-        coordstring <-"data.frame x/y"
-      }
-      
-      if (is.null(coords)) {
-        stop(
-          error(
-            "No valid coordinates provided. Check the provided data.frame and its format.\n"
+      if (verbose > 2) {
+        cat(
+          report(paste("  Analysing population",names(pop_list[i]),"\n")
           )
         )
       }
-    }
-    
-    if (is.null(coords)) {
-      stop(error("No valid coordinates provided!\n"))
-    }
-    
-    # make sure coordinates have the correct length
-    if (nrow(coords) != nInd(x_temp) & ta == "genlight") {
-      stop(error(
-        "Cannot find coordinates for each individual in slot @other$latlon.\n"
-      ))
-    }
-    
+      
+      x_temp <- pop_list[[i]]
+      
+      # check coordinates (if no Dgen and Dgeo is provided)
+      coords <- NULL
+      if (is(coordinates, "character")) {
+        if (coordinates == "latlon") {
+          if (is.null(x_temp@other$latlon))
+            stop(error(
+              "Cannot find coordinates in x@other$latlon"
+            ))
+          coords <- dismo::Mercator(x_temp@other$latlon[, c("lon", "lat")])
+          coordstring <-"x@other$latlon (Mercator transformed)"
+        }
+        
+        if (coordinates == "xy") {
+          if (is.null(x_temp@other$xy))
+            stop(error("Cannot find coordinates in x@other$xy"))
+          coords <- x_temp@other$xy
+          coordstring <-"x@other$xy"
+        }
+      }
+      
+      if (is(coordinates, "data.frame")) {
+        if (length(setdiff(colnames(coordinates), c("lat", "lon"))) == 0) {
+          coords <- dismo::Mercator(coordinates[, c("lon", "lat")])
+          coordstring <-"data.frame lat/lon (Mercator transformed)"
+        }
+        
+        if (length(setdiff(colnames(coordinates), c("x", "y"))) == 0) {
+          coords <- coordinates[, c("x", "y")]
+          coordstring <-"data.frame x/y"
+        }
+        
+        if (is.null(coords)) {
+          stop(
+            error(
+              "No valid coordinates provided. Check the provided data.frame and its format.\n"
+            )
+          )
+        }
+      }
+      
+      if (is.null(coords)) {
+        stop(error("No valid coordinates provided!\n"))
+      }
+      
+      # make sure coordinates have the correct length
+      if (nrow(coords) != nInd(x_temp) & ta == "genlight") {
+        stop(error(
+          "Cannot find coordinates for each individual in slot @other$latlon.\n"
+        ))
+      }
+      
       if (nInd(x_temp) > 1) {
         Dgeo <- dist(coords)
       } else {
@@ -348,39 +348,40 @@ gl.spatial.autoCorr <- function(x = NULL,
           )
         )
       }
-    
-    # calculate genetic distances
-    if (Dgen_method == "propShared") {
-      Dgen <- as.dist(gl.propShared(x_temp))
-    } else {
-      if (Dgen_method == "grm") {
-        Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
-          } else {
-                          verbose = 0
-          }
-    }
-    if ((dt == "SNP" &
-        Dgen_method == "propShared" |
-        Dgen_method == "Euclidean" |
-        Dgen_method == "Simple" |
-        Dgen_method == "Absolute") |
-      (dt == "SilicoDArT" & Dgen_method == "Euclidean")) {
       
-      # Reverse genetic distance matrix so that correlated values
-      # indicated more similar individuals as we are used to see plots in GenAleEx
-      Dgen <- 1 - Dgen
-    }
-    
-    distance <- Dgen_method
-
-  # convert matrices to distance objects
-    Dgen_list[[i]] <- as.dist(Dgen)
-    Dgeo_list[[i]] <- as.dist(Dgeo)
-      } # Close for(i in 1:length(pop_list))
-  pop.names <- popNames(x)
+      # calculate genetic distances
+      if (Dgen_method == "propShared") {
+        Dgen <- as.dist(gl.propShared(x_temp))
+      } else {
+        if (Dgen_method == "grm") {
+          Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
+        } else {
+          Dgen <- gl.dist.ind(x_temp, method = Dgen_method, plot.out = FALSE,
+                              verbose = 0)
+        }
+      }
+      if ((dt == "SNP" &
+           Dgen_method == "propShared" |
+           Dgen_method == "Euclidean" |
+           Dgen_method == "Simple" |
+           Dgen_method == "Absolute") |
+          (dt == "SilicoDArT" & Dgen_method == "Euclidean")) {
+        
+        # Reverse genetic distance matrix so that correlated values
+        # indicated more similar individuals as we are used to see plots in GenAleEx
+        Dgen <- 1 - Dgen
+      }
+      
+      distance <- Dgen_method
+      
+      # convert matrices to distance objects
+      Dgen_list[[i]] <- as.dist(Dgen)
+      Dgeo_list[[i]] <- as.dist(Dgeo)
+    } # Close for(i in 1:length(pop_list))
+    pop.names <- popNames(x)
   } # close if a genlight object is provided
-
-
+  
+  
   #### if distances are provided ####
   if (is.null(x)) {
     chk.D <- function(D, name.D) {
@@ -401,22 +402,22 @@ gl.spatial.autoCorr <- function(x = NULL,
     }  else {
       Dgen_list <- Dgen
     }
-
+    
     # now distances are a list
     if(length(Dgeo_list) != length(Dgen_list))
       stop(error( "  The arguments Dgen and Dgeo should be of same length\n"))
-
+    
     if(is.null(names(Dgeo_list))) pop.names <- paste0("Pop", seq_along(Dgen_list))
     
     chk.D.list <- function(D.list, name.D) {
       if(length(unique(sapply(D.list, class))) != 1) {
         stop(error(paste0("  ", name.D, 
-              " is a list, but its elements are of different classes. These should be either all matrices or distances\n")))
+                          " is a list, but its elements are of different classes. These should be either all matrices or distances\n")))
       }
       
       if(!(is(D.list[[1]], "dist") | is.matrix(D.list[[1]]))) {
         stop(error(paste0("  ", name.D, 
-              " is a list, but its element are neither all matrices nor distances\n")))
+                          " is a list, but its element are neither all matrices nor distances\n")))
       }
       
       if(is.matrix(D.list[[1]])) D.list <- lapply(D.list, as.dist)
@@ -425,7 +426,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     
     Dgeo_list <- chk.D.list(Dgeo_list, name.D = "Dgeo")
     Dgen_list <- chk.D.list(Dgen_list, name.D = "Dgen")
-      
+    
     len.elements.Dgeo <- sapply(Dgeo_list, length)
     len.elements.Dgen <- sapply(Dgen_list, length)
     
@@ -437,17 +438,17 @@ gl.spatial.autoCorr <- function(x = NULL,
     typedis <- "ind"
   } # Close if matrices are provided
   #----------------------------------------------------------------------------#
-
+  
   #### Apply transformations ####
   apply.transformation <- function(D, transFUN, name.D) {
     assign(name.D, value = D)
     new.obj <- eval(parse(text = transFUN))
     return(new.obj)
   }
-
+  
   Dgen_list <- lapply(Dgen_list, apply.transformation, transFUN=Dgen_trans, name.D="Dgen")
   Dgeo_list <- lapply(Dgeo_list, apply.transformation, transFUN=Dgeo_trans, name.D="Dgeo")
-      
+  
   lapply(Dgeo_list, function(D) {
     if(sum(is.infinite(D)) > 0) {
       stop(
@@ -456,7 +457,7 @@ gl.spatial.autoCorr <- function(x = NULL,
         )
       )
     }
-
+    
   } 
   )
   
@@ -470,181 +471,181 @@ gl.spatial.autoCorr <- function(x = NULL,
   Dgeo_list <- lapply(Dgeo_list, convert2matrix)
   
   #### Execute utils.spautocorr on a list ####
-      res <- list()
+  res <- list()
+  
+  for(z in seq_along(Dgeo_list)) {
+    
+    Dgeo <- Dgeo_list[[z]]
+    Dgen <- Dgen_list[[z]]
+    
+    sample.size <- nrow(Dgeo)
+    crt <- 1 / (sample.size - 1) # correction
+    nbins <- if (length(bins) == 1) {
+      bins
+    } else {
+      length(bins) - 1
+    }
+    
+    splist <-
+      utils.spautocor(Dgen,
+                      Dgeo,
+                      permutation = FALSE,
+                      bins = bins,
+                      reps = reps)
+    
+    if (permutation) {
+      bssplist <- replicate(reps,
+                            utils.spautocor(
+                              Dgen,
+                              Dgeo,
+                              permutation = TRUE,
+                              bins = bins,
+                              reps = reps
+                            ))
       
-      for(z in seq_along(Dgeo_list)) {
-        
-        Dgeo <- Dgeo_list[[z]]
-        Dgen <- Dgen_list[[z]]
-        
-        sample.size <- nrow(Dgeo)
-        crt <- 1 / (sample.size - 1) # correction
-        nbins <- if (length(bins) == 1) {
-          bins
-        } else {
-          length(bins) - 1
-        }
-        
-        splist <-
-          utils.spautocor(Dgen,
-                          Dgeo,
-                          permutation = FALSE,
-                          bins = bins,
-                          reps = reps)
-        
-        if (permutation) {
-          bssplist <- replicate(reps,
-                                utils.spautocor(
-                                  Dgen,
-                                  Dgeo,
-                                  permutation = TRUE,
-                                  bins = bins,
-                                  reps = reps
-                                ))
-          
-          #convert the output into a matrix
-          bs <- matrix(
-            unlist(bssplist),
-            nrow = reps,
-            ncol = nbins,
-            byrow = TRUE
-          )
-          bs.l <- apply(bs, 2, quantile, probs = 0.025, na.rm = TRUE)
-          bs.u <- apply(bs, 2, quantile, probs = 0.975, na.rm = TRUE)
-          
-          p.one.tail <-
-            sapply(seq_along(splist$r.uc), function(i, r.rc, r, crt = crt) {
-              if (is.na(r[i])) {
-                NA
-              } else{
-                if (r[i] >= 0) {
-                  sum(r.rc[, i] >= r[i]) / length(r.rc[, i])
-                } else{
-                  sum(r.rc[, i] <= r[i]) / length(r.rc[, i])
-                }
-              }
-            }, r = splist$r.uc + crt,  r.rc = bs + crt)
-          
-        }
-        
-        if (bootstrap) {
-          errors <-
-            replicate(reps,
-                      utils.spautocor(
-                        Dgen,
-                        Dgeo,
-                        bootstrap = TRUE,
-                        bins = bins,
-                        reps = reps
-                      ))
-          errors <-
-            matrix(unlist(errors),
-                   nrow = reps,
-                   ncol = nbins,
-                   byrow = TRUE)
-          err.l <- apply(errors, 2, quantile, probs = 0.025, na.rm = TRUE)
-          err.u <- apply(errors, 2, quantile, probs = 0.975, na.rm = TRUE)
-        }
-        
-        res_temp <- cbind(splist, Correction = crt, r = splist$r.uc + crt)
-        if (bootstrap) {
-          res_temp <- cbind(res_temp, L.r = err.l + crt, U.r = err.u + crt)
-        }
-        
-        if (permutation) {
-          res_temp <- cbind(
-            res_temp,
-            L.r.null.uc = bs.l,
-            U.r.null.uc = bs.u,
-            L.r.null = bs.l + crt,
-            U.r.null = bs.u + crt,
-            p.one.tail = p.one.tail
-          )
-        }
-        res[[z]] <- res_temp
-      }
+      #convert the output into a matrix
+      bs <- matrix(
+        unlist(bssplist),
+        nrow = reps,
+        ncol = nbins,
+        byrow = TRUE
+      )
+      bs.l <- apply(bs, 2, quantile, probs = 0.025, na.rm = TRUE)
+      bs.u <- apply(bs, 2, quantile, probs = 0.975, na.rm = TRUE)
       
-      names(res) <- pop.names
+      p.one.tail <-
+        sapply(seq_along(splist$r.uc), function(i, r.rc, r, crt = crt) {
+          if (is.na(r[i])) {
+            NA
+          } else{
+            if (r[i] >= 0) {
+              sum(r.rc[, i] >= r[i]) / length(r.rc[, i])
+            } else{
+              sum(r.rc[, i] <= r[i]) / length(r.rc[, i])
+            }
+          }
+        }, r = splist$r.uc + crt,  r.rc = bs + crt)
+      
+    }
+    
+    if (bootstrap) {
+      errors <-
+        replicate(reps,
+                  utils.spautocor(
+                    Dgen,
+                    Dgeo,
+                    bootstrap = TRUE,
+                    bins = bins,
+                    reps = reps
+                  ))
+      errors <-
+        matrix(unlist(errors),
+               nrow = reps,
+               ncol = nbins,
+               byrow = TRUE)
+      err.l <- apply(errors, 2, quantile, probs = 0.025, na.rm = TRUE)
+      err.u <- apply(errors, 2, quantile, probs = 0.975, na.rm = TRUE)
+    }
+    
+    res_temp <- cbind(splist, Correction = crt, r = splist$r.uc + crt)
+    if (bootstrap) {
+      res_temp <- cbind(res_temp, L.r = err.l + crt, U.r = err.u + crt)
+    }
+    
+    if (permutation) {
+      res_temp <- cbind(
+        res_temp,
+        L.r.null.uc = bs.l,
+        U.r.null.uc = bs.u,
+        L.r.null = bs.l + crt,
+        U.r.null = bs.u + crt,
+        p.one.tail = p.one.tail
+      )
+    }
+    res[[z]] <- res_temp
+  }
+  
+  names(res) <- pop.names
   #-------- Close Execute utils.spautoCorr ------------------------------------#
-
-#### PRINTING OUTPUTS ####
-
+  
+  #### PRINTING OUTPUTS ####
+  
   if (plot.out) {
     
     if (is.null(plot_theme)) {
       plot_theme <- theme_dartR()
     }
     
-      if (is.null(plot_colors_pop)) {
-        plot_colors_pop <- dartR.base::gl.colors("dis")
-      }
-      
-      if (is(plot_colors_pop, "function")) {
-        if(is.null(x)) n.pop <- length(Dgeo_list) else
-          n.pop <- nPop(x)
-        plot_colors_pop <- plot_colors_pop(n.pop)
-      }
-      
-      if (!is(plot_colors_pop, "function")) {
-        plot_colors_pop <- plot_colors_pop
-      }
-      
-      spa_multi <-data.table::rbindlist(res, use.names = TRUE, 
-                                        fill = TRUE, idcol = "Population")
-      if(spa_multi [, max(Bin)] > 1000) {
-        lbls <- round(spa_multi$Bin/1000, 1) 
-      } else {
-        lbls <- spa_multi$Bin
-      }
-      
-      p3 <- ggplot(spa_multi, aes_string("Bin", "r", col="Population")) +
-        geom_line(size=1) +
-        geom_point(size=2) +
-        geom_hline(yintercept = 0, col = "black", size=1) +
-        scale_color_manual(values = plot_colors_pop) +
-        scale_x_continuous(breaks = spa_multi$Bin,
-                      labels = lbls) +
-        ylab("Autocorrelation (r)") + 
-        xlab("Distance class") + 
-        plot_theme
-      
-      if (bootstrap) {
-        p3 <- p3 +   
-          geom_errorbar(aes(ymin=L.r, ymax=U.r), 
-                        width=spa_multi[, mean(tail(Bin, -1) - head(Bin, -1))]/10) 
-      }
-
-      if (permutation & plot.pops.together == FALSE) {
-        p3 <- p3 +  
-          geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI_color, 
-                      alpha=0.25,show.legend = FALSE) + 
-          geom_line(aes(y = L.r.null), col = "black", linetype = "dashed") +
-          geom_point(aes(y = L.r.null), col = "black") +
-          geom_line(aes(y = U.r.null), col = "black", linetype = "dashed") +
-          geom_point(aes(y = U.r.null), col = "black") +
-          facet_wrap(~Population, nrow = length(Dgen_list), scales = "free_y") +
-           theme(
+    if (is.null(plot_colors_pop)) {
+      plot_colors_pop <- dartR.base::gl.colors("dis")
+    }
+    
+    if (is(plot_colors_pop, "function")) {
+      if(is.null(x)) n.pop <- length(Dgeo_list) else
+        n.pop <- nPop(x)
+      plot_colors_pop <- plot_colors_pop(n.pop)
+    }
+    
+    if (!is(plot_colors_pop, "function")) {
+      plot_colors_pop <- plot_colors_pop
+    }
+    
+    spa_multi <-data.table::rbindlist(res, use.names = TRUE, 
+                                      fill = TRUE, idcol = "Population")
+    if(spa_multi [, max(Bin)] > 1000) {
+      lbls <- round(spa_multi$Bin/1000, 1) 
+    } else {
+      lbls <- spa_multi$Bin
+    }
+    
+    p3 <- ggplot(spa_multi, aes_string("Bin", "r", col="Population")) +
+      geom_line(size=1) +
+      geom_point(size=2) +
+      geom_hline(yintercept = 0, col = "black", size=1) +
+      scale_color_manual(values = plot_colors_pop) +
+      scale_x_continuous(breaks = spa_multi$Bin,
+                         labels = lbls) +
+      ylab("Autocorrelation (r)") + 
+      xlab("Distance class") + 
+      plot_theme
+    
+    if (bootstrap) {
+      p3 <- p3 +   
+        geom_errorbar(aes(ymin=L.r, ymax=U.r), 
+                      width=spa_multi[, mean(tail(Bin, -1) - head(Bin, -1))]/10) 
+    }
+    
+    if (permutation & plot.pops.together == FALSE) {
+      p3 <- p3 +  
+        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI_color, 
+                    alpha=0.25,show.legend = FALSE) + 
+        geom_line(aes(y = L.r.null), col = "black", linetype = "dashed") +
+        geom_point(aes(y = L.r.null), col = "black") +
+        geom_line(aes(y = U.r.null), col = "black", linetype = "dashed") +
+        geom_point(aes(y = U.r.null), col = "black") +
+        facet_wrap(~Population, nrow = length(Dgen_list), scales = "free_y") +
+        theme(
           #   strip.text.x = element_text(size = 12),
           #   axis.text.x = element_text(
           #     size = 12
           #   ), 
-             legend.position = "none") 
-      }
-      
-      if(length(Dgen_list) == 1) {
-        p3 <- p3 + 
-        scale_x_continuous(breaks = spa_multi$Bin,
-                            labels = lbls,
-                            sec.axis = sec_axis(
-                                  trans = ~ .,
-                                  breaks = spa_multi$Bin,
-                                  labels = spa_multi$N)) +
-        theme(strip.text = element_blank(), legend.position = "none")
-      }
-    suppressWarnings(
-    suppressMessages(print(p3))
-    )
+          legend.position = "none") 
     }
+    
+    if(length(Dgen_list) == 1) {
+      p3 <- p3 + 
+        scale_x_continuous(breaks = spa_multi$Bin,
+                           labels = lbls,
+                           sec.axis = sec_axis(
+                             trans = ~ .,
+                             breaks = spa_multi$Bin,
+                             labels = spa_multi$N)) +
+        theme(strip.text = element_blank(), legend.position = "none")
+    }
+    suppressWarnings(
+      suppressMessages(print(p3))
+    )
+  }
   
   if (verbose > 0) {
     cat(report("  Coordinates used from:", coordstring, "\n"))
@@ -691,7 +692,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     cat(report("Completed:", funname, "\n"))
   }
   
-  # RETURN
+  ex# RETURN
   return(invisible(res))
   
 }
