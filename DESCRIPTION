@@ -20,8 +20,6 @@ Encoding: UTF-8
 Depends: R (>= 3.5), adegenet (>= 2.0.0),  dartR.base, dartR.data
 Imports: methods, utils, crayon, PopGenReport, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table
 Suggests:
-  dartR.popgenomics,
-  dartR.sim,
   mmod,
   dismo,
   gdistance,
@@ -29,9 +27,7 @@ Suggests:
   rrBLUP,
   terra,
   testthat (>= 3.0.0)
-Remotes: github::green-striped-gecko/dartR.base,
-         github::green-striped-gecko/dartR.popgenomics, 
-         github::green-striped-gecko/dartR.sim
+Remotes: github::green-striped-gecko/dartR.base
 License: GPL (>= 3)
 RoxygenNote: 7.2.3
 NeedsCompilation: no
