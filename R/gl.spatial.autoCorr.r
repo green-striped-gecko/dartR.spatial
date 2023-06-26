@@ -207,7 +207,7 @@ gl.spatial.autoCorr <- function(x = NULL,
                                 verbose = NULL) {
   
   # CHECK IF PACKAGES ARE INSTALLED
-  pkg <- "dartR.popgenomics"
+  pkg <- "dartR.captive"
   if (!(requireNamespace(pkg, quietly = TRUE))) {
     cat(error(
       "Package",
@@ -354,7 +354,7 @@ gl.spatial.autoCorr <- function(x = NULL,
         Dgen <- as.dist(gl.propShared(x_temp))
       } else {
         if (Dgen_method == "grm") {
-          Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
+          Dgen <- as.dist(dartR.captive::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
         } else {
           Dgen <- gl.dist.ind(x_temp, method = Dgen_method, plot.out = FALSE,
                               verbose = 0)
