@@ -25,7 +25,8 @@ Suggests:
   rrBLUP,
   terra,
   dartR.popgenomics
-Remotes: github::green-striped-gecko/dartR.base
+Remotes: github::green-striped-gecko/dartR.base,
+         github::green-striped-gecko/dartR.popgenomics
 License: GPL (>= 3)
 RoxygenNote: 7.2.3
 NeedsCompilation: no
