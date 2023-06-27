@@ -16,14 +16,13 @@ gl.genleastcost(
 )
 }
 \arguments{
-\item{x}{A spatial genind object. See ?popgenreport how to provide
-coordinates in genind objects [required].}
+\item{x}{A spatial gelight object. [required].}
 
 \item{fric.raster}{A friction matrix [required].}
 
 \item{gen.distance}{Specification which genetic distance method should be
 used to calculate pairwise genetic distances between populations ( 'D',
-'Gst.Nei', 'Gst.Hedrick') or individuals ('Smouse', 'Kosman', 'propShared')
+'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
  [required].}
 
 \item{NN}{Number of neighbours used when calculating the cost distance
@@ -62,18 +61,19 @@ This function calculates the pairwise distances (Euclidean, cost path
   matrix can be either a single raster of a stack of several layers. If a
   stack is provided the specified cost distance is calculated for each layer
    in the stack. The output of this function can be used with the functions
-   \code{\link[PopGenReport]{wassermann}} or
-   \code{\link[PopGenReport]{lgrMMRR}} to test for the significance of a
+   wassermann from package PopGenReport and
+   lgrMMRR from package PopGenReport to test for the significance of a
    layer on the genetic structure.
 }
 \examples{
-\dontrun{
+
 data(possums.gl)
 library(raster)  #needed for that example
 landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-package='dartR'))
+package='dartR.data'))
 glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
 gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
+\dontrun{
 library(PopGenReport)
 PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
  gen.mat = glc$gen.mat)
@@ -93,10 +93,6 @@ barriers in landscape genetics. Molecular ecology, 4179-4191.
  (2010). Spatial scaling and multi-model inference in landscape genetics:
  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
  }
-}
-\seealso{
-\code{\link{landgenreport}}, \code{\link{popgenreport}},
- \code{\link{wassermann}}, \code{\link{lgrMMRR}}
 }
 \author{
 Bernd Gruber (bugs? Post to

@@ -16,7 +16,7 @@
 #' @param distance Type of distance that is calculated and used for the
 #' analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
 #' 'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
-#'  [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean']
+#'  [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
 #'  [default "Fst"].
 #' @param coordinates Can be either 'latlon', 'xy' or a two column data.frame
 #' with column names 'lat','lon', 'x', 'y'). Coordinates are provided via
@@ -221,7 +221,8 @@ gl.ibd <- function(x = NULL,
             }
             
             if (distance == "propShared" |
-                distance == "euclidean") {
+                distance == "euclidean" |
+                distance == "kosman") {
                 typedis <-"ind"
             }
             
@@ -281,6 +282,11 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "euclidean") {
                 Dgen <- as.dist(dist(as.matrix(x)))
             }
+            if (is.null(Dgen) & distance == "kosman") {
+              Dgen <- as.dist(gl.kosman(x)$kosman)
+            }
+            
+            
             
             ### order both matrices to be alphabetically as levels in genlight (ind or pop)
             if (is(x, "genlight")) {

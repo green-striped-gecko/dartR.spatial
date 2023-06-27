@@ -16,7 +16,7 @@ Description: dartR.spatial package from the dartRverse. This package provides fu
 Revision: Attractive Abalone
 Encoding: UTF-8
 Depends: R (>= 3.5), adegenet (>= 2.0.0),  dartR.base, dartR.data
-Imports: methods, utils, crayon, PopGenReport, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table
+Imports: methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table
 Suggests:
   mmod,
   dismo,

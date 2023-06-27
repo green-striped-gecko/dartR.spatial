@@ -7,15 +7,14 @@
 #'   matrix can be either a single raster of a stack of several layers. If a
 #'   stack is provided the specified cost distance is calculated for each layer
 #'    in the stack. The output of this function can be used with the functions
-#'    \code{\link[PopGenReport]{wassermann}} or
-#'    \code{\link[PopGenReport]{lgrMMRR}} to test for the significance of a
+#'    wassermann from package PopGenReport and
+#'    lgrMMRR from package PopGenReport to test for the significance of a
 #'    layer on the genetic structure.
-#' @param x A spatial genind object. See ?popgenreport how to provide
-#'  coordinates in genind objects [required].
+#' @param x A spatial gelight object. [required].
 #' @param fric.raster A friction matrix [required].
 #' @param gen.distance Specification which genetic distance method should be
 #' used to calculate pairwise genetic distances between populations ( 'D',
-#' 'Gst.Nei', 'Gst.Hedrick') or individuals ('Smouse', 'Kosman', 'propShared')
+#' 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
 #'  [required].
 #' @param NN Number of neighbours used when calculating the cost distance
 #' (possible values 4, 8 or 16). As the default is NULL a value has to be
@@ -35,7 +34,6 @@
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #' progress log; 3, progress and results summary; 5, full report
 #' [default 2, unless specified using gl.set.verbosity].
-#' @importFrom PopGenReport lgrMMRR wassermann gd.smouse gd.kosman
 #' @importFrom stats step
 #' @importFrom sp Line Lines SpatialLines SpatialLinesLengths
 #' @importFrom raster plot
@@ -44,8 +42,6 @@
 #'  line objects.
 #' @author Bernd Gruber (bugs? Post to
 #' \url{https://groups.google.com/d/forum/dartr})
-#' @seealso \code{\link{landgenreport}}, \code{\link{popgenreport}},
-#'  \code{\link{wassermann}}, \code{\link{lgrMMRR}}
 #' @references
 #' \itemize{
 #' \item Cushman, S., Wasserman, T., Landguth, E. and Shirk, A. (2013).
@@ -59,13 +55,14 @@
 #'  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
 #'  }
 #' @examples
-#' \dontrun{
+#' 
 #' data(possums.gl)
 #' library(raster)  #needed for that example
 #' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-#' package='dartR'))
+#' package='dartR.data'))
 #' glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
 #' gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
+#' \dontrun{
 #' library(PopGenReport)
 #' PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
 #'  gen.mat = glc$gen.mat)
@@ -128,8 +125,7 @@ gl.genleastcost <- function(x,
         gen.distance == "Gst.Nei")
         dist.type <- "pop"
     
-    if (gen.distance == "Kosman" ||
-        gen.distance == "Smouse" ||
+    if (gen.distance == "kosman" ||
         gen.distance == "propShared")
         dist.type <- "ind"
     
@@ -275,12 +271,8 @@ gl.genleastcost <- function(x,
         gendist.mat <- as.matrix(mmod::pairwise_D(xx))
     }
     
-    if (gen.distance == "Smouse") {
-        gendist.mat <- as.matrix(gd.smouse(xx, verbose = FALSE))
-    }
-    
-    if (gen.distance == "Kosman") {
-        gendist.mat <- as.matrix(as.dist(gd.kosman(xx)$geneticdist))
+    if (gen.distance == "kosman") {
+        gendist.mat <- as.matrix(as.dist(gl.kosman(xx)$kosman))
     }
     
     if (gen.distance == "propShared") {
