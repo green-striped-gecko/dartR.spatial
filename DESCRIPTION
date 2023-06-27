@@ -23,7 +23,7 @@ Suggests:
   gdistance,
   gplots,
   rrBLUP,
-  terra,
+  terra (>= 1.7-39),
   dartR.captive
 Remotes: github::green-striped-gecko/dartR.base,
          github::green-striped-gecko/dartR.captive
