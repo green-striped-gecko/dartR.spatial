@@ -17,11 +17,12 @@ gl.spatial.autoCorr(
   plot.pops.together = FALSE,
   permutation = TRUE,
   bootstrap = TRUE,
-  plot_theme = NULL,
+  plot.theme = theme_dartR(),
   plot_colors_pop = NULL,
   CI_color = "red",
   plot.out = TRUE,
-  save2tmp = FALSE,
+  plot.file = NULL,
+  plot.dir = NULL,
   verbose = NULL
 )
 }
@@ -69,7 +70,7 @@ of no spatial structure should be carried out [default TRUE].}
 \item{bootstrap}{Whether bootstrap calculations to compute the 95\% 
 confidence intervals around r should be carried out [default TRUE].}
 
-\item{plot_theme}{Theme for the plot. See details [default NULL].}
+\item{plot.theme}{Theme for the plot. See details [default NULL].}
 
 \item{plot_colors_pop}{A color palette for populations or a list with
 as many colors as there are populations in the dataset [default NULL].}
@@ -79,8 +80,10 @@ the r estimates [default "red"].}
 
 \item{plot.out}{Specify if plot is to be produced [default TRUE].}
 
-\item{save2tmp}{If TRUE, saves any ggplots and listings to the session
+\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
 temporary directory (tempdir) [default FALSE].}
+
+\item{plot.dir}{Directory in which to save files [default = working directory]}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 progress log ; 3, progress and results summary; 5, full report [default

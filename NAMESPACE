@@ -2,6 +2,7 @@
 
 export(gl.costdistances)
 export(gl.genleastcost)
+export(gl.grm2)
 export(gl.ibd)
 export(gl.spatial.autoCorr)
 export(gl2shp)
