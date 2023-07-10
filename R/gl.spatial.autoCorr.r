@@ -62,7 +62,7 @@
 #' Methods available to calculate genetic distances for SNP data:
 #' \itemize{
 #' \item "propShared" using the function \code{\link{gl.propShared}}.
-#' \item "grm" using the function \code{gl.grm}.
+#' \item "grm" using the function \code{gl.grm2}.
 #' \item "Euclidean" using the function \code{\link{gl.dist.ind}}.
 #' \item "Simple" using the function \code{\link{gl.dist.ind}}.
 #' \item "Absolute" using the function \code{\link{gl.dist.ind}}.

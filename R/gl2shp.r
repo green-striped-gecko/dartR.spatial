@@ -119,7 +119,6 @@ gl2shp <- function(x,
                 v,
                 filename = paste0(file.path(outpath, outfile), ".shp"),
                 filetype="ESRI Shapefile",
-                layer = outfile,
                 overwrite = TRUE
             )
         
@@ -128,7 +127,6 @@ gl2shp <- function(x,
                 v,
                 filename= paste0(file.path(outpath, outfile), ".kml"),
                 filetype="KML",
-                layer = outfile,
                 overwrite = TRUE
             )
         

@@ -69,7 +69,7 @@ locus are IBD from the base population). As this probability lies between 0
  represent different populations.
 }
 \examples{
-gl.grm(platypus.gl[1:10,1:100])
+gl.grm2(platypus.gl[1:10,1:100])
 
 }
 \references{
@@ -79,9 +79,6 @@ gl.grm(platypus.gl[1:10,1:100])
 \item Endelman, J. B. , Jannink, J.-L. (2012). Shrinkage estimation of the
 realized relationship matrix. G3: Genes, Genomics, Genetics 2, 1405.
 }
-}
-\seealso{
-\code{\link{gl.grm.network}}
 }
 \author{
 Custodian: Arthur Georges -- Post to

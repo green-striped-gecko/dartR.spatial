@@ -28,7 +28,7 @@ log(distance) is performed [required].}
 \item{distance}{Type of distance that is calculated and used for the
 analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
 'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
- [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean']
+ [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
  [default "Fst"].}
 
 \item{coordinates}{Can be either 'latlon', 'xy' or a two column data.frame
