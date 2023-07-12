@@ -77,11 +77,7 @@
 #' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 #' }
 #'   
-#'  Plots and table are saved to the temporal directory (tempdir) and can be
-#'  accessed with the function \code{\link{gl.print.reports}} and listed with
-#'  the function \code{\link{gl.list.reports}}. Note that they can be accessed
-#'  only in the current R session because tempdir is cleared each time that the
-#'   R session is closed.
+#'  Plots and table are saved by specifying plot.file. 
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
 #'  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
@@ -677,5 +673,4 @@ gl.spatial.autoCorr <- function(x = NULL,
   
   # RETURN
   return(invisible(res))
-  
 }
