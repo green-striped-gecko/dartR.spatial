@@ -76,8 +76,7 @@
 #' \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
 #' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 #' }
-#'   
-#'  Plots and table are saved by specifying plot.file. 
+#'  Plots and table are saved plot.file in plot.dir if specified.
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
 #'  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
