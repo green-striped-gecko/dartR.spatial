@@ -77,7 +77,11 @@
 #' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 #' }
 #'   
+<<<<<<< HEAD
 #'  Plots and table are saved by specifying plot.file. 
+=======
+#'  Plots and table are saved plot.file in plot.dir if specified.
+>>>>>>> 6fae58504a03e923768e5ba21478a88560cb1c93
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
 #'  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
