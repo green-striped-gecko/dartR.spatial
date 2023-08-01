@@ -87,7 +87,7 @@ gl.genleastcost <- function(x,
     funname <- match.call()[[1]]
     utils.flag.start(func = funname,
                      build = "Jody",
-                     verbosity = verbose)
+                     verbose = verbose)
     
     # FUNCTION SPECIFIC ERROR CHECKING
     # CHECK IF PACKAGES ARE INSTALLED

@@ -20,7 +20,7 @@ gl.kosman <- function(x, verbose=NULL){
   funname <- match.call()[[1]]
   utils.flag.start(func = funname,
                    build = "Jody",
-                   verbosity = verbose)
+                   verbose = verbose)
   
   #runs with any ploidy, hence no check of datatype
   if (!is(x,"genlight")) stop("No valid genlight/dartR object provided!!")

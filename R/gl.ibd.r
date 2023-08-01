@@ -134,7 +134,7 @@ gl.ibd <- function(x = NULL,
         funname <- match.call()[[1]]
         utils.flag.start(func = funname,
                          build = "v.2023.2",
-                         verbosity = verbose)
+                         verbose = verbose)
         
         # CHECK DATATYPE
         if (!is.null(x)){
