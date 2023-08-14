@@ -1,7 +1,7 @@
 Package: dartR.spatial
 Type: Package
 Title: dartR.spatial - Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 0.72
+Version: 0.73
 Date: 2023-08-14
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
@@ -14,8 +14,8 @@ Authors@R: c(
 Description: Provides landscape genomic functions to analyse 'SNP' (single nuclear
     polymorphism) data, such as least cost path analysis and isolation by distance. 
     Therefore each sample needs to have coordinate data attached (lat/lon) to be 
-    able to run most of the functions. dartR.spatial is a package that belongs
-    to the dartRverse suit of packages and depends on 'dartR.base' and 'dartR.data'.
+    able to run most of the functions. 'dartR.spatial' is a package that belongs
+    to the 'dartRverse' suit of packages and depends on 'dartR.base' and 'dartR.data'.
 Revision: Attractive Abalone
 Encoding: UTF-8
 Depends: R (>= 3.5), adegenet (>= 2.0.0),  dartR.base, dartR.data
