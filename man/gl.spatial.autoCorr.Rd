@@ -18,8 +18,8 @@ gl.spatial.autoCorr(
   permutation = TRUE,
   bootstrap = TRUE,
   plot.theme = theme_dartR(),
-  plot_colors_pop = NULL,
-  CI_color = "red",
+  plot.colors.pop = NULL,
+  CI.color = "red",
   plot.out = TRUE,
   plot.file = NULL,
   plot.dir = NULL,
@@ -72,22 +72,17 @@ confidence intervals around r should be carried out [default TRUE].}
 
 \item{plot.theme}{Theme for the plot. See details [default NULL].}
 
-\item{plot_colors_pop}{A color palette for populations or a list with
+\item{plot.colors.pop}{A color palette for populations or a list with
 as many colors as there are populations in the dataset [default NULL].}
 
-\item{CI_color}{Color for the shade of the 95\% confidence intervals around 
+\item{CI.color}{Color for the shade of the 95\% confidence intervals around 
 the r estimates [default "red"].}
 
 \item{plot.out}{Specify if plot is to be produced [default TRUE].}
 
-\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
-temporary directory (tempdir) [default FALSE].}
-
-\item{plot.dir}{Directory in which to save files [default = working directory]}
-
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log ; 3, progress and results summary; 5, full report [default
- NULL, unless specified using gl.set.verbosity].}
+progress log; 3, progress and results summary; 5, full report
+ [default NULL, unless specified using gl.set.verbosity]}
 }
 \value{
 Returns a data frame with the following columns:
@@ -202,10 +197,10 @@ require("dartR.data")
 res <- gl.spatial.autoCorr(platypus.gl, bins=seq(0,10000,2000))
 # using one population, showing sample size
 test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
 test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
 \references{
 \itemize{

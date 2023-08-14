@@ -115,17 +115,19 @@
 #' @param bootstrap Whether bootstrap calculations to compute the 95\% 
 #' confidence intervals around r should be carried out [default TRUE].
 #' @param plot.theme Theme for the plot. See details [default NULL].
-#' @param plot_colors_pop A color palette for populations or a list with
+#' @param plot.colors.pop A color palette for populations or a list with
 #' as many colors as there are populations in the dataset [default NULL].
-#' @param CI_color Color for the shade of the 95\% confidence intervals around 
+#' @param CI.color Color for the shade of the 95\% confidence intervals around 
 #' the r estimates [default "red"].
 #' @param plot.out Specify if plot is to be produced [default TRUE].
-#' @param plot.dir Directory in which to save files [default = working directory]
-#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
-#' temporary directory (tempdir) [default FALSE].
-#' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-#'  progress log ; 3, progress and results summary; 5, full report [default
-#'   NULL, unless specified using gl.set.verbosity].
+#' @inheritParams dartR.base::utils.plot.save
+## @param plot.dir Directory in which to save files [default = working directory]
+## @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
+## temporary directory (tempdir) [default FALSE].
+## @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
+##  progress log ; 3, progress and results summary; 5, full report [default
+##  NULL, unless specified using gl.set.verbosity].
+#'   
 #' @return Returns a data frame with the following columns:
 #' \enumerate{
 #' \item Bin  The distance classes
@@ -176,10 +178,10 @@
 #' res <- gl.spatial.autoCorr(platypus.gl, bins=seq(0,10000,2000))
 #' # using one population, showing sample size
 #' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 #' }
 #' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 #' @importFrom tidyr pivot_wider
 #' @export
 
@@ -196,8 +198,8 @@ gl.spatial.autoCorr <- function(x = NULL,
                                 permutation = TRUE,
                                 bootstrap = TRUE,
                                 plot.theme = theme_dartR(),
-                                plot_colors_pop = NULL,
-                                CI_color = "red",
+                                plot.colors.pop = NULL,
+                                CI.color = "red",
                                 plot.out = TRUE,
                                 plot.file=NULL,
                                 plot.dir=NULL,
@@ -576,18 +578,8 @@ gl.spatial.autoCorr <- function(x = NULL,
       plot.theme <- theme_dartR()
     }
     
-    if (is.null(plot_colors_pop)) {
-      plot_colors_pop <- dartR.base::gl.colors("dis")
-    }
-    
-    if (is(plot_colors_pop, "function")) {
-      if(is.null(x)) n.pop <- length(Dgeo_list) else
-        n.pop <- nPop(x)
-      plot_colors_pop <- plot_colors_pop(n.pop)
-    }
-    
-    if (!is(plot_colors_pop, "function")) {
-      plot_colors_pop <- plot_colors_pop
+    if (is.null(plot.colors.pop)) {
+      plot.colors.pop <- dartR.base::gl.select.colors(x, verbose=0)
     }
     
     spa_multi <-data.table::rbindlist(res, use.names = TRUE, 
@@ -602,7 +594,7 @@ gl.spatial.autoCorr <- function(x = NULL,
       geom_line(size=1) +
       geom_point(size=2) +
       geom_hline(yintercept = 0, col = "black", size=1) +
-      scale_color_manual(values = plot_colors_pop) +
+      scale_color_manual(values = plot.colors.pop) +
       scale_x_continuous(breaks = spa_multi$Bin,
                          labels = lbls) +
       ylab("Autocorrelation (r)") + 
@@ -617,7 +609,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     
     if (permutation & plot.pops.together == FALSE) {
       p3 <- p3 +  
-        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI_color, 
+        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI.color, 
                     alpha=0.25,show.legend = FALSE) + 
         geom_line(aes(y = L.r.null), col = "black", linetype = "dashed") +
         geom_point(aes(y = L.r.null), col = "black") +

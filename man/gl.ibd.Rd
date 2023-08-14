@@ -121,7 +121,7 @@ ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop',
 Dgeo_trans='Dgeo')
 }
 #only first 100 loci
-ibd <- gl.ibd(bandicoot.gl[,1:100])
+ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
 }
 \references{
 Rousset, F. (1997). Genetic differentiation and estimation of gene flow from

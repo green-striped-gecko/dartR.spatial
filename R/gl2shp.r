@@ -24,7 +24,7 @@
 #' @return 
 #' returns a SpatVector file 
 #' @examples
-#' out <- gl2shp(testset.gl)
+#' out <- gl2shp(testset.gl, outpath=tempdir())
 
 gl2shp <- function(x,
                    type = "shp",

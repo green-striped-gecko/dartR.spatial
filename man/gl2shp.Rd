@@ -43,7 +43,7 @@ Coordinates are provided under x@other$latlon and assumed to be in WGS84
 coordinates, if not proj4 string is provided.
 }
 \examples{
-out <- gl2shp(testset.gl)
+out <- gl2shp(testset.gl, outpath=tempdir())
 }
 \author{
 Bernd Guber (Post to \url{https://groups.google.com/d/forum/dartr})

@@ -66,7 +66,8 @@ This function calculates the pairwise distances (Euclidean, cost path
    layer on the genetic structure.
 }
 \examples{
-\dontrun{
+\donttest{
+#this example takes about 20 seconds to run...
 data(possums.gl)
 library(raster)  #needed for that example
 landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 

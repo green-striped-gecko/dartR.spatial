@@ -94,7 +94,7 @@
 #' Dgeo_trans='Dgeo')
 #' }
 #' #only first 100 loci
-#' ibd <- gl.ibd(bandicoot.gl[,1:100])
+#' ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
 
 gl.ibd <- function(x = NULL,
                    distance = "Fst",

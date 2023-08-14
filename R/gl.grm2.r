@@ -138,7 +138,7 @@ gl.grm2 <- function(x,
     
     if (plotheatmap == T) {
         if (is.null(palette_convergent)) 
-          cols <- gl.select.colors(library="baseR",palette="cm.colors",ncolors = 255, verbose=0) else cols <- palette_convergent
+          cols <- gl.select.colors(library="gr.hcl",palette="RdYBu",ncolors = 255, verbose = 0) else cols <- palette_convergent
         # plotting heatmap
         par(mar = c(1, 1, 1, 1))
         p3 <- gplots::heatmap.2(

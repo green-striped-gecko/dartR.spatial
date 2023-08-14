@@ -55,7 +55,8 @@
 #'  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
 #'  }
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' #this example takes about 20 seconds to run...
 #' data(possums.gl)
 #' library(raster)  #needed for that example
 #' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
