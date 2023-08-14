@@ -38,7 +38,7 @@ consists of the following packages:
 - dartR.sim (functions to simulate SNP data)
 - dartR.spatial (spatial analysis \<- this package)
 - dartR.popgenomics (popgenomics analysis)
-- dartR.sexlinkage
+- dartR.sexlinked (under development)
 
 `dartR` and its packages is a collaboration between the University of
 Canberra, CSIRO and Diversity Arrays Technology, and is supported with
