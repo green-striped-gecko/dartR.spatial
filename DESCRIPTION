@@ -1,7 +1,7 @@
 Package: dartR.spatial
 Type: Package
 Title: dartR.spatial - Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 0.73
+Version: 0.74
 Date: 2023-08-14
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
@@ -37,6 +37,6 @@ Author: Bernd Gruber [aut, cre],
   Jose L. Mijangos [aut],
   Carlo Pacioni [aut],
   Peter J. Unmack [ctb],
-  Oliver Berry [ctb],
+  Oliver Berry [ctb]
 URL: https://green-striped-gecko.github.io/dartR/
 BugReports: https://groups.google.com/g/dartr?pli=1
