@@ -80,9 +80,12 @@ the r estimates [default "red"].}
 
 \item{plot.out}{Specify if plot is to be produced [default TRUE].}
 
-\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log; 3, progress and results summary; 5, full report
- [default NULL, unless specified using gl.set.verbosity]}
+\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
+temporary directory (tempdir) [default FALSE].}
+
+\item{plot.dir}{Directory in which to save files [default = working directory]}
+
+\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,}
 }
 \value{
 Returns a data frame with the following columns:

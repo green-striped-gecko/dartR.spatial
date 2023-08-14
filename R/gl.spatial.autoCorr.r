@@ -120,13 +120,13 @@
 #' @param CI.color Color for the shade of the 95\% confidence intervals around 
 #' the r estimates [default "red"].
 #' @param plot.out Specify if plot is to be produced [default TRUE].
-#' @inheritParams dartR.base::utils.plot.save
-## @param plot.dir Directory in which to save files [default = working directory]
-## @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
-## temporary directory (tempdir) [default FALSE].
-## @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
+#' @param plot.dir Directory in which to save files [default = working directory]
+#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
+#' temporary directory (tempdir) [default FALSE].
+#' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 ##  progress log ; 3, progress and results summary; 5, full report [default
 ##  NULL, unless specified using gl.set.verbosity].
+## #@inheritParams dartR.base::utils.plot.save
 #'   
 #' @return Returns a data frame with the following columns:
 #' \enumerate{

@@ -74,6 +74,8 @@ landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata',
 package='dartR.data'))
 glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
 gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
+}
+\dontrun{
 #### run tests as implemented in popgenreport
 library(PopGenReport)
 PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
