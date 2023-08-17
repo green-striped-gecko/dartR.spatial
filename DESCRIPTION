@@ -1,8 +1,8 @@
 Package: dartR.spatial
 Type: Package
 Title: Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 0.74
-Date: 2023-08-14
+Version: 0.75
+Date: 2023-08-17
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
             person("Arthur", "Georges", email="georges@aerg.edu.au", role="aut"),
@@ -31,7 +31,7 @@ Suggests:
 License: GPL (>= 3)
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2021-04-28 23:28:46 UTC; 
+Packaged: 2023-08-17 23:28:46 UTC; 
 Author: Bernd Gruber [aut, cre],
   Arthur Georges [aut],
   Jose L. Mijangos [aut],

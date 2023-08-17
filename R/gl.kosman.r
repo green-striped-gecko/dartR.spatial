@@ -3,6 +3,7 @@
 #' This script calculates an individual based distance matrix.
 #' @param  x genlight/dartR object with a unique ploidy
 #' @param  verbose verbosity of the function.
+#' @return returns a matrix of [dimensions nInd(x) x nInd(x)] of kosman distances between individuals, 
 #' @export
 #' @examples
 #' #use only five individuals and seven loci

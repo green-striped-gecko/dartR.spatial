@@ -11,6 +11,9 @@ gl.kosman(x, verbose = NULL)
 
 \item{verbose}{verbosity of the function.}
 }
+\value{
+returns a matrix of [dimensions nInd(x) x nInd(x)] of kosman distances between individuals,
+}
 \description{
 This script calculates an individual based distance matrix.
 }

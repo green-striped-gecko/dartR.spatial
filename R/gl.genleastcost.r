@@ -55,22 +55,22 @@
 #'  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
 #'  }
 #' @examples
-#' \donttest{
 #' #this example takes about 20 seconds to run...
+#' \donttest{
 #' data(possums.gl)
 #' library(raster)  #needed for that example
 #' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
 #' package='dartR.data'))
+#' #use only 3 population (first 90 individuals) due to speed
 #' glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
 #' gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
-#' }
-#' \dontrun{
-#' #### run tests as implemented in popgenreport
-#' library(PopGenReport)
+#' #### run tests as implemented in PopGenreport (maybe need to install)
+#' if (require("PopGenReport", quietly=TRUE)) {
 #' PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
 #'  gen.mat = glc$gen.mat)
 #' lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
 #' eucl.mat = glc$eucl.mat)
+#' }
 #' }
 #' @export
 

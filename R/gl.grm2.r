@@ -140,7 +140,9 @@ gl.grm2 <- function(x,
         if (is.null(palette_convergent)) 
           cols <- gl.select.colors(library="gr.hcl",palette="RdYBu",ncolors = 255, verbose = 0) else cols <- palette_convergent
         # plotting heatmap
-        par(mar = c(1, 1, 1, 1))
+          oldpar <- par(no.readonly = TRUE)
+          on.exit(par(oldpar))
+          par(mar = c(1, 1, 1, 1))
         p3 <- gplots::heatmap.2(
             G,
             col = cols,
@@ -160,9 +162,6 @@ gl.grm2 <- function(x,
             cex = 0.75,
             title = "Populations"
         )
-        
-        
-        
     }
     
     # Optionally save the plot ---------------------
