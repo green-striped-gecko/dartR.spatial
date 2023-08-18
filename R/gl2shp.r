@@ -24,7 +24,7 @@
 #' @return 
 #' returns a SpatVector file 
 #' @examples
-#' out <- gl2shp(testset.gl)
+#' out <- gl2shp(testset.gl, outpath=tempdir())
 
 gl2shp <- function(x,
                    type = "shp",
@@ -41,7 +41,7 @@ gl2shp <- function(x,
     funname <- match.call()[[1]]
     utils.flag.start(func = funname,
                      build = "Jody",
-                     verbosity = verbose)
+                     verbose = verbose)
     
     # CHECK DATATYPE
     datatype <- utils.check.datatype(x, verbose = verbose)
@@ -119,7 +119,6 @@ gl2shp <- function(x,
                 v,
                 filename = paste0(file.path(outpath, outfile), ".shp"),
                 filetype="ESRI Shapefile",
-                layer = outfile,
                 overwrite = TRUE
             )
         
@@ -128,7 +127,6 @@ gl2shp <- function(x,
                 v,
                 filename= paste0(file.path(outpath, outfile), ".kml"),
                 filetype="KML",
-                layer = outfile,
                 overwrite = TRUE
             )
         

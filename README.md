@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `dartR.spatial` <a href="https://green-striped-gecko.github.io/dartR/"><img src="man/figures/dartRlogo.png" align="right" height="140"/></a>
+# `dartR.spatial` <a href="https://green-striped-gecko.github.io/dartR/"><img src="man/figures/dartR_logo.png" align="right" height="140"/></a>
 
 ## An accessible genetic analysis platform for conservation, ecology and agriculture - dartR.spatial
 
@@ -32,11 +32,13 @@ spatial autocorrelation.
 dartR.spatial is one package of the dartRverse. Currently the dartRverse
 consists of the following packages:
 
-- dartR.base
-- dartR.data
+- dartR.base (report, filter and input/output functions, basic
+  popgenomics)
+- dartR.data (repository for example data files)
 - dartR.sim (functions to simulate SNP data)
-- dartR.spatial (spatial analysis)
+- dartR.spatial (spatial analysis \<- this package)
 - dartR.popgenomics (popgenomics analysis)
+- dartR.sexlinked (under development)
 
 `dartR` and its packages is a collaboration between the University of
 Canberra, CSIRO and Diversity Arrays Technology, and is supported with
@@ -44,12 +46,7 @@ funding from the ACT Priority Investment Program, CSIRO and the
 University of Canberra.
 
 <p align="center">
-
-<img src="man/figures/UC.png" height="100"/>    
-<img src="man/figures/csiro_logo.png" height="100"/>    
-<img src="man/figures/DArT-removebg-preview.png" height="100"/>    
-<img src="man/figures/ACT.png" height="100"/>
-
+<img src='man/figures/institutions.png' width="800"/>
 </p>
 
 ## Installation

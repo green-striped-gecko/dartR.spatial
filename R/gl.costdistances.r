@@ -17,17 +17,16 @@
 #' Calculates a cost distance matrix, to be used with run.popgensim.
 #' @export
 #' @examples
-#' \dontrun{
 #' data(possums.gl)
 #' library(raster)  #needed for that example
 #' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-#' package='dartR'))
+#' package='dartR.data'))
 #' #calculate mean centers of individuals per population
 #' xy <- apply(possums.gl@other$xy, 2, function(x) tapply(x, pop(possums.gl),
 #'  mean))
 #' cd <- gl.costdistances(landscape.sim, xy, method='leastcost', NN=8)
 #' round(cd,3)
-#' }
+
 
 gl.costdistances <- function(landscape,
                              locs,
@@ -41,7 +40,7 @@ gl.costdistances <- function(landscape,
     funname <- match.call()[[1]]
     utils.flag.start(func = funname,
                      build = "Jody",
-                     verbosity = verbose)
+                     verbose = verbose)
     
     # CHECK IF PACKAGES ARE INSTALLED
     pkg <- "gdistance"

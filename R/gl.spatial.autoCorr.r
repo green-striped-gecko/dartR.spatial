@@ -62,7 +62,7 @@
 #' Methods available to calculate genetic distances for SNP data:
 #' \itemize{
 #' \item "propShared" using the function \code{\link{gl.propShared}}.
-#' \item "grm" using the function \code{gl.grm}.
+#' \item "grm" using the function \code{gl.grm2}.
 #' \item "Euclidean" using the function \code{\link{gl.dist.ind}}.
 #' \item "Simple" using the function \code{\link{gl.dist.ind}}.
 #' \item "Absolute" using the function \code{\link{gl.dist.ind}}.
@@ -76,12 +76,7 @@
 #' \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
 #' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 #' }
-#'   
-#'  Plots and table are saved to the temporal directory (tempdir) and can be
-#'  accessed with the function \code{\link{gl.print.reports}} and listed with
-#'  the function \code{\link{gl.list.reports}}. Note that they can be accessed
-#'  only in the current R session because tempdir is cleared each time that the
-#'   R session is closed.
+#'  Plots and table are saved plot.file in plot.dir if specified.
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
 #'  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
@@ -119,17 +114,20 @@
 #' of no spatial structure should be carried out [default TRUE].
 #' @param bootstrap Whether bootstrap calculations to compute the 95\% 
 #' confidence intervals around r should be carried out [default TRUE].
-#' @param plot_theme Theme for the plot. See details [default NULL].
-#' @param plot_colors_pop A color palette for populations or a list with
+#' @param plot.theme Theme for the plot. See details [default NULL].
+#' @param plot.colors.pop A color palette for populations or a list with
 #' as many colors as there are populations in the dataset [default NULL].
-#' @param CI_color Color for the shade of the 95\% confidence intervals around 
+#' @param CI.color Color for the shade of the 95\% confidence intervals around 
 #' the r estimates [default "red"].
 #' @param plot.out Specify if plot is to be produced [default TRUE].
-#' @param save2tmp If TRUE, saves any ggplots and listings to the session
+#' @param plot.dir Directory in which to save files [default = working directory]
+#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
 #' temporary directory (tempdir) [default FALSE].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-#'  progress log ; 3, progress and results summary; 5, full report [default
-#'   NULL, unless specified using gl.set.verbosity].
+##  progress log ; 3, progress and results summary; 5, full report [default
+##  NULL, unless specified using gl.set.verbosity].
+## #@inheritParams dartR.base::utils.plot.save
+#'   
 #' @return Returns a data frame with the following columns:
 #' \enumerate{
 #' \item Bin  The distance classes
@@ -180,10 +178,10 @@
 #' res <- gl.spatial.autoCorr(platypus.gl, bins=seq(0,10000,2000))
 #' # using one population, showing sample size
 #' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 #' }
 #' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 #' @importFrom tidyr pivot_wider
 #' @export
 
@@ -199,11 +197,12 @@ gl.spatial.autoCorr <- function(x = NULL,
                                 plot.pops.together = FALSE,
                                 permutation = TRUE,
                                 bootstrap = TRUE,
-                                plot_theme = NULL,
-                                plot_colors_pop = NULL,
-                                CI_color = "red",
+                                plot.theme = theme_dartR(),
+                                plot.colors.pop = NULL,
+                                CI.color = "red",
                                 plot.out = TRUE,
-                                save2tmp = FALSE,
+                                plot.file=NULL,
+                                plot.dir=NULL,
                                 verbose = NULL) {
   
   # CHECK IF PACKAGES ARE INSTALLED
@@ -228,12 +227,15 @@ gl.spatial.autoCorr <- function(x = NULL,
   
   # SET VERBOSITY
   verbose <- gl.check.verbosity(verbose)
-  
+
+  # SET WORKING DIRECTORY
+  plot.dir <- gl.check.wd(plot.dir,verbose=0)  
+    
   # FLAG SCRIPT START
   funname <- match.call()[[1]]
   utils.flag.start(func = funname,
                    build = "Jackson",
-                   verbosity = verbose)
+                   verbose = verbose)
   
   # CHECK DATATYPE
   if (!is.null(x)) {
@@ -354,7 +356,7 @@ gl.spatial.autoCorr <- function(x = NULL,
         Dgen <- as.dist(gl.propShared(x_temp))
       } else {
         if (Dgen_method == "grm") {
-          Dgen <- as.dist(dartR.popgenomics::gl.grm(x_temp, plotheatmap=FALSE, verbose = 0))
+          Dgen <- as.dist(gl.grm2(x_temp, plotheatmap=FALSE, verbose = 0))
         } else {
           Dgen <- gl.dist.ind(x_temp, method = Dgen_method, plot.out = FALSE,
                               verbose = 0)
@@ -572,22 +574,12 @@ gl.spatial.autoCorr <- function(x = NULL,
   
   if (plot.out) {
     
-    if (is.null(plot_theme)) {
-      plot_theme <- theme_dartR()
+    if (is.null(plot.theme)) {
+      plot.theme <- theme_dartR()
     }
     
-    if (is.null(plot_colors_pop)) {
-      plot_colors_pop <- dartR.base::gl.colors("dis")
-    }
-    
-    if (is(plot_colors_pop, "function")) {
-      if(is.null(x)) n.pop <- length(Dgeo_list) else
-        n.pop <- nPop(x)
-      plot_colors_pop <- plot_colors_pop(n.pop)
-    }
-    
-    if (!is(plot_colors_pop, "function")) {
-      plot_colors_pop <- plot_colors_pop
+    if (is.null(plot.colors.pop)) {
+      plot.colors.pop <- dartR.base::gl.select.colors(x, verbose=0)
     }
     
     spa_multi <-data.table::rbindlist(res, use.names = TRUE, 
@@ -602,12 +594,12 @@ gl.spatial.autoCorr <- function(x = NULL,
       geom_line(size=1) +
       geom_point(size=2) +
       geom_hline(yintercept = 0, col = "black", size=1) +
-      scale_color_manual(values = plot_colors_pop) +
+      scale_color_manual(values = plot.colors.pop) +
       scale_x_continuous(breaks = spa_multi$Bin,
                          labels = lbls) +
       ylab("Autocorrelation (r)") + 
       xlab("Distance class") + 
-      plot_theme
+      plot.theme
     
     if (bootstrap) {
       p3 <- p3 +   
@@ -617,7 +609,7 @@ gl.spatial.autoCorr <- function(x = NULL,
     
     if (permutation & plot.pops.together == FALSE) {
       p3 <- p3 +  
-        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI_color, 
+        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI.color, 
                     alpha=0.25,show.legend = FALSE) + 
         geom_line(aes(y = L.r.null), col = "black", linetype = "dashed") +
         geom_point(aes(y = L.r.null), col = "black") +
@@ -655,35 +647,13 @@ gl.spatial.autoCorr <- function(x = NULL,
     print(res)
   }
   
-  # SAVE INTERMEDIATES TO TEMPDIR
+  # Optionally save the plot ---------------------
   
-  # creating temp file names
-  if (save2tmp) {
-    if (plot.out) {
-      temp_plot <- tempfile(pattern = "Plot_")
-      match_call <-
-        paste0(names(match.call()),
-               "_",
-               as.character(match.call()),
-               collapse = "_")
-      # saving to tempdir
-      saveRDS(list(match_call, p3), file = temp_plot)
-      
-      if (verbose >= 2) {
-        cat(report("  Saving the ggplot to session tempfile\n"))
-      }
-    }
-    
-    temp_table <- tempfile(pattern = "Table_")
-    saveRDS(list(match_call, res), file = temp_table)
-    if (verbose >= 2) {
-      cat(report("  Saving tabulation to session tempfile\n"))
-      cat(
-        report(
-          "  NOTE: Retrieve output files from tempdir using gl.list.reports() and gl.print.reports()\n"
-        )
-      )
-    }
+  if(!is.null(plot.file)){
+    tmp <- utils.plot.save(p3,
+                           dir=plot.dir,
+                           file=plot.file,
+                           verbose=verbose)
   }
   
   # FLAG SCRIPT END
@@ -694,5 +664,4 @@ gl.spatial.autoCorr <- function(x = NULL,
   
   # RETURN
   return(invisible(res))
-  
 }

@@ -17,11 +17,12 @@ gl.spatial.autoCorr(
   plot.pops.together = FALSE,
   permutation = TRUE,
   bootstrap = TRUE,
-  plot_theme = NULL,
-  plot_colors_pop = NULL,
-  CI_color = "red",
+  plot.theme = theme_dartR(),
+  plot.colors.pop = NULL,
+  CI.color = "red",
   plot.out = TRUE,
-  save2tmp = FALSE,
+  plot.file = NULL,
+  plot.dir = NULL,
   verbose = NULL
 )
 }
@@ -69,22 +70,22 @@ of no spatial structure should be carried out [default TRUE].}
 \item{bootstrap}{Whether bootstrap calculations to compute the 95\% 
 confidence intervals around r should be carried out [default TRUE].}
 
-\item{plot_theme}{Theme for the plot. See details [default NULL].}
+\item{plot.theme}{Theme for the plot. See details [default NULL].}
 
-\item{plot_colors_pop}{A color palette for populations or a list with
+\item{plot.colors.pop}{A color palette for populations or a list with
 as many colors as there are populations in the dataset [default NULL].}
 
-\item{CI_color}{Color for the shade of the 95\% confidence intervals around 
+\item{CI.color}{Color for the shade of the 95\% confidence intervals around 
 the r estimates [default "red"].}
 
 \item{plot.out}{Specify if plot is to be produced [default TRUE].}
 
-\item{save2tmp}{If TRUE, saves any ggplots and listings to the session
+\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
 temporary directory (tempdir) [default FALSE].}
 
-\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log ; 3, progress and results summary; 5, full report [default
- NULL, unless specified using gl.set.verbosity].}
+\item{plot.dir}{Directory in which to save files [default = working directory]}
+
+\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,}
 }
 \value{
 Returns a data frame with the following columns:
@@ -172,7 +173,7 @@ of possible combinations given the sample size of any given distance class is
 Methods available to calculate genetic distances for SNP data:
 \itemize{
 \item "propShared" using the function \code{\link{gl.propShared}}.
-\item "grm" using the function \code{gl.grm}.
+\item "grm" using the function \code{gl.grm2}.
 \item "Euclidean" using the function \code{\link{gl.dist.ind}}.
 \item "Simple" using the function \code{\link{gl.dist.ind}}.
 \item "Absolute" using the function \code{\link{gl.dist.ind}}.
@@ -186,12 +187,7 @@ Methods available to calculate genetic distances for SilicoDArT data:
 \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
 \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 }
-  
- Plots and table are saved to the temporal directory (tempdir) and can be
- accessed with the function \code{\link{gl.print.reports}} and listed with
- the function \code{\link{gl.list.reports}}. Note that they can be accessed
- only in the current R session because tempdir is cleared each time that the
-  R session is closed.
+ Plots and table are saved plot.file in plot.dir if specified.
 
 Examples of other themes that can be used can be consulted in \itemize{
  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
@@ -204,10 +200,10 @@ require("dartR.data")
 res <- gl.spatial.autoCorr(platypus.gl, bins=seq(0,10000,2000))
 # using one population, showing sample size
 test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
 test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI_color = "green")
+res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
 \references{
 \itemize{

@@ -16,7 +16,7 @@
 #' @param distance Type of distance that is calculated and used for the
 #' analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
 #' 'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
-#'  [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean']
+#'  [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
 #'  [default "Fst"].
 #' @param coordinates Can be either 'latlon', 'xy' or a two column data.frame
 #' with column names 'lat','lon', 'x', 'y'). Coordinates are provided via
@@ -40,10 +40,10 @@
 #' @param paircols Should pairwise dots colored by 'pop'ulation/'ind'ividual
 #' pairs [default 'pop']. You can color pairwise individuals by pairwise
 #'  population colors.
-#' @param plot_theme Theme for the plot. See details for options
+#' @param plot.theme Theme for the plot. See details for options
 #' [default theme_dartR()].
-#' @param save2tmp If TRUE, saves any ggplots and listings to the session
-#' temporary directory (tempdir) [default FALSE].
+#' @param plot.dir Directory in which to save files [default = working directory]
+#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #' progress log ; 3, progress and results summary; 5, full report
 #' [default 2 or as specified using gl.set.verbosity].
@@ -94,7 +94,7 @@
 #' Dgeo_trans='Dgeo')
 #' }
 #' #only first 100 loci
-#' ibd <- gl.ibd(bandicoot.gl[,1:100])
+#' ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
 
 gl.ibd <- function(x = NULL,
                    distance = "Fst",
@@ -106,8 +106,9 @@ gl.ibd <- function(x = NULL,
                    permutations = 999,
                    plot.out = TRUE,
                    paircols = NULL,
-                   plot_theme = theme_dartR(),
-                   save2tmp = FALSE,
+                   plot.theme = theme_dartR(),
+                   plot.file=NULL,
+                   plot.dir=NULL,
                    verbose = NULL) {
   
     # CHECK IF PACKAGES ARE INSTALLED
@@ -121,13 +122,21 @@ gl.ibd <- function(x = NULL,
     return(-1)
   } else {
         
-        # TRAP COMMAND
         funname <- match.call()[[1]]
         
-        # GENERAL ERROR CHECKING
-        
+        # SET VERBOSITY
         verbose <- gl.check.verbosity(verbose)
         
+        # SET WORKING DIRECTORY
+        plot.dir <- gl.check.wd(plot.dir,verbose=0)
+        
+        # FLAG SCRIPT START
+        funname <- match.call()[[1]]
+        utils.flag.start(func = funname,
+                         build = "v.2023.2",
+                         verbose = verbose)
+        
+        # CHECK DATATYPE
         if (!is.null(x)){
             dt <- utils.check.datatype(x, verbose = 0)
         }
@@ -221,7 +230,8 @@ gl.ibd <- function(x = NULL,
             }
             
             if (distance == "propShared" |
-                distance == "euclidean") {
+                distance == "euclidean" |
+                distance == "kosman") {
                 typedis <-"ind"
             }
             
@@ -281,6 +291,11 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "euclidean") {
                 Dgen <- as.dist(dist(as.matrix(x)))
             }
+            if (is.null(Dgen) & distance == "kosman") {
+              Dgen <- as.dist(gl.kosman(x)$kosman)
+            }
+            
+            
             
             ### order both matrices to be alphabetically as levels in genlight (ind or pop)
             if (is(x, "genlight")) {
@@ -365,7 +380,7 @@ gl.ibd <- function(x = NULL,
                     parse = TRUE,
                     hjust = 1.05,
                     vjust = 0) + 
-              plot_theme
+              plot.theme
             
         } else {
             Legend <- col2 <- NA  #ggplot bug
@@ -401,7 +416,7 @@ gl.ibd <- function(x = NULL,
                        parse = TRUE,
                        hjust = 1.05,
                        vjust = 0) +
-              xlab(Dgeo_trans) + plot_theme
+              xlab(Dgeo_trans) + plot.theme
             
         }
         
@@ -417,33 +432,17 @@ gl.ibd <- function(x = NULL,
             print(manteltest)
         }
         
-        # SAVE INTERMEDIATES TO TEMPDIR
-        if (save2tmp & plot.out) {
-            # creating temp file names
-            match_call <-
-                paste0(names(match.call()),
-                       "_",
-                       as.character(match.call()),
-                       collapse = "_")
-            temp_plot <- tempfile(pattern = "Plot_")
-            
-            # saving to tempdir
-            saveRDS(list(match_call, p3), file = temp_plot)
-            if (verbose >= 2) {
-                cat(report("  Saving the ggplot to session tempfile\n"))
-            }
+        
+        # Optionally save the plot ---------------------
+        if(!is.null(plot.file)){
+          tmp <- utils.plot.save(p3,
+                                 dir=plot.dir,
+                                 file=plot.file,
+                                 verbose=verbose)
         }
         
-        if (save2tmp) {
-            temp_table <- tempfile(pattern = "Table_")
-            saveRDS(list(match_call, manteltest), file = temp_table)
-            if (verbose >= 2) {
-                cat(report("  Saving the report to the session tempfile\n"))
-            }
-        }
         
         # FLAG SCRIPT END
-        
         if (verbose >= 1) {
             cat(report("\nCompleted:", funname, "\n\n"))
         }

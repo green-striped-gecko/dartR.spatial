@@ -15,8 +15,9 @@ gl.ibd(
   permutations = 999,
   plot.out = TRUE,
   paircols = NULL,
-  plot_theme = theme_dartR(),
-  save2tmp = FALSE,
+  plot.theme = theme_dartR(),
+  plot.file = NULL,
+  plot.dir = NULL,
   verbose = NULL
 )
 }
@@ -27,7 +28,7 @@ log(distance) is performed [required].}
 \item{distance}{Type of distance that is calculated and used for the
 analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
 'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
- [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean']
+ [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
  [default "Fst"].}
 
 \item{coordinates}{Can be either 'latlon', 'xy' or a two column data.frame
@@ -60,11 +61,12 @@ distance. The transformation can be applied as a formula using Dgen as the
 pairs [default 'pop']. You can color pairwise individuals by pairwise
  population colors.}
 
-\item{plot_theme}{Theme for the plot. See details for options
+\item{plot.theme}{Theme for the plot. See details for options
 [default theme_dartR()].}
 
-\item{save2tmp}{If TRUE, saves any ggplots and listings to the session
-temporary directory (tempdir) [default FALSE].}
+\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]}
+
+\item{plot.dir}{Directory in which to save files [default = working directory]}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 progress log ; 3, progress and results summary; 5, full report
@@ -119,7 +121,7 @@ ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop',
 Dgeo_trans='Dgeo')
 }
 #only first 100 loci
-ibd <- gl.ibd(bandicoot.gl[,1:100])
+ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
 }
 \references{
 Rousset, F. (1997). Genetic differentiation and estimation of gene flow from
