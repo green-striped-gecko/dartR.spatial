@@ -206,7 +206,7 @@ gl.spatial.autoCorr <- function(x = NULL,
                                 verbose = NULL) {
   
   # CHECK IF PACKAGES ARE INSTALLED
-  pkg <- "dartR.popgenomics"
+  pkg <- "dartR.popgen"
   if (!(requireNamespace(pkg, quietly = TRUE))) {
     cat(error(
       "Package",

@@ -1,6 +1,6 @@
-#' Setting up the package dartR.popgenomics
+#' Setting up the package dartR.spatial
 #'
-#' Setting up dartR.popgenomics
+#' Setting up dartR.spatial
 #' @importFrom crayon blue
 #' @importFrom utils packageVersion combn head tail
 #' @importFrom methods getPackageName is
