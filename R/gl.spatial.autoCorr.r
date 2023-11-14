@@ -358,7 +358,7 @@ gl.spatial.autoCorr <- function(x = NULL,
         if (Dgen_method == "grm") {
           Dgen <- as.dist(gl.grm2(x_temp, plotheatmap=FALSE, verbose = 0))
         } else {
-          Dgen <- gl.dist.ind(x_temp, method = Dgen_method, plot.out = FALSE,
+          Dgen <- gl.dist.ind(x_temp, method = Dgen_method,
                               verbose = 0)
         }
       }
