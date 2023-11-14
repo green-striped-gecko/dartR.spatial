@@ -48,6 +48,7 @@
 #' realized relationship matrix. G3: Genes, Genomics, Genetics 2, 1405.
 #' }
 #' @examples
+#' require(dartR.base)  
 #' gl.grm2(platypus.gl[1:10,1:100])
 #'
 #' @family inbreeding functions

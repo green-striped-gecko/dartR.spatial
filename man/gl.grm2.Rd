@@ -69,6 +69,7 @@ locus are IBD from the base population). As this probability lies between 0
  represent different populations.
 }
 \examples{
+require(dartR.base)  
 gl.grm2(platypus.gl[1:10,1:100])
 
 }
