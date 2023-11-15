@@ -32,12 +32,11 @@ spatial autocorrelation.
 dartR.spatial is one package of the dartRverse. Currently the dartRverse
 consists of the following packages:
 
-- dartR.base (report, filter and input/output functions, basic
-  popgenomics)
+- dartR.base (report, filter and input/output functions, basic popgen)
 - dartR.data (repository for example data files)
 - dartR.sim (functions to simulate SNP data)
 - dartR.spatial (spatial analysis \<- this package)
-- dartR.popgenomics (popgenomics analysis)
+- dartR.popgen (popgen analysis)
 - dartR.sexlinked (under development)
 
 `dartR` and its packages is a collaboration between the University of
