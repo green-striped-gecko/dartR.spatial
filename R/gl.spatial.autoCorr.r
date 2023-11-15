@@ -76,7 +76,6 @@
 #' \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
 #' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 #' }
-#'  Plots and table are saved plot.file in plot.dir if specified.
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
 #'  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
@@ -149,6 +148,8 @@
 #' spatial autocorrelation (if \code{permutation = TRUE})
 #' \item p.one.tail The p value of the one tail statistical test
 #' }
+#'  Plots and table are saved plot.file in plot.dir if specified.
+#'  Bootstraps and permutations (if requested) are saved in a temporary directory 
 #'
 #' @author Carlo Pacioni, Bernd Gruber & Luis Mijangos 
 #' (Post to \url{https://groups.google.com/d/forum/dartr})
@@ -512,6 +513,11 @@ gl.spatial.autoCorr <- function(x = NULL,
         ncol = nbins,
         byrow = TRUE
       )
+      
+      # Save permutations
+      temp_perm <- tempfile(pattern = paste0("Perm_Pop", z))
+      saveRDS(bs, file = temp_perm)
+      
       bs.l <- apply(bs, 2, quantile, probs = 0.025, na.rm = TRUE)
       bs.u <- apply(bs, 2, quantile, probs = 0.975, na.rm = TRUE)
       
@@ -545,6 +551,10 @@ gl.spatial.autoCorr <- function(x = NULL,
                nrow = reps,
                ncol = nbins,
                byrow = TRUE)
+      # save Boots
+      temp_boots <- tempfile(pattern = paste0("Boots_Pop", z))
+      saveRDS(errors, file = temp_boots)
+      
       err.l <- apply(errors, 2, quantile, probs = 0.025, na.rm = TRUE)
       err.u <- apply(errors, 2, quantile, probs = 0.975, na.rm = TRUE)
     }
