@@ -109,6 +109,8 @@ spatial autocorrelation (if \code{permutation = TRUE})
 spatial autocorrelation (if \code{permutation = TRUE})
 \item p.one.tail The p value of the one tail statistical test
 }
+ Plots and table are saved plot.file in plot.dir if specified.
+ Bootstraps and permutations (if requested) are saved in a temporary directory
 }
 \description{
 Global spatial autocorrelation is a multivariate approach
@@ -187,7 +189,6 @@ Methods available to calculate genetic distances for SilicoDArT data:
 \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
 \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
 }
- Plots and table are saved plot.file in plot.dir if specified.
 
 Examples of other themes that can be used can be consulted in \itemize{
  \item \url{https://ggplot2.tidyverse.org/reference/ggtheme.html} and \item
