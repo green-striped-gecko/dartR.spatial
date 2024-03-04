@@ -1,8 +1,8 @@
 Package: dartR.spatial
 Type: Package
 Title: Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 0.78
-Date: 2023-11-15
+Version: 0.88
+Date: 2024-03-02
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
             person("Arthur", "Georges", email="georges@aerg.edu.au", role="aut"),
@@ -19,7 +19,7 @@ Description: Provides landscape genomic functions to analyse 'SNP' (single nucle
 Revision: Attractive Abalone
 Encoding: UTF-8
 Depends: R (>= 3.5), adegenet (>= 2.0.0),  dartR.base, dartR.data
-Imports: methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table
+Imports: methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table, grDevices
 Suggests:
   mmod,
   dismo,
@@ -28,7 +28,10 @@ Suggests:
   rrBLUP,
   terra (>= 1.7-39),
   sf,
-  PopGenReport
+  PopGenReport,
+  reemsplots2,
+  dismo
+Remotes: dipetkov/reemsplots2
 License: GPL (>= 3)
 RoxygenNote: 7.2.3
 NeedsCompilation: no

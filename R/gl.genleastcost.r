@@ -129,7 +129,8 @@ gl.genleastcost <- function(x,
         dist.type <- "pop"
     
     if (gen.distance == "kosman" ||
-        gen.distance == "propShared")
+        gen.distance == "propShared" ||
+        gen.distance == "dist" ) 
         dist.type <- "ind"
     
     if (is.na(dist.type)) {
@@ -281,6 +282,11 @@ gl.genleastcost <- function(x,
     if (gen.distance == "propShared") {
         gendist.mat <- as.matrix(as.dist(propShared(xx)))
     }
+    
+    if (gen.distance == "dist") {
+      gendist.mat <- as.matrix(dist(as.matrix(xx)))
+    }
+    
     
     dimnames(gendist.mat) <- dimnames(eucl.mat)
     
