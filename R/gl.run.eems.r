@@ -190,20 +190,20 @@ pxy <- st_coordinates(pbuf)[,1:2]
               row.names = FALSE, 
               col.names = FALSE)
   
-
+  if (is.null(seed)) seed <-round(runif(1,1,1000000))
   if (Sys.info()["sysname"] == "Windows") {
     prog <- "runeems_snps.exe"
-    cmd <- paste0("runeems_snps.exe --params ",paste0("param_", plot.file, ".ini"))
+    cmd <- paste0("runeems_snps.exe --params ",paste0("param_", plot.file, ".ini"), paste0(" --seed ",seed ))
   }
   
   if (Sys.info()["sysname"] == "Linux")  {
     prog <- "runeems_snps"
-    cmd <- paste0("./runeems_snps --params ",paste0("param_", plot.file, ".ini"))
+    cmd <- paste0("./runeems_snps --params ",paste0("param_", plot.file, ".ini"), paste0(" --seed ",seed ))
   }
   
   if (Sys.info()["sysname"] == "Darwin") {
     prog <- "runeems_snps"
-    cmd <- paste0("./runeems_snps --params ",paste0("param_", plot.file, ".ini"))
+    cmd <- paste0("./runeems_snps --params ",paste0("param_", plot.file, ".ini"), paste0(" --seed ",seed ))
   }
   
   # check if file program can be found
@@ -224,7 +224,7 @@ pxy <- st_coordinates(pbuf)[,1:2]
     stop()
   }
   
-  if (is.null(seed)) seed <-round(runif(1,1,1000000))
+
   
   # change into tempdir (run it there)
   old.path <- getwd()
@@ -232,7 +232,7 @@ pxy <- st_coordinates(pbuf)[,1:2]
   on.exit(setwd(old.path))
 ### run eems
   if (Sys.info()["sysname"] == "Linux") system("chmod +x runeems_snps")
-  cmd <- paste0(paste0(prog,"  --params ",  paste0("param_", plot.file, ".ini "), paste0("--seed ",seed )))
+  #cmd <- paste0(paste0(prog,"  --params ",  paste0("param_", plot.file, ".ini "), paste0("--seed ",seed )))
   
   system(cmd)
   
