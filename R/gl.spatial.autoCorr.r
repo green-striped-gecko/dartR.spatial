@@ -82,7 +82,7 @@
 #'  \url{https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/}
 #'  }
 #'  
-#' @param x Genlight object [default NULL].
+#' @param x Name of the genlight object containing the SNP data [required].
 #' @param Dgen Genetic distance matrix if no genlight object is provided
 #' [default NULL].
 #' @param Dgeo Geographic distance matrix if no genlight object is provided.
@@ -186,7 +186,7 @@
 #' @importFrom tidyr pivot_wider
 #' @export
 
-gl.spatial.autoCorr <- function(x = NULL,
+gl.spatial.autoCorr <- function(x,
                                 Dgeo = NULL,
                                 Dgen = NULL,
                                 coordinates = "latlon", 
