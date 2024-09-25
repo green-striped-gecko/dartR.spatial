@@ -15,6 +15,15 @@ gl.run.eems(
   numBurnIter = 2000,
   numThinIter = 9,
   seed = NULL,
+  dpi = 250,
+  add_grid = FALSE,
+  col_grid = "#BBBBBB",
+  add_demes = FALSE,
+  col_demes = "#000000",
+  add_outline = FALSE,
+  col_outline = "#FFFFFF",
+  eems_colors = NULL,
+  plot.colors.pop = gl.colors("dis"),
   out.dir = NULL,
   plot.dir = NULL,
   plot.file = NULL,
@@ -46,6 +55,31 @@ gl.run.eems(
 
 \item{seed}{An integer used to seed the random number generator 
 [default NULL].}
+
+\item{dpi}{Resolution of the contour raster [default 250].}
+
+\item{add_grid}{A logical value indicating whether to add the population 
+grid or not [default FALSE].}
+
+\item{col_grid}{The color of the population grid [default gray ("#BBBBBB")].}
+
+\item{add_demes}{A logical value indicating whether to add the observed 
+demes or not [default FALSE].}
+
+\item{col_demes}{The color of the demes [default black ("#000000")].}
+
+\item{add_outline}{A logical value indicating whether to add the habitat 
+outline or not [default FALSE].}
+
+\item{col_outline}{The color of the habitat outline 
+[default white ("#FFFFFF")].}
+
+\item{eems_colors}{The EEMS color scheme as a vector of colors, ordered 
+from low to high [default NULL].}
+
+\item{plot.colors.pop}{A color palette for population plots or a list with
+as many colors as there are populations in the dataset
+[default gl.colors("dis")].}
 
 \item{out.dir}{Path where to save the output file. Use outpath=getwd() or 
 out.dir='.' when calling this function to direct output files to your 

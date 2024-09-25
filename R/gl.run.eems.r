@@ -24,6 +24,22 @@
 #'  [default 9].
 #' @param seed 	An integer used to seed the random number generator 
 #' [default NULL].
+#' @param dpi Resolution of the contour raster [default 250].
+#' @param add_grid A logical value indicating whether to add the population 
+#' grid or not [default FALSE].
+#' @param col_grid The color of the population grid [default gray ("#BBBBBB")].
+#' @param add_demes A logical value indicating whether to add the observed 
+#' demes or not [default FALSE].
+#' @param col_demes The color of the demes [default black ("#000000")].
+#' @param add_outline A logical value indicating whether to add the habitat 
+#' outline or not [default FALSE].
+#' @param col_outline The color of the habitat outline 
+#' [default white ("#FFFFFF")].
+#' @param eems_colors The EEMS color scheme as a vector of colors, ordered 
+#' from low to high [default NULL].
+#' @param plot.colors.pop A color palette for population plots or a list with
+#' as many colors as there are populations in the dataset
+#' [default gl.colors("dis")].
 #' @param out.dir Path where to save the output file. Use outpath=getwd() or 
 #' out.dir='.' when calling this function to direct output files to your 
 #' working or current directory [default tempdir(), mandated by CRAN].
@@ -101,6 +117,15 @@ gl.run.eems <- function(x,
                         numBurnIter = 2000,
                         numThinIter = 9,
                         seed = NULL,
+                        dpi = 250,
+                        add_grid = FALSE,
+                        col_grid = "#BBBBBB", 
+                        add_demes = FALSE, 
+                        col_demes = "#000000",
+                        add_outline = FALSE,
+                        col_outline = "#FFFFFF", 
+                        eems_colors = NULL,
+                        plot.colors.pop = gl.colors("dis"),
                         out.dir = NULL,
                         plot.dir = NULL,
                         plot.file = NULL,
@@ -185,7 +210,7 @@ gl.run.eems <- function(x,
       plot.file <- "eems"
     }
     
-    #removing loci iwith all missing data
+    #removing loci with all missing data
     x <- gl.filter.allna(x, verbose = 0)
     
     # DO THE JOB
@@ -230,7 +255,7 @@ gl.run.eems <- function(x,
     ll <- data.frame(x = x@other$latlon$lon,
                      y = x@other$latlon$lat)
     xy <- Mercator(ll)
-    plot(xy)
+    # plot(xy)
     hpts <- chull(xy)
     hpts <- c(hpts, hpts[1])
     poly <- xy[hpts,]
@@ -266,8 +291,10 @@ gl.run.eems <- function(x,
       col.names = FALSE
     )
     
-    if (is.null(seed))
+    if (is.null(seed)){
       seed <- round(runif(1, 1, 1000000))
+    }
+    
     if (Sys.info()["sysname"] == "Windows") {
       prog <- "runeems_snps.exe"
       cmd <-
@@ -321,8 +348,10 @@ gl.run.eems <- function(x,
     setwd(tempdir())
     on.exit(setwd(old.path))
     ### run eems
-    if (Sys.info()["sysname"] == "Linux")
+    if (Sys.info()["sysname"] == "Linux"){
       system("chmod +x runeems_snps")
+    }
+    
     #cmd <- paste0(paste0(prog,"  --params ",  paste0("param_", plot.file, ".ini "), paste0("--seed ",seed )))
     
     system(cmd)
@@ -339,8 +368,42 @@ gl.run.eems <- function(x,
       file.copy(eems_files, to = out.dir, overwrite = TRUE)
     }
     
-    p8 <-
-      reemsplots2::make_eems_plots(mcmcpath =  eems_results, longlat = TRUE, ...)
+    p8 <- reemsplots2::make_eems_plots(mcmcpath =  eems_results,
+                                       longlat = TRUE,
+                                       dpi = dpi,
+                                       add_grid = add_grid,
+                                       col_grid = col_grid, 
+                                       add_demes = add_demes, 
+                                       col_demes = col_demes,
+                                       add_outline = add_outline,
+                                       col_outline = col_outline, 
+                                       eems_colors = eems_colors,
+                                       ...
+                                       )
+    
+    # if pop colors is a palette
+    if (is(plot.colors.pop, "function")) {
+      colors_pops <- plot.colors.pop(length(levels(pop(x))))
+    }
+    # if pop colors is a vector
+    if (!is(plot.colors.pop, "function")) {
+      colors_pops <- plot.colors.pop
+    }
+    
+    xy_plot <-
+      data.frame(x = xy[, 1], y = xy[, 2], pop = as.character(pop(x)))
+    p8[[1]] <- p8$mrates01 +
+      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
+      scale_color_manual(values = colors_pops)
+    p8[[2]]  <- p8$mrates02 +
+      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
+      scale_color_manual(values = colors_pops)
+    p8[[3]]  <- p8$qrates01 +
+      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
+      scale_color_manual(values = colors_pops)
+    p8[[4]]  <- p8$qrates02 +
+      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
+      scale_color_manual(values = colors_pops) 
     
     if (cleanup) {
       unlink(eems_results, recursive = TRUE)
