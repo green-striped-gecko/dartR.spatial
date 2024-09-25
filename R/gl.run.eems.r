@@ -394,16 +394,20 @@ gl.run.eems <- function(x,
       data.frame(x = xy[, 1], y = xy[, 2], pop = as.character(pop(x)))
     p8[[1]] <- p8$mrates01 +
       geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops)
+      scale_color_manual(values = colors_pops) +
+      coord_equal()
     p8[[2]]  <- p8$mrates02 +
       geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops)
+      scale_color_manual(values = colors_pops) +
+      coord_equal()
     p8[[3]]  <- p8$qrates01 +
       geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops)
+      scale_color_manual(values = colors_pops) +
+      coord_equal()
     p8[[4]]  <- p8$qrates02 +
       geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops) 
+      scale_color_manual(values = colors_pops)  +
+      coord_equal()
     
     if (cleanup) {
       unlink(eems_results, recursive = TRUE)
