@@ -31,6 +31,11 @@
 #' recommended to do this to check least cost paths visually.
 #' @param theta value needed for rSPDistance function. See
 #' \code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].
+#' @param plot.colors.pop A color palette for population plots or a list with
+#' as many colors as there are populations in the dataset
+#' [default gl.colors("dis")].
+#' @param raster.colors The color palette to use to color the raster values
+#'  [default rev(terrain.colors(255))].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #' progress log; 3, progress and results summary; 5, full report
 #' [default 2, unless specified using gl.set.verbosity].
@@ -81,6 +86,8 @@ gl.genleastcost <- function(x,
                             pathtype = "leastcost",
                             plotpath = TRUE,
                             theta = 1,
+                            plot.colors.pop = gl.colors("dis"),
+                            raster.colors = rev(terrain.colors(255)),
                             verbose = NULL) {
     
     # SET VERBOSITY
@@ -168,6 +175,18 @@ gl.genleastcost <- function(x,
         npop <- length(indNames(x))
     }
     
+    # population colors 
+    # if pop colors is a palette
+    if (is(plot.colors.pop, "function")) {
+      cols <- plot.colors.pop(length(levels(pop(x))))
+    }
+    # if pop colors is a vector
+    if (!is(plot.colors.pop, "function")) {
+      cols <- plot.colors.pop
+    }
+    
+    colors_pops <- cols[as.numeric(pop(x))]
+
     # check if fric.raster is a stack or not...
     fric.raster <- raster::raster(fric.raster)
     mats <- list()
@@ -183,14 +202,20 @@ gl.genleastcost <- function(x,
     
     for (ci in 1:n.mats) {
         raster::plot(fric.raster[[ci]],
-                     main = paste(names(fric.raster)[ci], ":", pathtype, ", NN=", NN, sep = ""))
+                     col = raster.colors,
+                     main = paste(names(fric.raster)[ci],
+                                  ":", 
+                                  pathtype, 
+                                  ", NN=", 
+                                  NN, 
+                                  sep = ""))
         # image(fric.raster, col=fric.raster@legend@colortable, asp=1)
         
         points(
             x@other$xy,
             cex = 1,
             pch = 16,
-            col = rainbow(nPop(x))[as.numeric(pop(x))]
+            col = colors_pops
         )
         if (dist.type == "pop")
             points(cp,
@@ -287,7 +312,6 @@ gl.genleastcost <- function(x,
     if (gen.distance == "dist") {
       gendist.mat <- as.matrix(dist(as.matrix(xx)))
     }
-    
     
     dimnames(gendist.mat) <- dimnames(eucl.mat)
     

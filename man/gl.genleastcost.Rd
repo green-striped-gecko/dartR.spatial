@@ -12,6 +12,8 @@ gl.genleastcost(
   pathtype = "leastcost",
   plotpath = TRUE,
   theta = 1,
+  plot.colors.pop = gl.colors("dis"),
+  raster.colors = rev(terrain.colors(255)),
   verbose = NULL
 )
 }
@@ -43,6 +45,13 @@ recommended to do this to check least cost paths visually.}
 
 \item{theta}{value needed for rSPDistance function. See
 \code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].}
+
+\item{plot.colors.pop}{A color palette for population plots or a list with
+as many colors as there are populations in the dataset
+[default gl.colors("dis")].}
+
+\item{raster.colors}{The color palette to use to color the raster values
+[default rev(terrain.colors(255))].}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 progress log; 3, progress and results summary; 5, full report
