@@ -7,8 +7,8 @@
 gl.genleastcost(
   x,
   fric.raster,
-  gen.distance,
-  NN = NULL,
+  gen.distance = "Gst.Nei",
+  NN = 8,
   pathtype = "leastcost",
   plotpath = TRUE,
   theta = 1,
@@ -23,13 +23,13 @@ gl.genleastcost(
 \item{gen.distance}{Specification which genetic distance method should be
 used to calculate pairwise genetic distances between populations ( 'D',
 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
- [required].}
+ [default "Gst.Nei"].}
 
 \item{NN}{Number of neighbours used when calculating the cost distance
 (possible values 4, 8 or 16). As the default is NULL a value has to be
 provided if pathtype='leastcost'. NN=8 is most commonly used. Be aware that
  linear structures may cause artefacts in the least-cost paths, therefore
- inspect the actual least-cost paths in the provided output [default NULL].}
+ inspect the actual least-cost paths in the provided output [default 8].}
 
 \item{pathtype}{Type of cost distance to be calculated (based on function in
 the \code{gdistance} package. Available distances are 'leastcost', 'commute'
