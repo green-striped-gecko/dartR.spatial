@@ -1,24 +1,27 @@
 #' Performs least-cost path analysis based on a friction matrix
 #'
-#' This function calculates the pairwise distances (Euclidean, cost path
-#'  distances and genetic distances) of populations using a friction matrix and
-#'   a spatial genind object. The genind object needs to have coordinates in the
-#'   same projected coordinate system as the friction matrix. The friction
-#'   matrix can be either a single raster of a stack of several layers. If a
-#'   stack is provided the specified cost distance is calculated for each layer
-#'    in the stack. The output of this function can be used with the functions
-#'    wassermann from package PopGenReport and
-#'    lgrMMRR from package PopGenReport to test for the significance of a
-#'    layer on the genetic structure.
-#' @param x A spatial gelight object. [required].
+#' This function calculates pairwise distances (Euclidean, cost path
+#' distances and genetic distances) between populations or between individuals 
+#' using a friction matrix and a spatial genlight object. The genlight object 
+#' needs to have coordinates in the same projected coordinate system as the 
+#' friction matrix. The friction matrix can be either a single raster or a 
+#' stack of several layers. If a stack is provided the specified cost distance 
+#' is calculated for each layer in the stack. The output of this function can 
+#' be used with the functions wassermann from package PopGenReport and lgrMMRR 
+#' from package PopGenReport to test for the significance of a layer on the 
+#' genetic structure.
+#'    
+#' Genetic distances between individuals are 'kosman' and 'propShared'.
+#' 
+#' Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
+#' @param x A spatial genlight object. [required].
 #' @param fric.raster A friction matrix [required].
 #' @param gen.distance Specification which genetic distance method should be
 #' used to calculate pairwise genetic distances between populations ( 'D',
 #' 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
 #'  [default "Gst.Nei"].
 #' @param NN Number of neighbours used when calculating the cost distance
-#' (possible values 4, 8 or 16). As the default is NULL a value has to be
-#' provided if pathtype='leastcost'. NN=8 is most commonly used. Be aware that
+#' (possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
 #'  linear structures may cause artefacts in the least-cost paths, therefore
 #'  inspect the actual least-cost paths in the provided output [default 8].
 #' @param pathtype Type of cost distance to be calculated (based on function in
