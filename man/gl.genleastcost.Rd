@@ -18,7 +18,7 @@ gl.genleastcost(
 )
 }
 \arguments{
-\item{x}{A spatial gelight object. [required].}
+\item{x}{A spatial genlight object. [required].}
 
 \item{fric.raster}{A friction matrix [required].}
 
@@ -28,8 +28,7 @@ used to calculate pairwise genetic distances between populations ( 'D',
  [default "Gst.Nei"].}
 
 \item{NN}{Number of neighbours used when calculating the cost distance
-(possible values 4, 8 or 16). As the default is NULL a value has to be
-provided if pathtype='leastcost'. NN=8 is most commonly used. Be aware that
+(possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
  linear structures may cause artefacts in the least-cost paths, therefore
  inspect the actual least-cost paths in the provided output [default 8].}
 
@@ -63,16 +62,21 @@ Returns a list that consists of four pairwise distance matrices
  line objects.
 }
 \description{
-This function calculates the pairwise distances (Euclidean, cost path
- distances and genetic distances) of populations using a friction matrix and
-  a spatial genind object. The genind object needs to have coordinates in the
-  same projected coordinate system as the friction matrix. The friction
-  matrix can be either a single raster of a stack of several layers. If a
-  stack is provided the specified cost distance is calculated for each layer
-   in the stack. The output of this function can be used with the functions
-   wassermann from package PopGenReport and
-   lgrMMRR from package PopGenReport to test for the significance of a
-   layer on the genetic structure.
+This function calculates pairwise distances (Euclidean, cost path
+distances and genetic distances) between populations or between individuals 
+using a friction matrix and a spatial genlight object. The genlight object 
+needs to have coordinates in the same projected coordinate system as the 
+friction matrix. The friction matrix can be either a single raster or a 
+stack of several layers. If a stack is provided the specified cost distance 
+is calculated for each layer in the stack. The output of this function can 
+be used with the functions wassermann from package PopGenReport and lgrMMRR 
+from package PopGenReport to test for the significance of a layer on the 
+genetic structure.
+   
+Genetic distances between individuals are 'kosman' and 'propShared'.
+}
+\details{
+Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
 }
 \examples{
 #this example takes about 20 seconds to run...
