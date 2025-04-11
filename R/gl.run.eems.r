@@ -9,11 +9,22 @@
 #' and can be downloaded from the github site of dartR.
 #' 
 #' @param x Genlight object [required].
+#' @param eems.path Path to the EEMS binary (runeems_snps[.exe]) [default = "./"].
+#' @param buffer Buffer size in meters around the sampling locations [default = 10000].
+#' @param nDemes Number of demes to use in the EEMS model [default = 500].
+#' @param diploid Logical indicating whether the data is diploid [default = TRUE].
+#' @param numMCMCIter Number of MCMC iterations to run [default = 10000].
+#' @param numBurnIter Number of burn-in iterations to run [default = 2000].
+#' @param numThinIter Number of thinning iterations to run [default = 9].
+#' @param seed Random seed for reproducibility [default = NULL].
+#' @param out.dir Directory to save the output files [default = NULL].
 #' @param plot.dir Directory in which to save output and intermediate files [default = tempdir()]
 #' @param plot.file Name for the RDS binary file to save the list of plots (base name only, exclude extension) [default eems]
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #' progress log ; 3, progress and results summary; 5, full report
 #' [default 2 or as specified using gl.set.verbosity].
+#' @param cleanup Logical indicating whether to delete intermediate files after
+#' @param ... Additional arguments to be passed to the EEMS algorithm.
 
 #' @return A list of contour plots of migration and diversity rates as well as 
 #' several diagnostic plots It is a good idea to examine all these figures, 
@@ -33,6 +44,7 @@
 #' @importFrom grDevices chull
 #' @importFrom utils write.table
 #' @importFrom dismo Mercator
+#' @importFrom stats runif
 #' @author Bernd Gruber  & Robyn (bugs? Post to 
 #' \url{https://groups.google.com/d/forum/dartr})
 #' @references
@@ -75,6 +87,15 @@ bed2diffs_v2 <- function(Geno) {
 
 # CHECK IF PACKAGES ARE INSTALLED
 pkg <- "reemsplots2"
+if (!(requireNamespace(pkg, quietly = TRUE))) {
+  cat(error(
+    "Package",
+    pkg,
+    " needed for this function to work. Please install it using: \n
+    install_github('dipetkov/reemsplots2')" ))
+  return(-1)
+}
+pkg <- "sf"
 if (!(requireNamespace(pkg, quietly = TRUE))) {
   cat(error(
     "Package",
@@ -171,7 +192,7 @@ plot(pbuf, axes=TRUE, border="green", lwd=2)
 plot(p,add=TRUE,col="red")
 points(xy, pch=20, col="blue") 
 
-pxy <- st_coordinates(pbuf)[,1:2]
+pxy <- sf::st_coordinates(pbuf)[,1:2]
 
 
 # Write outer

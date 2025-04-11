@@ -28,11 +28,10 @@ Suggests:
   terra (>= 1.7-39),
   sf,
   PopGenReport,
-  reemsplots2,
-  dismo
+  reemsplots2
 Remotes: dipetkov/reemsplots2
 License: GPL (>= 3)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 NeedsCompilation: no
 Packaged: 2023-08-17 23:28:46 UTC; 
 Author: Bernd Gruber [aut, cre],

@@ -25,6 +25,24 @@ gl.run.eems(
 \arguments{
 \item{x}{Genlight object [required].}
 
+\item{eems.path}{Path to the EEMS binary (runeems_snps[.exe]) [default = "./"].}
+
+\item{buffer}{Buffer size in meters around the sampling locations [default = 10000].}
+
+\item{nDemes}{Number of demes to use in the EEMS model [default = 500].}
+
+\item{diploid}{Logical indicating whether the data is diploid [default = TRUE].}
+
+\item{numMCMCIter}{Number of MCMC iterations to run [default = 10000].}
+
+\item{numBurnIter}{Number of burn-in iterations to run [default = 2000].}
+
+\item{numThinIter}{Number of thinning iterations to run [default = 9].}
+
+\item{seed}{Random seed for reproducibility [default = NULL].}
+
+\item{out.dir}{Directory to save the output files [default = NULL].}
+
 \item{plot.dir}{Directory in which to save output and intermediate files [default = tempdir()]}
 
 \item{plot.file}{Name for the RDS binary file to save the list of plots (base name only, exclude extension) [default eems]}
@@ -32,6 +50,10 @@ gl.run.eems(
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 progress log ; 3, progress and results summary; 5, full report
 [default 2 or as specified using gl.set.verbosity].}
+
+\item{cleanup}{Logical indicating whether to delete intermediate files after}
+
+\item{...}{Additional arguments to be passed to the EEMS algorithm.}
 }
 \value{
 A list of contour plots of migration and diversity rates as well as 
