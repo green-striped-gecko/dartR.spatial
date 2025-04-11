@@ -32,6 +32,7 @@ gl2shp <- function(x,
                    outfile = "gl",
                    outpath = tempdir(),
                    verbose = NULL) {
+  
     outfilespec <- file.path(outpath, outfile)
     
     # SET VERBOSITY
@@ -102,18 +103,21 @@ gl2shp <- function(x,
                 "Removed: ", indNames(x)[toremove], "\n"
             )))
         }
-        glpoints <- glpoints[complete.cases(glpoints),]
+        
+        completeCases <- which(complete.cases(glpoints))
+        glpoints <- glpoints[completeCases,]
         
         glpoints$id <- 1:nrow(glpoints)
         
         sp::coordinates(glpoints) <- c("lon", "lat")
         
         # create all sites point shp files
-        spdf <-SpatialPointsDataFrame(glpoints, data.frame(glpoints))
+        spdf <- SpatialPointsDataFrame(glpoints, data.frame(glpoints))
+        
         proj4string(spdf) <- CRS(proj4)
         # if (!is.null(reproj4)) spdf <- project(spdf, proj = reproj4, inv = TRUE)
         #now use terra
-        v <- terra::vect(cbind(spdf, x@other$ind.metrics ))
+        v <- terra::vect(cbind(spdf, x@other$ind.metrics[completeCases,] ))
         if (type == "shp")
             terra::writeVector(
                 v,
