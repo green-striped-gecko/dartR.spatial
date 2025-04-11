@@ -7,29 +7,30 @@
 gl.genleastcost(
   x,
   fric.raster,
-  gen.distance,
-  NN = NULL,
+  gen.distance = "Gst.Nei",
+  NN = 8,
   pathtype = "leastcost",
   plotpath = TRUE,
   theta = 1,
+  plot.colors.pop = gl.colors("dis"),
+  raster.colors = rev(terrain.colors(255)),
   verbose = NULL
 )
 }
 \arguments{
-\item{x}{A spatial gelight object. [required].}
+\item{x}{A spatial genlight object. [required].}
 
 \item{fric.raster}{A friction matrix [required].}
 
 \item{gen.distance}{Specification which genetic distance method should be
 used to calculate pairwise genetic distances between populations ( 'D',
 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
- [required].}
+ [default "Gst.Nei"].}
 
 \item{NN}{Number of neighbours used when calculating the cost distance
-(possible values 4, 8 or 16). As the default is NULL a value has to be
-provided if pathtype='leastcost'. NN=8 is most commonly used. Be aware that
+(possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
  linear structures may cause artefacts in the least-cost paths, therefore
- inspect the actual least-cost paths in the provided output [default NULL].}
+ inspect the actual least-cost paths in the provided output [default 8].}
 
 \item{pathtype}{Type of cost distance to be calculated (based on function in
 the \code{gdistance} package. Available distances are 'leastcost', 'commute'
@@ -44,6 +45,13 @@ recommended to do this to check least cost paths visually.}
 \item{theta}{value needed for rSPDistance function. See
 \code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].}
 
+\item{plot.colors.pop}{A color palette for population plots or a list with
+as many colors as there are populations in the dataset
+[default gl.colors("dis")].}
+
+\item{raster.colors}{The color palette to use to color the raster values
+[default rev(terrain.colors(255))].}
+
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 progress log; 3, progress and results summary; 5, full report
 [default 2, unless specified using gl.set.verbosity].}
@@ -54,35 +62,38 @@ Returns a list that consists of four pairwise distance matrices
  line objects.
 }
 \description{
-This function calculates the pairwise distances (Euclidean, cost path
- distances and genetic distances) of populations using a friction matrix and
-  a spatial genind object. The genind object needs to have coordinates in the
-  same projected coordinate system as the friction matrix. The friction
-  matrix can be either a single raster of a stack of several layers. If a
-  stack is provided the specified cost distance is calculated for each layer
-   in the stack. The output of this function can be used with the functions
-   wassermann from package PopGenReport and
-   lgrMMRR from package PopGenReport to test for the significance of a
-   layer on the genetic structure.
+This function calculates pairwise distances (Euclidean, cost path
+distances and genetic distances) between populations or between individuals 
+using a friction matrix and a spatial genlight object. The genlight object 
+needs to have coordinates in the same projected coordinate system as the 
+friction matrix. The friction matrix can be either a single raster or a 
+stack of several layers. If a stack is provided the specified cost distance 
+is calculated for each layer in the stack. The output of this function can 
+be used with the functions wassermann from package PopGenReport and lgrMMRR 
+from package PopGenReport to test for the significance of a layer on the 
+genetic structure.
+   
+Genetic distances between individuals are 'kosman' and 'propShared'.
+}
+\details{
+Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
 }
 \examples{
 #this example takes about 20 seconds to run...
-\donttest{
 data(possums.gl)
 library(raster)  #needed for that example
 landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
 package='dartR.data'))
 #use only 3 population (first 90 individuals) due to speed
-glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
-gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
+#glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
+#gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
 #### run tests as implemented in PopGenreport (maybe need to install)
-if (require("PopGenReport", quietly=TRUE)) {
-PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
- gen.mat = glc$gen.mat)
-lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
-eucl.mat = glc$eucl.mat)
-}
-}
+#if (require("PopGenReport", quietly=TRUE)) {
+#PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
+#gen.mat = glc$gen.mat)
+#lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
+#eucl.mat = glc$eucl.mat)
+#}
 }
 \references{
 \itemize{

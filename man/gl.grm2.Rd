@@ -22,7 +22,7 @@ gl.grm2(
 
 \item{plotheatmap}{A switch if a heatmap should be shown [default TRUE].}
 
-\item{palette_discrete}{the color of populations [gl.select.colors].}
+\item{palette_discrete}{The color of populations [NULL].}
 
 \item{palette_convergent}{A convergent palette for the IBD values
 [default convergent_palette].}

@@ -5,7 +5,7 @@
 \title{Spatial autocorrelation following Smouse and Peakall 1999}
 \usage{
 gl.spatial.autoCorr(
-  x = NULL,
+  x,
   Dgeo = NULL,
   Dgen = NULL,
   coordinates = "latlon",
@@ -27,7 +27,7 @@ gl.spatial.autoCorr(
 )
 }
 \arguments{
-\item{x}{Genlight object [default NULL].}
+\item{x}{Name of the genlight object containing the SNP data [required].}
 
 \item{Dgeo}{Geographic distance matrix if no genlight object is provided.
 This is typically an Euclidean distance but it can be any meaningful 
