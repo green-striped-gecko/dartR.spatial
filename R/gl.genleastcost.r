@@ -1,26 +1,29 @@
 #' Performs least-cost path analysis based on a friction matrix
 #'
-#' This function calculates the pairwise distances (Euclidean, cost path
-#'  distances and genetic distances) of populations using a friction matrix and
-#'   a spatial genind object. The genind object needs to have coordinates in the
-#'   same projected coordinate system as the friction matrix. The friction
-#'   matrix can be either a single raster of a stack of several layers. If a
-#'   stack is provided the specified cost distance is calculated for each layer
-#'    in the stack. The output of this function can be used with the functions
-#'    wassermann from package PopGenReport and
-#'    lgrMMRR from package PopGenReport to test for the significance of a
-#'    layer on the genetic structure.
-#' @param x A spatial gelight object. [required].
+#' This function calculates pairwise distances (Euclidean, cost path
+#' distances and genetic distances) between populations or between individuals 
+#' using a friction matrix and a spatial genlight object. The genlight object 
+#' needs to have coordinates in the same projected coordinate system as the 
+#' friction matrix. The friction matrix can be either a single raster or a 
+#' stack of several layers. If a stack is provided the specified cost distance 
+#' is calculated for each layer in the stack. The output of this function can 
+#' be used with the functions wassermann from package PopGenReport and lgrMMRR 
+#' from package PopGenReport to test for the significance of a layer on the 
+#' genetic structure.
+#'    
+#' Genetic distances between individuals are 'kosman' and 'propShared'.
+#' 
+#' Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
+#' @param x A spatial genlight object. [required].
 #' @param fric.raster A friction matrix [required].
 #' @param gen.distance Specification which genetic distance method should be
 #' used to calculate pairwise genetic distances between populations ( 'D',
 #' 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
-#'  [required].
+#'  [default "Gst.Nei"].
 #' @param NN Number of neighbours used when calculating the cost distance
-#' (possible values 4, 8 or 16). As the default is NULL a value has to be
-#' provided if pathtype='leastcost'. NN=8 is most commonly used. Be aware that
+#' (possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
 #'  linear structures may cause artefacts in the least-cost paths, therefore
-#'  inspect the actual least-cost paths in the provided output [default NULL].
+#'  inspect the actual least-cost paths in the provided output [default 8].
 #' @param pathtype Type of cost distance to be calculated (based on function in
 #'  the \code{gdistance} package. Available distances are 'leastcost', 'commute'
 #'   or 'rSPDistance'. See functions in the gdistance package for futher
@@ -31,6 +34,11 @@
 #' recommended to do this to check least cost paths visually.
 #' @param theta value needed for rSPDistance function. See
 #' \code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].
+#' @param plot.colors.pop A color palette for population plots or a list with
+#' as many colors as there are populations in the dataset
+#' [default gl.colors("dis")].
+#' @param raster.colors The color palette to use to color the raster values
+#'  [default rev(terrain.colors(255))].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #' progress log; 3, progress and results summary; 5, full report
 #' [default 2, unless specified using gl.set.verbosity].
@@ -76,11 +84,13 @@
 
 gl.genleastcost <- function(x,
                             fric.raster,
-                            gen.distance,
-                            NN = NULL,
+                            gen.distance = "Gst.Nei",
+                            NN = 8,
                             pathtype = "leastcost",
                             plotpath = TRUE,
                             theta = 1,
+                            plot.colors.pop = gl.colors("dis"),
+                            raster.colors = rev(terrain.colors(255)),
                             verbose = NULL) {
     
     # SET VERBOSITY
@@ -168,7 +178,20 @@ gl.genleastcost <- function(x,
         npop <- length(indNames(x))
     }
     
+    # population colors 
+    # if pop colors is a palette
+    if (is(plot.colors.pop, "function")) {
+      cols <- plot.colors.pop(length(levels(pop(x))))
+    }
+    # if pop colors is a vector
+    if (!is(plot.colors.pop, "function")) {
+      cols <- plot.colors.pop
+    }
+    
+    colors_pops <- cols[as.numeric(pop(x))]
+
     # check if fric.raster is a stack or not...
+    fric.raster <- raster::raster(fric.raster)
     mats <- list()
     mats.names <- NA
     mats.pathlength <- list()
@@ -182,14 +205,20 @@ gl.genleastcost <- function(x,
     
     for (ci in 1:n.mats) {
         raster::plot(fric.raster[[ci]],
-                     main = paste(names(fric.raster)[ci], ":", pathtype, ", NN=", NN, sep = ""))
+                     col = raster.colors,
+                     main = paste(names(fric.raster)[ci],
+                                  ":", 
+                                  pathtype, 
+                                  ", NN=", 
+                                  NN, 
+                                  sep = ""))
         # image(fric.raster, col=fric.raster@legend@colortable, asp=1)
         
         points(
             x@other$xy,
             cex = 1,
             pch = 16,
-            col = rainbow(nPop(x))[as.numeric(pop(x))]
+            col = colors_pops
         )
         if (dist.type == "pop")
             points(cp,
@@ -286,7 +315,6 @@ gl.genleastcost <- function(x,
     if (gen.distance == "dist") {
       gendist.mat <- as.matrix(dist(as.matrix(xx)))
     }
-    
     
     dimnames(gendist.mat) <- dimnames(eucl.mat)
     

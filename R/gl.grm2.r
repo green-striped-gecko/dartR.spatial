@@ -9,7 +9,7 @@
 #'
 #' @param x Name of the genlight object containing the SNP data [required].
 #' @param plotheatmap A switch if a heatmap should be shown [default TRUE].
-#' @param palette_discrete the color of populations [gl.select.colors].
+#' @param palette_discrete The color of populations [NULL].
 #' @param palette_convergent A convergent palette for the IBD values
 #'  [default convergent_palette].
 #' @param legendx x coordinates for the legend[default 0].
