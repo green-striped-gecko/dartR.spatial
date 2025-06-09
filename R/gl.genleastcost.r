@@ -45,6 +45,7 @@
 #' @importFrom stats step
 #' @importFrom sp Line Lines SpatialLines SpatialLinesLengths
 #' @importFrom raster plot
+#' @importFrom grDevices terrain.colors
 #' @return Returns a list that consists of four pairwise distance matrices
 #' (Euclidean, Cost, length of path and genetic) and the actual paths as spatial
 #'  line objects.
@@ -64,22 +65,20 @@
 #'  }
 #' @examples
 #' #this example takes about 20 seconds to run...
-#' \donttest{
 #' data(possums.gl)
 #' library(raster)  #needed for that example
 #' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
 #' package='dartR.data'))
 #' #use only 3 population (first 90 individuals) due to speed
-#' glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
-#' gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
+#' #glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
+#' #gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
 #' #### run tests as implemented in PopGenreport (maybe need to install)
-#' if (require("PopGenReport", quietly=TRUE)) {
-#' PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
-#'  gen.mat = glc$gen.mat)
-#' lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
-#' eucl.mat = glc$eucl.mat)
-#' }
-#' }
+#' #if (require("PopGenReport", quietly=TRUE)) {
+#' #PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
+#' #gen.mat = glc$gen.mat)
+#' #lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
+#' #eucl.mat = glc$eucl.mat)
+#' #}
 #' @export
 
 gl.genleastcost <- function(x,
