@@ -140,6 +140,26 @@ This function runs the EEMS algorithm on a genlight object. The EEMS
   is call runeems_snps[.exe] and can be downloaded from the github site of
    dartR.
 }
+\details{
+Set the Number of MCMC iterations to 2 million for an initial run. If the 
+posterior trace is still trending, lengthen the chain. Set the number of 
+initial burnin iterations at 50% of total iterations. Set the iterations to 
+thin between writes so that total/thin is around 100–200; a 10000‑step 
+thinning interval is a practical default.
+
+Choose the number of demes to match geographic scale: 100–250 for local or 
+island studies and 300–500 for continental datasets. Runtime grows 
+cubically with number of demes, so anything above 1000 rarely pays off. 
+
+Draw the habitat polygon with a small buffer (in meters), so every sample 
+sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
+sample bounding box (or a few kilometres for fine‑scale work) is usually 
+adequate.
+
+For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
+Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
+affects file size, not the inference itself.
+}
 \examples{
  \dontrun{
  # This example needs a binary (runeems_snps[.exe]) specific to your 
