@@ -123,7 +123,7 @@ customise the figures.
  \item{rdist01}{Scatter plot of the observed vs the fitted between-deme
   component of genetic dissimilarity, where one point represents a pair of 
   sampled demes.}
- \item{rdist01}{Scatter plot of the observed vs the fitted within-deme
+ \item{rdist02}{Scatter plot of the observed vs the fitted within-deme
   component of genetic dissimilarity, where one point represents a 
   sampled deme.}
  \item{rdist03}{Scatter plot of observed genetic dissimilarities between 
