@@ -61,20 +61,20 @@
 #' 
 #' Methods available to calculate genetic distances for SNP data:
 #' \itemize{
-#' \item "propShared" using the function \code{\link{gl.propShared}}.
+#' \item "propShared" using the function \code{\link[dartR.base]{gl.propShared}}.
 #' \item "grm" using the function \code{gl.grm2}.
-#' \item "Euclidean" using the function \code{\link{gl.dist.ind}}.
-#' \item "Simple" using the function \code{\link{gl.dist.ind}}.
-#' \item "Absolute" using the function \code{\link{gl.dist.ind}}.
-#' \item "Manhattan" using the function \code{\link{gl.dist.ind}}.
+#' \item "Euclidean" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Simple" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Absolute" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Manhattan" using the function \code{\link[dartR.base]{gl.dist.ind}}.
 #' }
 #' 
 #' Methods available to calculate genetic distances for SilicoDArT data:
 #' \itemize{
-#' \item "Euclidean" using the function \code{\link{gl.dist.ind}}.
-#' \item "Simple" using the function \code{\link{gl.dist.ind}}.
-#' \item "Jaccard" using the function \code{\link{gl.dist.ind}}.
-#' \item "Bray-Curtis" using the function \code{\link{gl.dist.ind}}.
+#' \item "Euclidean" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Simple" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Jaccard" using the function \code{\link[dartR.base]{gl.dist.ind}}.
+#' \item "Bray-Curtis" using the function \code{\link[dartR.base]{gl.dist.ind}}.
 #' }
 #'
 #' Examples of other themes that can be used can be consulted in \itemize{
