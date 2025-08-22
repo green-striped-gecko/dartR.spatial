@@ -189,7 +189,7 @@ gl.run.eems <- function(x,
         "Package",
         pkg,
         " needed for this function to work. Please install it using: \n
-    install_github('dipetkov/reemsplots2')"
+    devtools::install_github('dipetkov/reemsplots2 \n')"
       )
     )
     return(-1)
@@ -398,7 +398,9 @@ gl.run.eems <- function(x,
       )
       file.copy(eems_files, to = out.dir, overwrite = TRUE)
     }
-    
+    if (!exists('make_eems_plots', mode="function")) {make_eems_plots <- function() return (-1);
+    error("You need to load the package reemsplot2 from github via:\n
+          devtools::install_github('dipetkov/reemsplots2 \n")}
     p8 <- make_eems_plots(mcmcpath =  eems_results,
                                        longlat = TRUE,
                                        dpi = dpi,
