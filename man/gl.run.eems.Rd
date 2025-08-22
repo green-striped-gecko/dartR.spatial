@@ -141,10 +141,10 @@ This function runs the EEMS algorithm on a genlight object. The EEMS
    dartR.
 }
 \details{
-Set the Number of MCMC iterations to 2 million for an initial run. If the 
+Set the Number of MCMC iterations to 2 million for an initial run. If the 
 posterior trace is still trending, lengthen the chain. Set the number of 
 initial burnin iterations at 50% of total iterations. Set the iterations to 
-thin between writes so that total/thin is around 100–200; a 10000‑step 
+thin between writes so that total/thin is around 100–200; a 10000‑step 
 thinning interval is a practical default.
 
 Choose the number of demes to match geographic scale: 100–250 for local or 
@@ -152,12 +152,12 @@ island studies and 300–500 for continental datasets. Runtime grows
 cubically with number of demes, so anything above 1000 rarely pays off. 
 
 Draw the habitat polygon with a small buffer (in meters), so every sample 
-sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
+sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
 sample bounding box (or a few kilometres for fine‑scale work) is usually 
 adequate.
 
-For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
-Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
+For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
+Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
 affects file size, not the inference itself.
 }
 \examples{
@@ -177,7 +177,7 @@ visualize the results of EEMS_. R package version 0.1.0,
 \item 
 D Petkova, J Novembre, M Stephens. Visualizing spatial population structure
 with estimated effective migration surfaces. Nature Genetics 48, 
-94 -- 100 (2016). \url{http://dx.doi.org/10.1038/ng.3464}.
+94 -- 100 (2016). \doi{10.1038/ng.3464}.
 }
 }
 \author{

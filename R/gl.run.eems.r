@@ -54,10 +54,10 @@
 #' @param ... Extra parameters to add to function reemsplots2::make_eems_plots.
 #' 
 #' @details
-#' Set the Number of MCMC iterations to 2 million for an initial run. If the 
+#' Set the Number of MCMC iterations to 2 million for an initial run. If the 
 #' posterior trace is still trending, lengthen the chain. Set the number of 
 #' initial burnin iterations at 50% of total iterations. Set the iterations to 
-#' thin between writes so that total/thin is around 100–200; a 10000‑step 
+#' thin between writes so that total/thin is around 100–200; a 10000‑step 
 #' thinning interval is a practical default.
 #' 
 #' Choose the number of demes to match geographic scale: 100–250 for local or 
@@ -65,12 +65,12 @@
 #' cubically with number of demes, so anything above 1000 rarely pays off. 
 #' 
 #' Draw the habitat polygon with a small buffer (in meters), so every sample 
-#' sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
+#' sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
 #' sample bounding box (or a few kilometres for fine‑scale work) is usually 
 #' adequate.
 #' 
-#' For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
-#' Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
+#' For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
+#' Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
 #' affects file size, not the inference itself.
 #' 
 #' @return A list of contour plots of migration and diversity rates as well as
@@ -118,7 +118,7 @@
 #' \item 
 #' D Petkova, J Novembre, M Stephens. Visualizing spatial population structure
 #' with estimated effective migration surfaces. Nature Genetics 48, 
-#' 94 -- 100 (2016). \url{http://dx.doi.org/10.1038/ng.3464}.
+#' 94 -- 100 (2016). \doi{10.1038/ng.3464}.
 #' }
 #' @examples
 #'  \dontrun{
@@ -189,7 +189,7 @@ gl.run.eems <- function(x,
         "Package",
         pkg,
         " needed for this function to work. Please install it using: \n
-    install_github('dipetkov/reemsplots2')"
+    devtools::install_github('dipetkov/reemsplots2 \n')"
       )
     )
     return(-1)
@@ -398,8 +398,10 @@ gl.run.eems <- function(x,
       )
       file.copy(eems_files, to = out.dir, overwrite = TRUE)
     }
-    
-    p8 <- reemsplots2::make_eems_plots(mcmcpath =  eems_results,
+    if (!exists('make_eems_plots', mode="function")) {make_eems_plots <- function() return (-1);
+    error("You need to load the package reemsplot2 from github via:\n
+          devtools::install_github('dipetkov/reemsplots2 \n")}
+    p8 <- make_eems_plots(mcmcpath =  eems_results,
                                        longlat = TRUE,
                                        dpi = dpi,
                                        add_grid = add_grid,
