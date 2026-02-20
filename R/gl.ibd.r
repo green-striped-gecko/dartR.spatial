@@ -284,7 +284,7 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "Fst") {
               fbm <- .fbm_or_null(x)
               if (!is.null(fbm)) {
-                x <- gl.fbm2gen(x)
+                x <- dartR.base::gl.fbm2gen(x)
               }
                 class(x)<- "genlight" #stampp issue
                 Dgen <- as.dist(StAMPP::stamppFst(x, nboots = 1))
@@ -293,7 +293,7 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "D") {
               fbm <- .fbm_or_null(x)
               if (!is.null(fbm)) {
-                x <- gl.fbm2gen(x)
+                x <- dartR.base::gl.fbm2gen(x)
               }
               class(x)<- "genlight" #stampp issue
                 Dgen <-
