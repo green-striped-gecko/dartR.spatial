@@ -87,6 +87,7 @@
 #' @examples
 #'  \donttest{
 #' #because of speed only the first 100 loci
+#' #' if (isTRUE(getOption("dartR_fbm"))) bandicoot.gl <- gl.gen2fbm(bandicoot.gl)
 #' ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
 #' Dgen_trans='Dgen/(1-Dgen)')
 #' #because of speed only the first 10 individuals)
@@ -271,6 +272,14 @@ gl.ibd <- function(x = NULL,
             }
             
             # apply logarithm to distance
+            .fbm_or_null <- function(x) {
+              if (methods::.hasSlot(x, "fbm")) {
+                val <- methods::slot(x, "fbm")
+                return(if (is.null(val)) NULL else val)
+              }
+              NULL
+            }
+            
             
             if (is.null(Dgen) & distance == "Fst") {
               fbm <- .fbm_or_null(x)
