@@ -4,7 +4,7 @@
 #' @importFrom crayon blue
 #' @importFrom utils packageVersion combn head tail
 #' @importFrom methods getPackageName is
-#' @import adegenet
+#' @rawNamespace import(adegenet, except = c(glMean, glSum) )
 #' @import dartR.base
 #' @import dartR.data
 #' @import data.table
