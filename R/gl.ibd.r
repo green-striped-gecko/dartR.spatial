@@ -284,7 +284,11 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "Fst") {
               fbm <- .fbm_or_null(x)
               if (!is.null(fbm)) {
-                x <- dartR.base::gl.fbm2gen(x)
+                
+                if (!exists('gl.fbm2gen', mode="function")) {gl.fbm2gen <- function() return (-1);
+                error("You need to update dartR.base >=1.2.2 to have the fbm version installed.\n")}  
+                
+                x <- gl.fbm2gen(x)
               }
                 class(x)<- "genlight" #stampp issue
                 Dgen <- as.dist(StAMPP::stamppFst(x, nboots = 1))
@@ -293,7 +297,11 @@ gl.ibd <- function(x = NULL,
             if (is.null(Dgen) & distance == "D") {
               fbm <- .fbm_or_null(x)
               if (!is.null(fbm)) {
-                x <- dartR.base::gl.fbm2gen(x)
+                if (!exists('gl.fbm2gen', mode="function")) {
+                  gl.fbm2gen <- function() return (-1);
+                  error("You need to update dartR.base >=1.2.2 to have the fbm version installed.\n")
+                  }  
+              x <- gl.fbm2gen(x)
               }
               class(x)<- "genlight" #stampp issue
                 Dgen <-
