@@ -8,7 +8,7 @@
 #'  C++, hence it is necessary to have the binary downloaded and the function 
 #'  needs to point to this file via the path specified in eems.path. The binary
 #'   is call runeems_snps[.exe] and can be downloaded from the github site of
-#'    dartR.
+#'    dartRverse (https://github.com/green-striped-gecko/dartRverse/tree/main/binaries).
 #'
 #' @param x Name of the genlight object containing the SNP data [required].
 #' @param eems.path Path to the folder containing the eems executable
@@ -61,12 +61,12 @@
 #' thinning interval is a practical default.
 #' 
 #' Choose the number of demes to match geographic scale: 100–250 for local or 
-#' island studies and 300–500 for continental datasets. Runtime grows 
+#' island studies and 300–500 for continental datasets. Run time grows 
 #' cubically with number of demes, so anything above 1000 rarely pays off. 
 #' 
 #' Draw the habitat polygon with a small buffer (in meters), so every sample 
 #' sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
-#' sample bounding box (or a few kilometres for fine‑scale work) is usually 
+#' sample bounding box (or a few kilometers for fine‑scale work) is usually 
 #' adequate.
 #' 
 #' For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
@@ -189,7 +189,7 @@ gl.run.eems <- function(x,
         "Package",
         pkg,
         " needed for this function to work. Please install it using: \n
-    devtools::install_github('dipetkov/reemsplots2 \n')"
+    devtools::install_github('dipetkov/reemsplots2')"
       )
     )
     return(-1)
@@ -285,7 +285,7 @@ gl.run.eems <- function(x,
     
     ll <- data.frame(x = x@other$latlon$lon,
                      y = x@other$latlon$lat)
-    xy <- Mercator(ll)
+    xy <- dismo::Mercator(ll)
     # plot(xy)
     hpts <- chull(xy)
     hpts <- c(hpts, hpts[1])
@@ -400,7 +400,7 @@ gl.run.eems <- function(x,
     }
     if (!exists('make_eems_plots', mode="function")) {make_eems_plots <- function() return (-1);
     error("You need to load the package reemsplot2 from github via:\n
-          devtools::install_github('dipetkov/reemsplots2 \n")}
+          devtools::install_github('dipetkov/reemsplots2 \n")}  
     p8 <- make_eems_plots(mcmcpath =  eems_results,
                                        longlat = TRUE,
                                        dpi = dpi,
@@ -410,8 +410,7 @@ gl.run.eems <- function(x,
                                        col_demes = col_demes,
                                        add_outline = add_outline,
                                        col_outline = col_outline, 
-                                       eems_colors = eems_colors,
-                                       ...
+                                       eems_colors = eems_colors
     )
     
     # if pop colors is a palette
@@ -441,6 +440,8 @@ gl.run.eems <- function(x,
       geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
       scale_color_manual(values = colors_pops)  +
       coord_equal()
+    
+  print(p8)
     
     if (cleanup) {
       unlink(eems_results, recursive = TRUE)

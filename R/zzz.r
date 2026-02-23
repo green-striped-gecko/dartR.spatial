@@ -4,7 +4,7 @@
 #' @importFrom crayon blue
 #' @importFrom utils packageVersion combn head tail
 #' @importFrom methods getPackageName is
-#' @import adegenet
+#' @rawNamespace import(adegenet, except = c(glMean, glSum) )
 #' @import dartR.base
 #' @import dartR.data
 #' @import data.table
@@ -26,6 +26,14 @@ report <- crayon::green
 important <- crayon::blue
 code <- crayon::cyan
 
+## returns NULL if the 'fbm' slot is missing OR is NULL
+.fbm_or_null <- function(x) {
+  if (methods::.hasSlot(x, "fbm")) {
+    val <- methods::slot(x, "fbm")
+    return(if (is.null(val)) NULL else val)
+  }
+  NULL
+}
 
 # WELCOME MESSAGE
 .onAttach <- function(...) {

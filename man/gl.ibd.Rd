@@ -114,6 +114,7 @@ you could add some "noise" to the coordinates of the individuals (e.g. +- 1m,
 \examples{
  \donttest{
 #because of speed only the first 100 loci
+#' if (isTRUE(getOption("dartR_fbm"))) bandicoot.gl <- gl.gen2fbm(bandicoot.gl)
 ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
 Dgen_trans='Dgen/(1-Dgen)')
 #because of speed only the first 10 individuals)
