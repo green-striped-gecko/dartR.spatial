@@ -174,7 +174,7 @@ of possible combinations given the sample size of any given distance class is
 
 Methods available to calculate genetic distances for SNP data:
 \itemize{
-\item "propShared" using the function \code{\link[dartR.base]{gl.propShared}}.
+\item "propShared" using the function \code{\link{gl.propShared}}.
 \item "grm" using the function \code{gl.grm2}.
 \item "Euclidean" using the function \code{\link[dartR.base]{gl.dist.ind}}.
 \item "Simple" using the function \code{\link[dartR.base]{gl.dist.ind}}.
