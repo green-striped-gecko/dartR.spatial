@@ -22,6 +22,8 @@ Depends: R (>= 3.5), dartR.base, dartR.data
 Imports: adegenet (>= 2.0.0), methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table, grDevices, dismo
 Suggests:
   mmod,
+  Rcpp,
+  testthat (>= 3.0.0),
   gdistance,
   gplots,
   rrBLUP,
