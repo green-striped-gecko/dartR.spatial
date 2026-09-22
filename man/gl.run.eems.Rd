@@ -43,7 +43,9 @@ gl.run.eems(
 \item{nDemes}{The approximate number of demes in the population graph 
 [default 500].}
 
-\item{diploid}{Whether the organism is diploid [default TRUE].}
+\item{diploid}{Whether the organism is diploid. TRUE requires ploidy 2
+for every individual; FALSE requires ploidy 1. Input must represent SNP
+allele dosages, not dominant presence/absence markers [default TRUE].}
 
 \item{numMCMCIter}{Number of MCMC iterations [default 10000].}
 
@@ -81,21 +83,24 @@ from low to high [default NULL].}
 as many colors as there are populations in the dataset
 [default gl.colors("dis")].}
 
-\item{out.dir}{Path where to save the output file. Use outpath=getwd() or 
-out.dir='.' when calling this function to direct output files to your 
-working or current directory [default tempdir(), mandated by CRAN].}
+\item{out.dir}{Existing directory for output. Each call creates a unique
+eems-run-* subdirectory containing data_eems/ and eems.log. Relative paths
+are resolved from the calling directory. Results in tempdir() last only
+for the R session [default tempdir()].}
 
 \item{plot.dir}{Directory to save the plot RDS files 
 [default as specified by the global working directory or tempdir()].}
 
 \item{plot.file}{Name for the RDS binary file to save (base name only, 
-exclude extension) [default NULL].}
+exclude extension); NULL disables RDS saving [default NULL].}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2, 
 progress log; 3, progress and results summary; 5, full report 
 [default NULL, unless specified using gl.set.verbosity].}
 
-\item{cleanup}{Whether to delete intermediate files [default TRUE].}
+\item{cleanup}{Whether to delete this run's input and parameter files
+after success. Raw EEMS results and logs are retained; failed runs retain
+all files for diagnosis [default TRUE].}
 
 \item{...}{Extra parameters to add to function reemsplots2::make_eems_plots.}
 }
@@ -156,9 +161,12 @@ sits at least one grid spacing inside the edge. A 5–10 % expansion of the
 sample bounding box (or a few kilometers for fine‑scale work) is usually 
 adequate.
 
-For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
-Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
-affects file size, not the inference itself.
+The dpi argument controls sampling of the contour grid in reemsplots2,
+not the dots per inch of an exported image. Higher values increase grid
+resolution and plotting work without changing EEMS inference. Set image
+dimensions and export DPI separately when saving a rendered plot.
+Routine messages are suppressed at verbose = 0; diagnostic plots are
+displayed at verbose >= 3. All eight plots are returned at every level.
 }
 \examples{
  \dontrun{
