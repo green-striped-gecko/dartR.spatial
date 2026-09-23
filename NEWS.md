@@ -6,6 +6,22 @@
   once: duplicated `.1` columns and the `optional` column are gone, and `id`
   holds sample names instead of row numbers. Invalid `type`, a missing
   `outpath`, missing terra and data with no complete coordinates now error.
+* `gl.costdistances()` now uses mean cell resistance for symmetric edges.
+  This changes distances on heterogeneous landscapes. Genlight coordinates
+  are selected by lon/lat names, interpreted as WGS84, and their population
+  centres are transformed to the raster CRS. Geographic commute distances
+  now use random-walk correction, and a sparse solver supports locations in
+  the grounded cell while retaining commute-time scaling.
+* `gl.costdistances()` validates locations, resistance, population assignments
+  and calculation settings. Invalid locations are no longer omitted or
+  recycled into misleading matrices. NA/Inf cells are barriers; zero/negative
+  resistance is rejected. Explicit x/y on unreferenced rasters still uses
+  local grid units. Disconnected least-cost pairs retain Inf; disconnected
+  commute/RSP analyses error. Optional `theta = 1` is appended after `verbose`;
+  it exposes the RSP parameter without changing its default. Non-finite RSP
+  results now error with scale/theta guidance. Dependency errors, verbosity,
+  function-object invocation and method/units documentation are corrected.
+
 * `gl.ibd()` aligns labelled distances and explicitly named coordinate tables.
   Misaligned inputs can therefore produce different results; mismatched or
   duplicate identities now error. Stored coordinates retain individual order.
