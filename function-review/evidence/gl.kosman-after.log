@@ -1,0 +1,35 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+testset.gl : max |diff| vs independent = 7.285839e-17 
+testset.gs : max |diff| vs independent = 1.526557e-16 
+possums.gl : max |diff| vs independent = 1.110223e-16 
+
+===  P1 mixed ploidy  ===
+[1] "ERROR: Fatal Error: individuals have different ploidies. Separate them by ploidy before running gl.kosman\n"
+
+===  P2 no shared loci  ===
+         AA010915 UC_00126
+AA010915        0       NA
+UC_00126      NaN        0
+
+===  P3 verbose=3  ===
+Starting gl.kosman 
+Completed: gl.kosman 
+
+===  P4 matrix input  ===
+[1] "ERROR: Fatal Error: x must be a genlight or dartR object\n"
+[1] "ERROR: Fatal Error: x must be a genlight or dartR object\n"
+
+P5 class: list | names: kosman nloci 
+P6 nInd=81 nLoc=250: 0.01 s, peak 15340310 MB
+P6 nInd=81 nLoc=1000: 0.01 s, peak 16219349 MB
+          used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 5670260 302.9   10834028 578.6         NA  5670260 302.9
+Vcells 9178463  70.1   17824054 136.0      65536  9178463  70.1
+P7 vectorised nLoc=1000: 0.03 s, peak 17640477 MB, max diff 0, nloci equal TRUE
+
+=== Large synthetic run (after fix) ===
+nInd=300 nLoc=20000: 2.8 s, max Vcells used 422 MB
