@@ -1,0 +1,35 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+  Processing genlight object with SNP data
+=== Q1 SNP distances passed without reversal (expect positive first class) ===
+Simple    raw r = 0.122 0.0422 -0.0647 | reversed (as function) r = -0.0696 -0.0239 0.0373
+Absolute  raw r = 0.2994 0.1172 -0.1413 | reversed (as function) r = -0.0438 -0.0165 0.0211
+grm as distance (as function): r = 13.6674 5.0257 -6.8422 | grm converted to distance (max - G): r = 0.1681 0.0613 -0.0847 
+
+=== Q2 SilicoDArT (presence/absence) ===
+Registered S3 methods overwritten by 'ggpp':
+  method                  from   
+  heightDetails.titleGrob ggplot2
+  widthDetails.titleGrob  ggplot2
+Euclidean   function r = 0.0652 0.0225 -0.0363 | raw distance r = 0.0598 0.0206 -0.0333
+Simple      function r = -0.0678 -0.0245 0.0366 | raw distance r = 0.1187 0.0432 -0.0634
+Jaccard     function r = 0.0948 0.0334 -0.0519 | raw distance r = 0.0948 0.0334 -0.0519
+Bray-Curtis function r = 0.1197 0.0441 -0.0625 | raw distance r = 0.1197 0.0441 -0.0625
+
+=== Q3 automatic bins when the minimum distance is far from zero ===
+       Bin   N
+1  1785.00   0
+2  3570.00   0
+3  5355.00   0
+4  7140.00   0
+5 58948.18 435
+distance range: 50023 58948  pairs: 435 
+
+=== Q4 list inputs (x = NULL) ===
+unnamed list of dist : ok 
+named list of dist : object 'pop.names' not found 
+unnamed list of matrices :   Dgeo is a list, but its elements are of different classes. These should be either all matrices or distances
+ 

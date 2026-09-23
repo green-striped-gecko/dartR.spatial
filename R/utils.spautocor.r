@@ -81,8 +81,11 @@ utils.spautocor <- function(GD,
   diag(ed) <- NA
   
   if (length(bins) == 1) {
-    steps <- seq_len(bins) * signif(diff(range(ed, na.rm = TRUE)) / bins, 4)
-    steps <- c(min(ed, na.rm = TRUE), steps)
+    # even classes from the minimum to the maximum distance
+    min.ed <- min(ed, na.rm = TRUE)
+    steps <- min.ed +
+      seq_len(bins) * signif(diff(range(ed, na.rm = TRUE)) / bins, 4)
+    steps <- c(min.ed, steps)
     if (steps[length(steps)] < max(ed, na.rm = TRUE))
       steps[length(steps)] <- max(ed, na.rm = TRUE)
   } else {
