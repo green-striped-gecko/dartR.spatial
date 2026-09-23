@@ -78,5 +78,8 @@ if (requireNamespace("gdistance", quietly = TRUE)) {
 \seealso{
 \link[gdistance]{costDistance}, \link[gdistance]{rSPDistance},
 \link[gdistance]{commuteDistance}, \link[gdistance]{geoCorrection}
+
+Other spatial analysis functions: 
+\code{\link{gl.genleastcost}()}
 }
 \concept{spatial analysis functions}

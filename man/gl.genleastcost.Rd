@@ -12,38 +12,40 @@ gl.genleastcost(
   pathtype = "leastcost",
   plotpath = TRUE,
   theta = 1,
-  plot.colors.pop = gl.colors("dis"),
+  plot.colors.pop = gl.colors("dis", verbose = 0),
   raster.colors = rev(terrain.colors(255)),
   verbose = NULL
 )
 }
 \arguments{
-\item{x}{A spatial genlight object. [required].}
+\item{x}{Name of the genlight object containing SNP data and coordinates
+[required].}
 
-\item{fric.raster}{A friction matrix [required].}
+\item{fric.raster}{A friction matrix: file path, RasterLayer, RasterStack,
+RasterBrick or SpatRaster [required].}
 
-\item{gen.distance}{Specification which genetic distance method should be
-used to calculate pairwise genetic distances between populations ( 'D',
-'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
- [default "Gst.Nei"].}
+\item{gen.distance}{Genetic distance between populations ('D', 'Gst.Nei',
+'Gst.Hedrick') or individuals ('kosman', 'propShared', 'dist')
+[default "Gst.Nei"].}
 
 \item{NN}{Number of neighbours used when calculating the cost distance
-(possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
- linear structures may cause artefacts in the least-cost paths, therefore
- inspect the actual least-cost paths in the provided output [default 8].}
+(possible values 4, 8, 16 or 'bishop'). NN=8 is most commonly used. Be
+aware that linear structures may cause artefacts in the least-cost paths,
+therefore inspect the actual least-cost paths in the provided output
+[default 8].}
 
-\item{pathtype}{Type of cost distance to be calculated (based on function in
-the \code{gdistance} package. Available distances are 'leastcost', 'commute'
- or 'rSPDistance'. See functions in the gdistance package for futher
- explanations. If the path type is set to 'leastcost' then paths and also
- pathlength are returned [default 'leastcost'].}
+\item{pathtype}{Type of cost distance to be calculated: 'leastcost',
+'commute' or 'rSPDistance'. If the path type is set to 'leastcost' and
+plotpath is TRUE, paths and path lengths are also returned
+[default 'leastcost'].}
 
-\item{plotpath}{switch if least cost paths should be plotted (works only if
-pathtype='leastcost'. Be aware this slows down the computation, but it is
-recommended to do this to check least cost paths visually.}
+\item{plotpath}{If TRUE, plots each friction layer with the individuals,
+population centres and (for 'leastcost') the least-cost paths, and returns
+the paths and their lengths. Calculating paths slows down the computation,
+but checking them visually is recommended [default TRUE].}
 
-\item{theta}{value needed for rSPDistance function. See
-\code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].}
+\item{theta}{Value needed for pathtype 'rSPDistance', strictly between 0 and
+20. See \code{\link{gl.costdistances}} [default 1].}
 
 \item{plot.colors.pop}{A color palette for population plots or a list with
 as many colors as there are populations in the dataset
@@ -53,47 +55,75 @@ as many colors as there are populations in the dataset
 [default rev(terrain.colors(255))].}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log; 3, progress and results summary; 5, full report
+brief progress messages; 3, progress and results summary; 5, full report
 [default 2, unless specified using gl.set.verbosity].}
 }
 \value{
-Returns a list that consists of four pairwise distance matrices
-(Euclidean, Cost, length of path and genetic) and the actual paths as spatial
- line objects.
+A list with six elements:
+\itemize{
+\item gen.mat -- matrix of pairwise genetic distances.
+\item eucl.mat -- matrix of pairwise Euclidean distances.
+\item cost.matnames -- names of the friction layers.
+\item cost.mats -- list of cost distance matrices, one per layer.
+\item pathlength.mats -- list of path length matrices, one per layer
+(only for pathtype 'leastcost' with plotpath = TRUE).
+\item paths -- list of least-cost paths as SpatialLines objects, one list
+per layer (only for pathtype 'leastcost' with plotpath = TRUE).
+}
 }
 \description{
 This function calculates pairwise distances (Euclidean, cost path
-distances and genetic distances) between populations or between individuals 
-using a friction matrix and a spatial genlight object. The genlight object 
-needs to have coordinates in the same projected coordinate system as the 
-friction matrix. The friction matrix can be either a single raster or a 
-stack of several layers. If a stack is provided the specified cost distance 
-is calculated for each layer in the stack. The output of this function can 
-be used with the functions wassermann from package PopGenReport and lgrMMRR 
-from package PopGenReport to test for the significance of a layer on the 
-genetic structure.
-   
-Genetic distances between individuals are 'kosman' and 'propShared'.
+distances and genetic distances) between populations or between individuals
+using a friction matrix and a spatial genlight object. The output of this
+function can be used with the functions wassermann and lgrMMRR from package
+PopGenReport to test for the significance of a layer on the genetic
+structure.
 }
 \details{
-Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
+The friction matrix can be a single raster or a stack of several layers,
+supplied as a file path, a RasterLayer, RasterStack or RasterBrick (package
+raster) or a SpatRaster (package terra). The specified cost distance is
+calculated for each layer.
+
+Cost distances are calculated with \code{\link{gl.costdistances}}, so both
+functions return the same values for the same landscape and locations. See
+that function for how resistance, barriers and geographic correction are
+handled.
+
+Coordinates are taken from x@other$xy, which must be in the same coordinate
+system as the friction matrix. If x@other$xy is missing, the lon and lat
+columns of x@other$latlon are used as they are, without projection, so they
+must also match the coordinate system of the friction matrix. For population
+distances, the arithmetic mean of the coordinates of each population is
+used.
+
+Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'
+(package mmod). Genetic distances between individuals are 'kosman'
+(\code{\link{gl.kosman}}), 'propShared' (one minus the proportion of shared
+alleles, \code{\link{gl.propShared}}) and 'dist' (Euclidean distance between
+allele counts).
 }
 \examples{
-#this example takes about 20 seconds to run...
-data(possums.gl)
-library(raster)  #needed for that example
-landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-package='dartR.data'))
-#use only 3 population (first 90 individuals) due to speed
-#glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
-#gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
-#### run tests as implemented in PopGenreport (maybe need to install)
-#if (require("PopGenReport", quietly=TRUE)) {
-#PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
-#gen.mat = glc$gen.mat)
-#lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
-#eucl.mat = glc$eucl.mat)
-#}
+\donttest{
+if (requireNamespace("gdistance", quietly = TRUE) &&
+    requireNamespace("mmod", quietly = TRUE)) {
+  landscape.sim <- readRDS(system.file("extdata", "landscape.sim.rdata",
+                                       package = "dartR.data"))
+  # three populations and a coarser landscape to keep the example fast
+  x <- possums.gl[pop(possums.gl) \%in\% c("A", "B", "C"), ]
+  landscape <- raster::aggregate(landscape.sim, 5)
+  glc <- gl.genleastcost(x, fric.raster = landscape, gen.distance = "D",
+                         NN = 8, pathtype = "leastcost", plotpath = TRUE)
+  glc$cost.mats
+  # test the significance of the layer (package PopGenReport)
+  if (requireNamespace("PopGenReport", quietly = TRUE)) {
+    PopGenReport::wassermann(eucl.mat = glc$eucl.mat,
+                             cost.mat = glc$cost.mats,
+                             gen.mat = glc$gen.mat)
+  }
+}
+}
+
 }
 \references{
 \itemize{
@@ -108,7 +138,14 @@ barriers in landscape genetics. Molecular ecology, 4179-4191.
  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
  }
 }
-\author{
-Bernd Gruber (bugs? Post to
-\url{https://groups.google.com/d/forum/dartr})
+\seealso{
+\code{\link{gl.costdistances}}
+
+Other spatial analysis functions: 
+\code{\link{gl.costdistances}()}
 }
+\author{
+Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to
+\url{https://groups.google.com/d/forum/dartr}
+}
+\concept{spatial analysis functions}

@@ -1,5 +1,15 @@
 # dartR.spatial (development)
 
+* `gl.genleastcost()` accepts a file path, RasterLayer, RasterStack,
+  RasterBrick or SpatRaster and processes every layer. Raster objects had
+  failed on every call since December 2024. Cost distances now come from
+  `gl.costdistances()`, so they change (mean-resistance conductance, random-
+  walk correction for commute) and `theta` is used; `rSPDistance` with the
+  default `theta = 1` may now stop with an underflow message. `propShared`
+  is returned as a distance (1 - proportion shared) instead of a
+  similarity, and `kosman` no longer errors. With `plotpath = FALSE`
+  nothing is plotted. Invalid arguments, missing coordinates and
+  SilicoDArT data stop early with clear messages.
 * `gl.kosman()` computes distances with matrix cross-products instead of one
   matrix per locus, so large datasets no longer exhaust memory (300
   individuals x 20,000 loci: 2.8 s, 422 MB). Distances are unchanged. The

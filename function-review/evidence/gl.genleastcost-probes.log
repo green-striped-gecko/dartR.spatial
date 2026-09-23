@@ -1,0 +1,146 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+===  P1 RasterLayer input  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+[1] "ERROR: no values associated with this RasterLayer"
+raster::raster(fric) hasValues: FALSE 
+
+===  P2 kosman  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+Starting gl.kosman 
+[1] "ERROR: error in evaluating the argument 'x' in selecting a method for function 'as.matrix': Fatal Error: x must be a genlight or dartR object\n"
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+
+=== P3 propShared ===
+gen.mat[2,1] = 0.69  gl.propShared[2,1] = 0.69  1 - propShared = 0.31 
+within-pop mean gen.mat: 0.728  between A-C mean: 0.5758 
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+
+=== P4 theta ===
+identical theta=1 vs theta=0.001: TRUE 
+gl.costdistances theta=0.001 [2,1]: 1456.433  vs glc: 573.191 
+
+===  P5 pathtype='least'  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+[1] "ERROR: object 'cd.mat' not found"
+
+===  P5b NN=5  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+[1] "ERROR: directions should be one of: 4, 8, 16, \"bishop\", or a matrix"
+
+===  P6 no coordinates  ===
+No projected coordinates in @other$xy found. Hence will use latlons (if provided), which are not projected, hence there might be distortions if the area covered is large or close to the poles. Be aware your resistance layer and coordinates in the genlight object need to have the same coordinate system.
+[1] "ERROR: $ operator is invalid for atomic vectors"
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+P7 leastcost: glc[2,1]=570.6766  gl.costdistances[2,1]=670.8746  max rel diff=0.5233
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+P7 commute: glc[2,1]=23205.9556  gl.costdistances[2,1]=21028.0890  max rel diff=0.1036
+P7b transition(1/x[2]) symmetric: TRUE 
+
+===  P9 two-layer SpatRaster  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+cost.mats: 1 base 
+
+===  P9b RasterStack  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+[1] "ERROR: no values associated with this RasterLayer"
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+$gen.mat
+          A          B          C
+A 0.0000000 0.21877166 0.18687196
+B 0.2187717 0.00000000 0.08648195
+C 0.1868720 0.08648195 0.00000000
+
+$eucl.mat
+         A         B         C
+A   0.0000 232.35683 212.06416
+B 232.3568   0.00000  20.87023
+C 212.0642  20.87023   0.00000
+
+$cost.matnames
+[1] "layer"
+
+$cost.mats
+$cost.mats$layer
+         A         B         C
+A   0.0000 570.67661 527.58544
+B 570.6766   0.00000  50.16224
+C 527.5854  50.16224   0.00000
+
+
+$pathlength.mats
+list()
+
+$paths
+list()
+
+pdf 
+  2 
+
+=== P10 plotpath=FALSE: PDF bytes written: 8575 
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+
+=== P11 ===
+mmod labels: B C A  glc labels: B C A 
+       B      C      A
+B 0.0000 0.0598 0.1572
+C 0.0598 0.0000 0.1308
+A 0.1572 0.1308 0.0000
+[1] 0
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+A-B original: 0.1572  A-B reordered: 0.1572 
+
+===  P12 SilicoDArT  ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+[1] "ERROR: Fatal Error: inappropriate object passed to function, found SilicoDArT expecting SNP\n"
+
+=== P13 verbose=0 output ===
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+
+===  P14 lonlat raster  ===
+No projected coordinates in @other$xy found. Hence will use latlons (if provided), which are not projected, hence there might be distortions if the area covered is large or close to the poles. Be aware your resistance layer and coordinates in the genlight object need to have the same coordinate system.
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+glc cost A-B: 253535  gl.costdistances (metres): 253535  geodesic km: 239.5 
+        A       B       C
+A   0.000 570.677 527.585
+B 570.677   0.000  50.162
+C 527.585  50.162   0.000

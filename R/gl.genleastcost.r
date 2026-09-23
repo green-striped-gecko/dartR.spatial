@@ -1,56 +1,85 @@
-#' Performs least-cost path analysis based on a friction matrix
+#' @name gl.genleastcost
+#' @title Performs least-cost path analysis based on a friction matrix
+#' @family spatial analysis functions
 #'
+#' @description
 #' This function calculates pairwise distances (Euclidean, cost path
-#' distances and genetic distances) between populations or between individuals 
-#' using a friction matrix and a spatial genlight object. The genlight object 
-#' needs to have coordinates in the same projected coordinate system as the 
-#' friction matrix. The friction matrix can be either a single raster or a 
-#' stack of several layers. If a stack is provided the specified cost distance 
-#' is calculated for each layer in the stack. The output of this function can 
-#' be used with the functions wassermann from package PopGenReport and lgrMMRR 
-#' from package PopGenReport to test for the significance of a layer on the 
-#' genetic structure.
-#'    
-#' Genetic distances between individuals are 'kosman' and 'propShared'.
-#' 
-#' Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'.
-#' @param x A spatial genlight object. [required].
-#' @param fric.raster A friction matrix [required].
-#' @param gen.distance Specification which genetic distance method should be
-#' used to calculate pairwise genetic distances between populations ( 'D',
-#' 'Gst.Nei', 'Gst.Hedrick') or individuals ('kosman', 'propShared')
-#'  [default "Gst.Nei"].
+#' distances and genetic distances) between populations or between individuals
+#' using a friction matrix and a spatial genlight object. The output of this
+#' function can be used with the functions wassermann and lgrMMRR from package
+#' PopGenReport to test for the significance of a layer on the genetic
+#' structure.
+#'
+#' @details
+#' The friction matrix can be a single raster or a stack of several layers,
+#' supplied as a file path, a RasterLayer, RasterStack or RasterBrick (package
+#' raster) or a SpatRaster (package terra). The specified cost distance is
+#' calculated for each layer.
+#'
+#' Cost distances are calculated with \code{\link{gl.costdistances}}, so both
+#' functions return the same values for the same landscape and locations. See
+#' that function for how resistance, barriers and geographic correction are
+#' handled.
+#'
+#' Coordinates are taken from x@other$xy, which must be in the same coordinate
+#' system as the friction matrix. If x@other$xy is missing, the lon and lat
+#' columns of x@other$latlon are used as they are, without projection, so they
+#' must also match the coordinate system of the friction matrix. For population
+#' distances, the arithmetic mean of the coordinates of each population is
+#' used.
+#'
+#' Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'
+#' (package mmod). Genetic distances between individuals are 'kosman'
+#' (\code{\link{gl.kosman}}), 'propShared' (one minus the proportion of shared
+#' alleles, \code{\link{gl.propShared}}) and 'dist' (Euclidean distance between
+#' allele counts).
+#'
+#' @param x Name of the genlight object containing SNP data and coordinates
+#' [required].
+#' @param fric.raster A friction matrix: file path, RasterLayer, RasterStack,
+#' RasterBrick or SpatRaster [required].
+#' @param gen.distance Genetic distance between populations ('D', 'Gst.Nei',
+#' 'Gst.Hedrick') or individuals ('kosman', 'propShared', 'dist')
+#' [default "Gst.Nei"].
 #' @param NN Number of neighbours used when calculating the cost distance
-#' (possible values 4, 8 or 16). NN=8 is most commonly used. Be aware that
-#'  linear structures may cause artefacts in the least-cost paths, therefore
-#'  inspect the actual least-cost paths in the provided output [default 8].
-#' @param pathtype Type of cost distance to be calculated (based on function in
-#'  the \code{gdistance} package. Available distances are 'leastcost', 'commute'
-#'   or 'rSPDistance'. See functions in the gdistance package for futher
-#'   explanations. If the path type is set to 'leastcost' then paths and also
-#'   pathlength are returned [default 'leastcost'].
-#' @param plotpath switch if least cost paths should be plotted (works only if
-#' pathtype='leastcost'. Be aware this slows down the computation, but it is
-#' recommended to do this to check least cost paths visually.
-#' @param theta value needed for rSPDistance function. See
-#' \code{\link[gdistance]{rSPDistance}} in package \code{gdistance} [default 1].
+#' (possible values 4, 8, 16 or 'bishop'). NN=8 is most commonly used. Be
+#' aware that linear structures may cause artefacts in the least-cost paths,
+#' therefore inspect the actual least-cost paths in the provided output
+#' [default 8].
+#' @param pathtype Type of cost distance to be calculated: 'leastcost',
+#' 'commute' or 'rSPDistance'. If the path type is set to 'leastcost' and
+#' plotpath is TRUE, paths and path lengths are also returned
+#' [default 'leastcost'].
+#' @param plotpath If TRUE, plots each friction layer with the individuals,
+#' population centres and (for 'leastcost') the least-cost paths, and returns
+#' the paths and their lengths. Calculating paths slows down the computation,
+#' but checking them visually is recommended [default TRUE].
+#' @param theta Value needed for pathtype 'rSPDistance', strictly between 0 and
+#' 20. See \code{\link{gl.costdistances}} [default 1].
 #' @param plot.colors.pop A color palette for population plots or a list with
 #' as many colors as there are populations in the dataset
 #' [default gl.colors("dis")].
 #' @param raster.colors The color palette to use to color the raster values
-#'  [default rev(terrain.colors(255))].
+#' [default rev(terrain.colors(255))].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-#' progress log; 3, progress and results summary; 5, full report
+#' brief progress messages; 3, progress and results summary; 5, full report
 #' [default 2, unless specified using gl.set.verbosity].
-#' @importFrom stats step
-#' @importFrom sp Line Lines SpatialLines SpatialLinesLengths
-#' @importFrom raster plot
-#' @importFrom grDevices terrain.colors
-#' @return Returns a list that consists of four pairwise distance matrices
-#' (Euclidean, Cost, length of path and genetic) and the actual paths as spatial
-#'  line objects.
-#' @author Bernd Gruber (bugs? Post to
-#' \url{https://groups.google.com/d/forum/dartr})
+#'
+#' @return A list with six elements:
+#' \itemize{
+#' \item gen.mat -- matrix of pairwise genetic distances.
+#' \item eucl.mat -- matrix of pairwise Euclidean distances.
+#' \item cost.matnames -- names of the friction layers.
+#' \item cost.mats -- list of cost distance matrices, one per layer.
+#' \item pathlength.mats -- list of path length matrices, one per layer
+#' (only for pathtype 'leastcost' with plotpath = TRUE).
+#' \item paths -- list of least-cost paths as SpatialLines objects, one list
+#' per layer (only for pathtype 'leastcost' with plotpath = TRUE).
+#' }
+#'
+#' @author Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to
+#' \url{https://groups.google.com/d/forum/dartr}
+#'
 #' @references
 #' \itemize{
 #' \item Cushman, S., Wasserman, T., Landguth, E. and Shirk, A. (2013).
@@ -63,22 +92,32 @@
 #'  (2010). Spatial scaling and multi-model inference in landscape genetics:
 #'  Martes americana in northern Idaho. Landscape Ecology, 25(10), 1601-1612.
 #'  }
+#'
 #' @examples
-#' #this example takes about 20 seconds to run...
-#' data(possums.gl)
-#' library(raster)  #needed for that example
-#' landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-#' package='dartR.data'))
-#' #use only 3 population (first 90 individuals) due to speed
-#' #glc <- gl.genleastcost(x=possums.gl,fric.raster=landscape.sim ,
-#' #gen.distance = 'D', NN=8, pathtype = 'leastcost',plotpath = TRUE)
-#' #### run tests as implemented in PopGenreport (maybe need to install)
-#' #if (require("PopGenReport", quietly=TRUE)) {
-#' #PopGenReport::wassermann(eucl.mat = glc$eucl.mat, cost.mat = glc$cost.mats, 
-#' #gen.mat = glc$gen.mat)
-#' #lgrMMRR(gen.mat = glc$gen.mat, cost.mats = glc$cost.mats,  
-#' #eucl.mat = glc$eucl.mat)
-#' #}
+#' \donttest{
+#' if (requireNamespace("gdistance", quietly = TRUE) &&
+#'     requireNamespace("mmod", quietly = TRUE)) {
+#'   landscape.sim <- readRDS(system.file("extdata", "landscape.sim.rdata",
+#'                                        package = "dartR.data"))
+#'   # three populations and a coarser landscape to keep the example fast
+#'   x <- possums.gl[pop(possums.gl) %in% c("A", "B", "C"), ]
+#'   landscape <- raster::aggregate(landscape.sim, 5)
+#'   glc <- gl.genleastcost(x, fric.raster = landscape, gen.distance = "D",
+#'                          NN = 8, pathtype = "leastcost", plotpath = TRUE)
+#'   glc$cost.mats
+#'   # test the significance of the layer (package PopGenReport)
+#'   if (requireNamespace("PopGenReport", quietly = TRUE)) {
+#'     PopGenReport::wassermann(eucl.mat = glc$eucl.mat,
+#'                              cost.mat = glc$cost.mats,
+#'                              gen.mat = glc$gen.mat)
+#'   }
+#' }
+#' }
+#'
+#' @seealso \code{\link{gl.costdistances}}
+#' @importFrom sp Line Lines SpatialLines SpatialLinesLengths
+#' @importFrom raster plot
+#' @importFrom grDevices terrain.colors
 #' @export
 
 gl.genleastcost <- function(x,
@@ -88,94 +127,134 @@ gl.genleastcost <- function(x,
                             pathtype = "leastcost",
                             plotpath = TRUE,
                             theta = 1,
-                            plot.colors.pop = gl.colors("dis"),
+                            plot.colors.pop = gl.colors("dis", verbose = 0),
                             raster.colors = rev(terrain.colors(255)),
                             verbose = NULL) {
-    
     # SET VERBOSITY
     verbose <- gl.check.verbosity(verbose)
     
     # FLAG SCRIPT START
     funname <- match.call()[[1]]
     utils.flag.start(func = funname,
-                     build = "Jody",
                      verbose = verbose)
     
+    # CHECK DATATYPE
+    datatype <- utils.check.datatype(x, accept = "SNP", verbose = verbose)
+    
     # FUNCTION SPECIFIC ERROR CHECKING
+    
+    pop.distances <- c("D", "Gst.Hedrick", "Gst.Nei")
+    ind.distances <- c("kosman", "propShared", "dist")
+    if (!is.character(gen.distance) || length(gen.distance) != 1 ||
+        !(gen.distance %in% c(pop.distances, ind.distances))) {
+        stop(error(
+            "Fatal Error: gen.distance must be one of",
+            paste(c(pop.distances, ind.distances), collapse = ", "),
+            "\n"
+        ))
+    }
+    dist.type <- if (gen.distance %in% pop.distances) "pop" else "ind"
+    
+    if (!is.character(pathtype) || length(pathtype) != 1 ||
+        !(pathtype %in% c("leastcost", "commute", "rSPDistance"))) {
+        stop(error(
+            "Fatal Error: pathtype must be leastcost, commute or rSPDistance\n"
+        ))
+    }
+    
+    if (!(is.numeric(NN) && length(NN) == 1 && !is.na(NN) &&
+          NN %in% c(4, 8, 16)) && !identical(NN, "bishop")) {
+        stop(error(
+            "Fatal Error: NN must be 4, 8, 16 or 'bishop'. NN=8 is the most",
+            "commonly used option; if linear features are tested you may want",
+            "to consider NN=4.\n"
+        ))
+    }
+    
     # CHECK IF PACKAGES ARE INSTALLED
     pkg <- "gdistance"
     if (!(requireNamespace(pkg, quietly = TRUE))) {
-      cat(error(
-        "Package",
-        pkg,
-        " needed for this function to work. Please install it.\n"
-      ))
-      return(-1)
+        stop(error(
+            "Package",
+            pkg,
+            " needed for this function to work. Please install it.\n"
+        ))
     }
     
-    pkg <- "mmod"
-    if (!(requireNamespace(pkg, quietly = TRUE))) {
-      cat(error(
-        "Package",
-        pkg,
-        " needed for this function to work. Please install it.\n"
-      ))
-      return(-1)
+    if (dist.type == "pop") {
+        pkg <- "mmod"
+        if (!(requireNamespace(pkg, quietly = TRUE))) {
+            stop(error(
+                "Package",
+                pkg,
+                " needed for this function to work. Please install it.\n"
+            ))
+        }
     }
     
-    if (is.null(NN) & pathtype == "leastcost") {
-        stop(
-            error(
-                "NN is not specified!\nPlease specify the number of nearest neighbour to use for the least-cost path calculations (NN=4 or NN=8). If linear features are tested you may want to consider NN=4 otherwise NN=8 is the most commonly used and prefered option. In any case check the actual least-cost paths for artefacts by inspecting the plot on least-cost paths.\n"
-            )
-        )
-    }
-    
-    dist.type <- NA
-    if (gen.distance == "D" ||
-        gen.distance == "Gst.Hedrick" ||
-        gen.distance == "Gst.Nei")
-        dist.type <- "pop"
-    
-    if (gen.distance == "kosman" ||
-        gen.distance == "propShared" ||
-        gen.distance == "dist" ) 
-        dist.type <- "ind"
-    
-    if (is.na(dist.type)) {
-        stop(
-            error(
-                "No valid genetic distance type was provided. Please check ?landgenreport for valid options\n"
-            )
-        )
-    }
-    
-    if (is.null(x@other$xy)) {
+    # coordinates: projected x/y, otherwise lon/lat used as they are
+    xy <- x@other$xy
+    if (is.null(xy)) {
+        latlon <- x@other$latlon
+        if (is.null(latlon) || length(dim(latlon)) != 2 ||
+            !all(c("lon", "lat") %in% colnames(latlon))) {
+            stop(error(
+                "Fatal Error: No coordinates found. Provide projected",
+                "coordinates in x@other$xy or lon/lat columns in",
+                "x@other$latlon\n"
+            ))
+        }
         cat(
             warn(
                 "No projected coordinates in @other$xy found. Hence will use latlons (if provided), which are not projected, hence there might be distortions if the area covered is large or close to the poles. Be aware your resistance layer and coordinates in the genlight object need to have the same coordinate system.\n"
             )
         )
-        x@other$xy <- x@other$latlon[, c("lon", "lat")]
-        if (is.null(x@other$xy)) {
-            step(warn("No coordinates found in the genlight object!!\n"))
-        }
+        xy <- latlon[, c("lon", "lat")]
     }
+    xy <- as.matrix(xy)[, 1:2, drop = FALSE]
+    if (nrow(xy) != nInd(x)) {
+        stop(error(
+            "Fatal Error: Number of coordinates is different from the number",
+            "of individuals\n"
+        ))
+    }
+    if (anyNA(xy)) {
+        stop(error(
+            "Fatal Error: Missing coordinates for:",
+            paste(indNames(x)[rowSums(is.na(xy)) > 0], collapse = ", "),
+            "\n"
+        ))
+    }
+    
+    # read the friction matrix as a stack so that every layer is used
+    if (is.character(fric.raster) ||
+        inherits(fric.raster, c("RasterLayer", "RasterStack", "RasterBrick",
+                                "SpatRaster"))) {
+        fric.raster <- raster::stack(fric.raster)
+    } else {
+        stop(error(
+            "Fatal Error: fric.raster must be a file path, RasterLayer,",
+            "RasterStack, RasterBrick or SpatRaster\n"
+        ))
+    }
+    
+    # DO THE JOB
     
     if (dist.type == "pop") {
         # calculate the centers if population measurement is wanted
-        c.x <- tapply(x@other$xy[, 1], x@pop, mean)
-        c.y <- tapply(x@other$xy[, 2], x@pop, mean)
+        c.x <- tapply(xy[, 1], x@pop, mean)
+        c.y <- tapply(xy[, 2], x@pop, mean)
         cp <- cbind(c.x, c.y)
         eucl.mat <- as.matrix(dist(cp))
         dimnames(eucl.mat) <- list(popNames(x), popNames(x))
         npop <- length(levels(x@pop))
     } else {
-        cp <- cbind(x@other$xy[, 1], x@other$xy[, 2])
+        cp <- cbind(xy[, 1], xy[, 2])
         eucl.mat <- as.matrix(dist(cp))
         dimnames(eucl.mat) <- list(indNames(x), indNames(x))
         npop <- length(indNames(x))
     }
+    rownames(cp) <- NULL
     
     # population colors 
     # if pop colors is a palette
@@ -189,8 +268,6 @@ gl.genleastcost <- function(x,
     
     colors_pops <- cols[as.numeric(pop(x))]
 
-    # check if fric.raster is a stack or not...
-    fric.raster <- raster::raster(fric.raster)
     mats <- list()
     mats.names <- NA
     mats.pathlength <- list()
@@ -203,53 +280,63 @@ gl.genleastcost <- function(x,
         dim(fric.raster)[3]  #number of rasters in the stack
     
     for (ci in 1:n.mats) {
-        raster::plot(fric.raster[[ci]],
-                     col = raster.colors,
-                     main = paste(names(fric.raster)[ci],
-                                  ":", 
-                                  pathtype, 
-                                  ", NN=", 
-                                  NN, 
-                                  sep = ""))
-        # image(fric.raster, col=fric.raster@legend@colortable, asp=1)
+        layer <- fric.raster[[ci]]
         
-        points(
-            x@other$xy,
-            cex = 1,
-            pch = 16,
-            col = colors_pops
+        if (verbose >= 2) {
+            cat(report(
+                "  Calculating", pathtype, "distances for layer",
+                names(fric.raster)[ci], "\n"
+            ))
+        }
+        
+        # same cost distances as gl.costdistances
+        cd.mat <- gl.costdistances(
+            layer,
+            cp,
+            method = pathtype,
+            NN = NN,
+            verbose = 0,
+            theta = theta
         )
-        if (dist.type == "pop")
-            points(cp,
-                   cex = 1.5,
-                   pch = 15,
-                   col = "black")
-        
-        # create friction matrix
-        fric.mat <-
-            gdistance::transition(fric.raster[[ci]], function(x)
-                1 / x[2], NN)
-        
-        # set distances to meters if not projected already
-        fric.mat@crs@projargs <- "+proj=merc +units=m"
-        fric.mat.cor <- gdistance::geoCorrection(fric.mat)
-        
-        if (pathtype == "leastcost") {
-            cd.mat <- gdistance::costDistance(fric.mat.cor, cp, cp)
-        }
-        
-        if (pathtype == "rSPDistance") {
-            cd.mat <- gdistance::rSPDistance(fric.mat.cor, cp, cp, theta = 1)
-        }
-        
-        if (pathtype == "commute") {
-            cd.mat <- as.matrix(gdistance::commuteDistance(fric.mat.cor, cp))
-        }
-        
         dimnames(cd.mat) <- dimnames(eucl.mat)
+        
+        pathlength.mat <- NULL
+        paths <- NULL
+        
+        if (plotpath) {
+            raster::plot(layer,
+                         col = raster.colors,
+                         main = paste(names(fric.raster)[ci],
+                                      ":", 
+                                      pathtype, 
+                                      ", NN=", 
+                                      NN, 
+                                      sep = ""))
+            
+            points(
+                xy,
+                cex = 1,
+                pch = 16,
+                col = colors_pops
+            )
+            if (dist.type == "pop")
+                points(cp,
+                       cex = 1.5,
+                       pch = 15,
+                       col = "black")
+        }
         
         # only show paths if leastcost otherwise not possible
         if (pathtype == "leastcost" & plotpath == TRUE) {
+            # transition built as in gl.costdistances: NA and Inf cells are
+            # barriers, conductance is the reciprocal of the mean resistance
+            resistance <- raster::getValues(layer)
+            resistance[!is.finite(resistance)] <- NA_real_
+            layer.local <- raster::setValues(raster::raster(layer), resistance)
+            fric.mat <- suppressMessages(gdistance::transition(
+                layer.local, function(a) 1 / mean(a), NN, symm = TRUE))
+            fric.mat.cor <- gdistance::geoCorrection(fric.mat, type = "c")
+            
             comb <- t(combn(1:npop, 2))
             
             # pathlength matrix
@@ -284,35 +371,33 @@ gl.genleastcost <- function(x,
         
     }  #end of ci loop
     
-    # mats[[n.mats+1]] <- eucl.mat mats.names[n.mats+1]<- 'Euclidean'
     names(mats) <- names(fric.raster)
-    # put other calculations here....  Calculate genetic distances across 
-    #subpopulations
     
-    xx <- gl2gi(x, verbose = 0)
+    # genetic distances across populations or individuals
     
     if (gen.distance == "Gst.Nei") {
-        gendist.mat <- as.matrix(mmod::pairwise_Gst_Nei(xx))
+        gendist.mat <- as.matrix(mmod::pairwise_Gst_Nei(gl2gi(x, verbose = 0)))
     }
     
     if (gen.distance == "Gst.Hedrick") {
-        gendist.mat <- as.matrix(mmod::pairwise_Gst_Hedrick(xx))
+        gendist.mat <- as.matrix(mmod::pairwise_Gst_Hedrick(gl2gi(x, verbose = 0)))
     }
     
     if (gen.distance == "D") {
-        gendist.mat <- as.matrix(mmod::pairwise_D(xx))
+        gendist.mat <- as.matrix(mmod::pairwise_D(gl2gi(x, verbose = 0)))
     }
     
     if (gen.distance == "kosman") {
-        gendist.mat <- as.matrix(as.dist(gl.kosman(xx)$kosman))
+        gendist.mat <- as.matrix(as.dist(gl.kosman(x, verbose = 0)$kosman))
     }
     
     if (gen.distance == "propShared") {
-        gendist.mat <- as.matrix(as.dist(propShared(xx)))
+        # gl.propShared returns a similarity
+        gendist.mat <- 1 - gl.propShared(x)
     }
     
     if (gen.distance == "dist") {
-      gendist.mat <- as.matrix(dist(as.matrix(xx)))
+      gendist.mat <- as.matrix(dist(as.matrix(gl2gi(x, verbose = 0))))
     }
     
     dimnames(gendist.mat) <- dimnames(eucl.mat)
