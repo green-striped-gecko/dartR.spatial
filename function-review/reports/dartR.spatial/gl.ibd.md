@@ -144,6 +144,13 @@ Native Windows/Linux execution, large FBM workloads, independent derivation of S
 
 Package and campaign manifests record `awaiting-commit`. Luis approved the displayed commit message and PR title with “ok” on 2026-09-22. Commit, push and PR creation are authorised; the PR number will be recorded after creation. The unrelated EEMS addendum remains outside this approval and unchanged.
 
+### Post-review amendment (2026-09-23): geodesic distances
+
+Raised as A2 in `function-review/reports/dartR.spatial/gl.spatial.autoCorr.md` and approved by Luis ("amend as you suggest"). Longitude/latitude coordinates now give geodesic distances with `terra::distance(lonlat = TRUE)` instead of Euclidean distances on `dismo::Mercator()` coordinates, which are inflated by 1/cos(latitude). Population centres are the mean longitude and latitude. Out-of-range degrees stop with an error, because Mercator previously rejected latitude ±90 only as a side effect of producing infinite coordinates.
+
+- Snapshots: the four Euclidean snapshots changed. `Dgeo` is about 15% shorter (582,865 m to 493,514 m for the first pair); the Mantel statistic changed from 0.2658 to 0.2638 for `testset.gl` and from 0.0836 to 0.1006 for `testset.gs`. The Fst snapshots are unchanged.
+- Fix tests updated: latitude -90 is now valid, -95 errors; the dependency test mocks terra instead of dismo. 80/80 pass.
+
 ## 8. Machine block
 
 ```json

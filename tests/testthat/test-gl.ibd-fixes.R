@@ -74,9 +74,11 @@ test_that("explicit coordinate identities align and invalid coordinates fail (F1
   geographic <- ibd_run(x, distance = "euclidean")
   x@other$latlon$metadata <- letters[1:6]
   expect_equal(ibd_run(x, distance = "euclidean")$Dgeo, geographic$Dgeo)
+  # geodesic distances accept the poles; out-of-range degrees are rejected
   x@other$latlon <- data.frame(lon = 1:6, lat = c(0, 10, -90, 20, 30, 40))
-  expect_error(suppressWarnings(ibd_run(x, distance = "euclidean")),
-               "Non-finite coordinates")
+  expect_true(all(is.finite(ibd_run(x, distance = "euclidean")$Dgeo)))
+  x@other$latlon$lat[3] <- -95
+  expect_error(ibd_run(x, distance = "euclidean"), "must be WGS84 degrees")
   p <- ibd_populations()
   p@other$latlon <- p@other$latlon
   p@other$latlon[1, 1] <- NA
@@ -135,7 +137,7 @@ test_that("unused plotting and projection dependencies are bypassed (F5 F7)", {
   environment(f) <- list2env(list(
     ggplot = function(...) stop("plot was constructed"),
     requireNamespace = function(package, ...) {
-      if (package == "dismo") FALSE else base::requireNamespace(package, ...)
+      if (package == "terra") FALSE else base::requireNamespace(package, ...)
     }), parent = environment(f))
   expect_silent(result <- f(Dgen = D, Dgeo = D, permutations = 19,
                              plot.out = FALSE, verbose = 0))
@@ -144,7 +146,7 @@ test_that("unused plotting and projection dependencies are bypassed (F5 F7)", {
   expect_silent(f(x, distance = "euclidean", coordinates = "xy",
                   permutations = 19, plot.out = FALSE, verbose = 0))
   expect_error(f(x, distance = "euclidean", plot.out = FALSE, verbose = 0),
-               "Install package dismo")
+               "Install package terra")
 })
 
 test_that("display and saving preserve numerical results (F5)", {

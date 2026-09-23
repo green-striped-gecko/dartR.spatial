@@ -142,6 +142,7 @@ Approved by Luis and applied; a data.frame now gives the same result as `x@other
 
 **A2 [INFO] — Mercator distances in sibling functions**
 `gl.ibd` (line 268) and `gl.run.eems` (line 301) also use `dismo::Mercator()` for lon/lat input. `gl.ibd` was reviewed in PR #37, so this is for the custodian to decide.
+Follow-up (2026-09-23, approved by Luis): `gl.ibd` now uses geodesic distances (see the amendment in its report). `gl.run.eems` was not changed. There, Mercator projects the sample coordinates and the habitat polygon onto the plane where EEMS lays out its deme grid, and `buffer` is in Mercator metres. No pairwise distance is computed from it, so the original A2 suggestion does not apply to that function.
 
 ## 8. Machine block
 

@@ -21,8 +21,9 @@
 #' lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow
 #' individual order. Explicit data.frames with row names are matched to
 #' indNames(x); automatic row names use positional order. All used coordinates
-#' must be numeric and finite. Longitude/latitude is projected to Mercator
-#' metres; x/y is used directly [default "latlon"].
+#' must be numeric and finite. Longitude/latitude gives geodesic distances in
+#' metres (population centres are the mean longitude and latitude); x/y gives
+#' Euclidean distances in coordinate units [default "latlon"].
 #' @param Dgen Genetic distances as a dist object or symmetric numeric square
 #' matrix. If NULL, calculated from x [default NULL].
 #' @param Dgeo Geographic distances as a dist object or symmetric numeric square
@@ -61,7 +62,7 @@
 #' Missing pairs are rejected, not omitted from the Mantel test. Finite negative
 #' Fst estimates and transformed distances are permitted.
 #'
-#' The Mantel test uses vegan::mantel. Dismo is needed for Mercator projection.
+#' The Mantel test uses vegan::mantel. Terra is needed for geodesic distances.
 #' If an explicitly requested log(Dgeo) produces log(0), choose a scientifically
 #' appropriate transformation such as log(Dgeo + 1). No offset is added
 #' automatically. A plot is constructed only when plot.out is TRUE or plot.file
@@ -261,15 +262,29 @@ gl.ibd <- function(x = NULL,
                     stop(error(paste0(
                         "Latitude/longitude coordinates need lon and lat columns.\n")))
                 }
-                if (!requireNamespace("dismo", quietly = TRUE)) {
+                if (!requireNamespace("terra", quietly = TRUE)) {
                     stop(error(paste0(
-                        "Install package dismo to project longitude/latitude coordinates.\n")))
+                        "Install package terra to calculate geodesic distances.\n")))
                 }
-                coords <- dismo::Mercator(coords[, c("lon", "lat"), drop = FALSE])
-                check.coords(coords)
-                coordstring <- paste(coordstring, "(Mercator transformed)")
+                coords <- coords[, c("lon", "lat"), drop = FALSE]
+                if (any(abs(coords[, "lon"]) > 180 | abs(coords[, "lat"]) > 90)) {
+                    stop(error(paste0(
+                        "Longitude/latitude must be WGS84 degrees (|lon| <= 180, ",
+                        "|lat| <= 90).\n")))
+                }
+                coordstring <- paste(coordstring, "(geodesic distances)")
             }
             rownames(coords) <- ids
+            # geodesic distances in metres for lon/lat, Euclidean for x/y
+            geo.dist <- function(value) {
+                if (projection) {
+                    D <- as.matrix(terra::distance(value, lonlat = TRUE))
+                    dimnames(D) <- list(rownames(value), rownames(value))
+                    stats::as.dist(D)
+                } else {
+                    stats::dist(value)
+                }
+            }
             if (typedis == "pop") {
                 pop.xy <- apply(coords, 2, function(a) tapply(a, pop(x), mean))
                 if (any(!is.finite(pop.xy))) {
@@ -277,9 +292,9 @@ gl.ibd <- function(x = NULL,
                         "Population mean coordinates must be finite; check population ",
                         "membership.\n")))
                 }
-                Dgeo <- stats::dist(pop.xy)
+                Dgeo <- geo.dist(pop.xy)
             } else {
-                Dgeo <- stats::dist(coords)
+                Dgeo <- geo.dist(coords)
             }
         }
         if (is.null(Dgen)) {

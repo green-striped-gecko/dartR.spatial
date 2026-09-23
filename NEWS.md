@@ -1,5 +1,10 @@
 # dartR.spatial (development)
 
+* `gl.ibd()` calculates geodesic distances (package terra) for longitude/
+  latitude instead of Euclidean distances on Mercator coordinates, which
+  are inflated by 1/cos(latitude). For `testset.gl` the geographic
+  distances are about 15% shorter and the Mantel statistic changes
+  (0.2658 to 0.2638). Out-of-range degrees now stop with an error.
 * `gl.spatial.autoCorr()` uses genetic distances as distances: `Simple` and
   `Absolute` (and SilicoDArT `Simple`) were reversed, which flipped the sign
   of r, and `grm` is now converted to a distance instead of giving values
