@@ -22,46 +22,44 @@ gl.ibd(
 )
 }
 \arguments{
-\item{x}{Genlight object. If provided a standard analysis on Fst/1-Fst and
-log(distance) is performed [required].}
+\item{x}{Genlight object used to calculate missing distances. Ignored when
+both Dgen and Dgeo are supplied [default NULL].}
 
-\item{distance}{Type of distance that is calculated and used for the
-analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
-'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
- [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
- [default "Fst"].}
+\item{distance}{Distance to calculate: population-based 'Fst'
+[\link[StAMPP]{stamppFst}] or 'D' [\link[StAMPP]{stamppNeisD}], or
+individual-based 'propShared' (1 - gl.propShared), 'euclidean'
+[\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"].}
 
-\item{coordinates}{Can be either 'latlon', 'xy' or a two column data.frame
-with column names 'lat','lon', 'x', 'y'). Coordinates are provided via
-\code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. If latlon
-data will be projected to meters using Mercator system [google maps] or if
-xy then distance is directly calculated on the coordinates.}
+\item{coordinates}{'latlon', 'xy', or a two-column data.frame named
+lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow
+individual order. Explicit data.frames with row names are matched to
+indNames(x); automatic row names use positional order. All used coordinates
+must be numeric and finite. Longitude/latitude is projected to Mercator
+metres; x/y is used directly [default "latlon"].}
 
-\item{Dgen}{Genetic distance matrix if no genlight object is provided
-[default NULL].}
+\item{Dgen}{Genetic distances as a dist object or symmetric numeric square
+matrix. If NULL, calculated from x [default NULL].}
 
-\item{Dgeo}{Euclidean distance matrix if no genlight object is provided
-[default NULL].}
+\item{Dgeo}{Geographic distances as a dist object or symmetric numeric square
+matrix. If NULL, calculated from coordinates [default NULL].}
 
-\item{Dgeo_trans}{Transformation to be used on the Euclidean distances. See
-Dgen_trans [default "Dgeo"].}
+\item{Dgeo_trans}{R expression transforming Dgeo, for example 'log(Dgeo)'.
+The default leaves distances unchanged [default "Dgeo"].}
 
-\item{Dgen_trans}{You can provide a formula to transform the genetic
-distance. The transformation can be applied as a formula using Dgen as the
- variable to be transformed. For example: \code{Dgen_trans = 'Dgen/(1-Dgen)'.
-  Any valid R expression can be used here
-   [default 'Dgen', which is the identity function.]}}
+\item{Dgen_trans}{R expression transforming Dgen, for example
+'Dgen/(1-Dgen)'. The default leaves distances unchanged [default "Dgen"].}
 
 \item{permutations}{Number of permutations in the Mantel test [default 999].}
 
-\item{plot.out}{Should an isolation by distance plot be returned
+\item{plot.out}{Display the isolation by distance plot
 [default TRUE].}
 
-\item{paircols}{Should pairwise dots colored by 'pop'ulation/'ind'ividual
-pairs [default 'pop']. You can color pairwise individuals by pairwise
- population colors.}
+\item{paircols}{Colour points by 'pop'ulation or 'ind'ividual pairs.
+For individual distances calculated using x, 'pop' uses population membership.
+With both distance matrices supplied, x is ignored and distance labels are
+used. NULL uses uncoloured points [default NULL].}
 
-\item{plot.theme}{Theme for the plot. See details for options
+\item{plot.theme}{ggplot2 theme for the plot
 [default theme_dartR()].}
 
 \item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]}
@@ -69,47 +67,40 @@ pairs [default 'pop']. You can color pairwise individuals by pairwise
 \item{plot.dir}{Directory in which to save files [default = working directory]}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log ; 3, progress and results summary; 5, full report
-[default 2 or as specified using gl.set.verbosity].}
+brief progress messages; 3, progress and results summary; 5, full report
+[default 2, unless specified using gl.set.verbosity].}
 }
 \value{
-Returns a list of the following components: Dgen (the genetic
-distance matrix), Dgeo (the Euclidean distance matrix), Mantel (the
-statistics of the Mantel test).
+A list with Dgen and Dgeo (the transformed, aligned dist objects)
+and mantel (the Mantel test result). The plot is displayed or saved separately.
 }
 \description{
 This function performs an isolation by distance analysis based on a Mantel
 test and also produces an isolation by distance plot. If a genlight object
-with coordinates is provided, then an Euclidean and genetic distance matrices
-are calculated.'
+with coordinates is provided, then geographic and genetic distance matrices
+are calculated.
 }
 \details{
-Currently pairwise Fst and D between populations and
-1-propShared and Euclidean distance between individuals are
-implemented. Coordinates are expected as lat long and converted to Google
-Earth Mercator projection. If coordinates are already projected, provide them
-at the x@other$xy slot.
+Both transformations default to the identity: Fst is not linearised and
+geographic distance is not logged unless requested. The Euclidean genetic
+option uses stats::dist on the genotype matrix. For pairs with missing loci,
+squared differences are scaled by the total number of loci divided by the
+number compared; this differs from gl.dist.ind. Population geographic
+distances use the mean coordinates of each population.
 
-You can provide also your own genetic and Euclidean distance matrices. The
-function is based on the code provided by the adegenet tutorial
-(\url{http://adegenet.r-forge.r-project.org/files/tutorial-basics.pdf}),
-using the functions  \link[vegan]{mantel} (package vegan),
-\link[StAMPP]{stamppFst}, \link[StAMPP]{stamppNeisD} (package StAMPP) and
-gl.propShared or gl.dist.ind. For transformation you need to have the dismo
-package installed. As a new feature you can plot pairwise relationship using
-double colored points (paircols=TRUE). Pairwise relationship can be
-visualised via populations or individuals, depending which distance is
-calculated. Please note: Often a problem arises, if an individual based 
-distance is calculated (e.g. propShared) and some individuals have identical
- coordinates as this results in distances of zero between those pairs of 
- individuals.
- 
-If the standard transformation [log(Dgeo)] is used, this results in an 
-infinite value, because of trying to calculate'log(0)'. To avoid this, the 
-easiest fix is to change the transformation from log(Dgeo) to log(Dgeo+1) or 
-you could add some "noise" to the coordinates of the individuals (e.g. +- 1m,
- but be aware if you use lat lon then you rather want to add +0.00001 degrees
-  or so).
+Labelled distance inputs must have unique, matching identities. Geographic
+distances are reordered to match genetic distances. When either input lacks
+labels, its supplied order is used; callers must ensure correspondence.
+At least three individuals or populations, finite distances for every pair,
+and variation in both distance vectors are required after transformation.
+Missing pairs are rejected, not omitted from the Mantel test. Finite negative
+Fst estimates and transformed distances are permitted.
+
+The Mantel test uses vegan::mantel. Dismo is needed for Mercator projection.
+If an explicitly requested log(Dgeo) produces log(0), choose a scientifically
+appropriate transformation such as log(Dgeo + 1). No offset is added
+automatically. A plot is constructed only when plot.out is TRUE or plot.file
+is supplied. plot.file saves the plot as RDS even when plot.out is FALSE.
 }
 \examples{
  \donttest{
@@ -118,7 +109,7 @@ you could add some "noise" to the coordinates of the individuals (e.g. +- 1m,
 ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
 Dgen_trans='Dgen/(1-Dgen)')
 #because of speed only the first 10 individuals)
-ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop', 
+ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop',
 Dgeo_trans='Dgeo')
 }
 #only first 100 loci
@@ -132,6 +123,6 @@ F-statistics under isolation by distance. Genetics, 145(4), 1219-1228.
 \link[vegan]{mantel}, \link[StAMPP]{stamppFst}
 }
 \author{
-Bernd Gruber (bugs? Post to 
+Bernd Gruber (bugs? Post to
 \url{https://groups.google.com/d/forum/dartr})
 }

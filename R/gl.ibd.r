@@ -2,8 +2,8 @@
 #'
 #' This function performs an isolation by distance analysis based on a Mantel
 #' test and also produces an isolation by distance plot. If a genlight object
-#' with coordinates is provided, then an Euclidean and genetic distance matrices
-#' are calculated.'
+#' with coordinates is provided, then geographic and genetic distance matrices
+#' are calculated.
 #' @importFrom vegan mantel
 #' @importFrom MASS kde2d
 #' @importFrom grDevices colorRampPalette
@@ -11,74 +11,65 @@
 #' @importFrom stats as.dist lm
 #' @importFrom StAMPP stamppFst stamppNeisD
 #' @importFrom stats coef
-#' @param x Genlight object. If provided a standard analysis on Fst/1-Fst and
-#' log(distance) is performed [required].
-#' @param distance Type of distance that is calculated and used for the
-#' analysis. Can be either population based 'Fst' [\link[StAMPP]{stamppFst}],
-#' 'D' [\link[StAMPP]{stamppNeisD}] or individual based 'propShared',
-#'  [gl.propShared], 'euclidean' [gl.dist.ind, method='Euclidean'], 'kosman' [gl.kosman]
-#'  [default "Fst"].
-#' @param coordinates Can be either 'latlon', 'xy' or a two column data.frame
-#' with column names 'lat','lon', 'x', 'y'). Coordinates are provided via
-#' \code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. If latlon
-#' data will be projected to meters using Mercator system [google maps] or if
-#' xy then distance is directly calculated on the coordinates.
-#' @param Dgen Genetic distance matrix if no genlight object is provided
-#' [default NULL].
-#' @param Dgeo Euclidean distance matrix if no genlight object is provided
-#' [default NULL].
-#' @param Dgeo_trans Transformation to be used on the Euclidean distances. See
-#' Dgen_trans [default "Dgeo"].
-#' @param Dgen_trans You can provide a formula to transform the genetic
-#' distance. The transformation can be applied as a formula using Dgen as the
-#'  variable to be transformed. For example: \code{Dgen_trans = 'Dgen/(1-Dgen)'.
-#'   Any valid R expression can be used here
-#'    [default 'Dgen', which is the identity function.]}
+#' @param x Genlight object used to calculate missing distances. Ignored when
+#' both Dgen and Dgeo are supplied [default NULL].
+#' @param distance Distance to calculate: population-based 'Fst'
+#' [\link[StAMPP]{stamppFst}] or 'D' [\link[StAMPP]{stamppNeisD}], or
+#' individual-based 'propShared' (1 - gl.propShared), 'euclidean'
+#' [\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"].
+#' @param coordinates 'latlon', 'xy', or a two-column data.frame named
+#' lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow
+#' individual order. Explicit data.frames with row names are matched to
+#' indNames(x); automatic row names use positional order. All used coordinates
+#' must be numeric and finite. Longitude/latitude is projected to Mercator
+#' metres; x/y is used directly [default "latlon"].
+#' @param Dgen Genetic distances as a dist object or symmetric numeric square
+#' matrix. If NULL, calculated from x [default NULL].
+#' @param Dgeo Geographic distances as a dist object or symmetric numeric square
+#' matrix. If NULL, calculated from coordinates [default NULL].
+#' @param Dgeo_trans R expression transforming Dgeo, for example 'log(Dgeo)'.
+#' The default leaves distances unchanged [default "Dgeo"].
+#' @param Dgen_trans R expression transforming Dgen, for example
+#' 'Dgen/(1-Dgen)'. The default leaves distances unchanged [default "Dgen"].
 #' @param permutations Number of permutations in the Mantel test [default 999].
-#' @param plot.out Should an isolation by distance plot be returned
+#' @param plot.out Display the isolation by distance plot
 #' [default TRUE].
-#' @param paircols Should pairwise dots colored by 'pop'ulation/'ind'ividual
-#' pairs [default 'pop']. You can color pairwise individuals by pairwise
-#'  population colors.
-#' @param plot.theme Theme for the plot. See details for options
+#' @param paircols Colour points by 'pop'ulation or 'ind'ividual pairs.
+#' For individual distances calculated using x, 'pop' uses population membership.
+#' With both distance matrices supplied, x is ignored and distance labels are
+#' used. NULL uses uncoloured points [default NULL].
+#' @param plot.theme ggplot2 theme for the plot
 #' [default theme_dartR()].
 #' @param plot.dir Directory in which to save files [default = working directory]
 #' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-#' progress log ; 3, progress and results summary; 5, full report
-#' [default 2 or as specified using gl.set.verbosity].
+#' brief progress messages; 3, progress and results summary; 5, full report
+#' [default 2, unless specified using gl.set.verbosity].
 #' @details
-#' Currently pairwise Fst and D between populations and
-#' 1-propShared and Euclidean distance between individuals are
-#' implemented. Coordinates are expected as lat long and converted to Google
-#' Earth Mercator projection. If coordinates are already projected, provide them
-#' at the x@other$xy slot.
+#' Both transformations default to the identity: Fst is not linearised and
+#' geographic distance is not logged unless requested. The Euclidean genetic
+#' option uses stats::dist on the genotype matrix. For pairs with missing loci,
+#' squared differences are scaled by the total number of loci divided by the
+#' number compared; this differs from gl.dist.ind. Population geographic
+#' distances use the mean coordinates of each population.
 #'
-#' You can provide also your own genetic and Euclidean distance matrices. The
-#' function is based on the code provided by the adegenet tutorial
-#' (\url{http://adegenet.r-forge.r-project.org/files/tutorial-basics.pdf}),
-#' using the functions  \link[vegan]{mantel} (package vegan),
-#' \link[StAMPP]{stamppFst}, \link[StAMPP]{stamppNeisD} (package StAMPP) and
-#' gl.propShared or gl.dist.ind. For transformation you need to have the dismo
-#' package installed. As a new feature you can plot pairwise relationship using
-#' double colored points (paircols=TRUE). Pairwise relationship can be
-#' visualised via populations or individuals, depending which distance is
-#' calculated. Please note: Often a problem arises, if an individual based 
-#' distance is calculated (e.g. propShared) and some individuals have identical
-#'  coordinates as this results in distances of zero between those pairs of 
-#'  individuals.
-#'  
-#' If the standard transformation [log(Dgeo)] is used, this results in an 
-#' infinite value, because of trying to calculate'log(0)'. To avoid this, the 
-#' easiest fix is to change the transformation from log(Dgeo) to log(Dgeo+1) or 
-#' you could add some "noise" to the coordinates of the individuals (e.g. +- 1m,
-#'  but be aware if you use lat lon then you rather want to add +0.00001 degrees
-#'   or so).
-#' @return Returns a list of the following components: Dgen (the genetic
-#' distance matrix), Dgeo (the Euclidean distance matrix), Mantel (the
-#' statistics of the Mantel test).
+#' Labelled distance inputs must have unique, matching identities. Geographic
+#' distances are reordered to match genetic distances. When either input lacks
+#' labels, its supplied order is used; callers must ensure correspondence.
+#' At least three individuals or populations, finite distances for every pair,
+#' and variation in both distance vectors are required after transformation.
+#' Missing pairs are rejected, not omitted from the Mantel test. Finite negative
+#' Fst estimates and transformed distances are permitted.
+#'
+#' The Mantel test uses vegan::mantel. Dismo is needed for Mercator projection.
+#' If an explicitly requested log(Dgeo) produces log(0), choose a scientifically
+#' appropriate transformation such as log(Dgeo + 1). No offset is added
+#' automatically. A plot is constructed only when plot.out is TRUE or plot.file
+#' is supplied. plot.file saves the plot as RDS even when plot.out is FALSE.
+#' @return A list with Dgen and Dgeo (the transformed, aligned dist objects)
+#' and mantel (the Mantel test result). The plot is displayed or saved separately.
 #' @export
-#' @author Bernd Gruber (bugs? Post to 
+#' @author Bernd Gruber (bugs? Post to
 #' \url{https://groups.google.com/d/forum/dartr})
 #' @seealso \link[vegan]{mantel}, \link[StAMPP]{stamppFst}
 #' @references
@@ -91,7 +82,7 @@
 #' ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
 #' Dgen_trans='Dgen/(1-Dgen)')
 #' #because of speed only the first 10 individuals)
-#' ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop', 
+#' ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop',
 #' Dgeo_trans='Dgeo')
 #' }
 #' #only first 100 loci
@@ -108,260 +99,256 @@ gl.ibd <- function(x = NULL,
                    plot.out = TRUE,
                    paircols = NULL,
                    plot.theme = theme_dartR(),
-                   plot.file=NULL,
-                   plot.dir=NULL,
+                   plot.file = NULL,
+                   plot.dir = NULL,
                    verbose = NULL) {
-  
-    # CHECK IF PACKAGES ARE INSTALLED
-  pkg <- "dismo"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(error(
-      "Package",
-      pkg,
-      " needed for this function to work. Please install it.\n"
-    ))
-    return(-1)
-  } else {
-        
-        funname <- match.call()[[1]]
-        
-        # SET VERBOSITY
-        verbose <- gl.check.verbosity(verbose)
-        
-        # SET WORKING DIRECTORY
-        plot.dir <- gl.check.wd(plot.dir,verbose=0)
-        
-        # FLAG SCRIPT START
-        funname <- match.call()[[1]]
-        utils.flag.start(func = funname,
-                         build = "v.2023.2",
-                         verbose = verbose)
-        
-        # CHECK DATATYPE
-        if (!is.null(x)){
-            dt <- utils.check.datatype(x, verbose = 0)
+    # SET VERBOSITY AND FLAG SCRIPT START
+    verbose <- gl.check.verbosity(verbose)
+    funname <- match.call()[[1]]
+    if (is.function(funname)) funname <- "gl.ibd"
+    utils.flag.start(func = funname, verbose = verbose)
+
+    # CHECK INPUT MODE AND DISTANCE IDENTITIES
+    supplied <- !is.null(Dgen) && !is.null(Dgeo)
+    if (!supplied) {
+        if (!is(x, "genlight")) {
+            stop(error(paste0(
+                "Provide both Dgen and Dgeo, or a genlight x to calculate missing ",
+                "distances.\n")))
         }
-        
-        # specific error checks
-        
-        if (!is.null(Dgen) & !is.null(Dgeo)) {
-            if (verbose > 0)
-                cat(
-                    report(
-                        "Analysis performed using provided genetic and Euclidean distance matrices. If a genlight object is provided, it is ignored.\n"
-                    )
-                )
-            ta <-"dgendgeo"
-            # make sure both matrices are distance objects if provided via Dgen 
-            # and Dgeo directly
-            Dgen <- as.dist(Dgen)
-            Dgeo <- as.dist(Dgeo)
+        dt <- utils.check.datatype(x, verbose = 0)
+        if (length(distance) != 1L || is.na(distance) ||
+            !distance %in% c("Fst", "D", "propShared", "euclidean", "kosman")) {
+            stop(error("distance must be Fst, D, propShared, euclidean or kosman.\n"))
         }
-        
-        if (is(x, "genlight")) {
-            if (verbose > 0)
-                cat(report("Analysis performed on the genlight object.\n"))
-            ta <-"genlight"
+    }
+    check.ids <- function(ids, label) {
+        if (!is.null(ids) &&
+            (anyNA(ids) || any(!nzchar(ids)) || anyDuplicated(ids))) {
+            stop(error(label, "must have unique, non-missing labels.\n"))
         }
-        
-        # check coordinates (if no Dgen and Dgeo is provided)
-        if (ta == "genlight") {
-            coords <- NULL
-            if (is(coordinates, "character")) {
-                if (coordinates == "latlon") {
-                    if (is.null(x@other$latlon))
-                        stop(error(
-                            "Cannot find coordinates in x@other$latlon.\n"
-                        ))
-                    coords <-
-                        dismo::Mercator(x@other$latlon[, c("lon", "lat")])
-                    if (verbose > 0) {
-                        cat(
-                            report(
-                                "Coordinates transformed to Mercator (google) projection to calculate distances in meters.\n"
-                            )
-                        )
-                    }
-                    coordstring <-"x@other$latlon (Mercator transformed)"
-                }
-                
-                if (coordinates == "xy") {
-                    if (is.null(x@other$xy))
-                        stop(error("Cannot find coordinates in x@other$xy.\n"))
-                    coords <- x@other$xy
-                    coordstring <-"x@other$xy"
-                }
-                
+    }
+    as.distance <- function(value, label) {
+        if (inherits(value, "dist")) {
+            size <- attr(value, "Size")
+            if (!is.numeric(value) || !is.numeric(size) || length(size) != 1L ||
+                is.na(size) || !is.finite(size) || size < 2 ||
+                size != floor(size) || length(value) != size * (size - 1) / 2) {
+                stop(error(label, "is not a valid dist object.\n"))
             }
-            
-            if (is(coordinates, "data.frame")) {
-                if (length(setdiff(colnames(coordinates), c("lat", "lon"))) == 0) {
-                    coords <- dismo::Mercator(coordinates[, c("lon", "lat")])
-                    coordstring <- "data.frame lat/lon (Mercator transformed)"
-                }
-                
-                if (length(setdiff(colnames(coordinates), c("x", "y"))) == 0) {
-                    coords <- coordinates[, c("x", "y")]
-                    coordstring <-"data.frame x/y"
-                }
-                
-                if (is.null(coords)){
-                    stop(
-                        error(
-                            "No valid coordinates provided. check the provided data.frame and its format.\n"
-                        )
-                    )
+            ids <- attr(value, "Labels")
+            if (!is.null(ids) && length(ids) != size) {
+                stop(error(label, "labels must match its size.\n"))
             }
+            check.ids(ids, label)
+            return(value)
+        }
+        if (!is.matrix(value) || !is.numeric(value) ||
+            nrow(value) != ncol(value) || nrow(value) < 2) {
+            stop(error(label, "must be a dist object or numeric square matrix.\n"))
+        }
+        rows <- rownames(value)
+        cols <- colnames(value)
+        check.ids(rows, label)
+        check.ids(cols, label)
+        if (!is.null(rows) && !is.null(cols)) {
+            if (!setequal(rows, cols)) {
+                stop(error(label, "row and column labels must match.\n"))
             }
-            
-            if (is.null(coords)){
-                stop(error("No valid coordinates provided!\n"))
+            value <- value[, match(rows, cols), drop = FALSE]
+        }
+        ids <- if (!is.null(rows)) rows else cols
+        dimnames(value) <- list(ids, ids)
+        # Only off-diagonal pairs matter, including after log transformations.
+        lower <- lower.tri(value)
+        if (!isTRUE(all.equal(value[lower], t(value)[lower],
+                              check.attributes = FALSE))) {
+            stop(error(label, "must be symmetric.\n"))
+        }
+        return(stats::as.dist(value))
+    }
+    align.distances <- function(gen, geo) {
+        if (attr(gen, "Size") != attr(geo, "Size")) {
+            stop(error("Dgen and Dgeo must have the same number of observations.\n"))
+        }
+        gen.ids <- attr(gen, "Labels")
+        geo.ids <- attr(geo, "Labels")
+        if (!is.null(gen.ids) && !is.null(geo.ids)) {
+            if (!setequal(gen.ids, geo.ids)) {
+                stop(error("Dgen and Dgeo labels must identify the same observations.\n"))
             }
-            
-            # make sure coordinates have the correct length
-            if (nrow(coords) != nInd(x) & ta == "genlight"){
-                stop(error(
-                    "Cannot find coordinates for each individual in slot @other$latlon.\n"
-                ))
+            if (!identical(gen.ids, geo.ids)) {
+                order <- match(gen.ids, geo.ids)
+                geo <- stats::as.dist(as.matrix(geo)[order, order, drop = FALSE])
             }
-            
-            typedis <-NULL
-            if (distance == "Fst" | distance == "D") {
-                typedis <-"pop"
-            }
-            
-            if (distance == "propShared" |
-                distance == "euclidean" |
-                distance == "kosman") {
-                typedis <-"ind"
-            }
-            
-            if (typedis == "pop" & nPop(x) < 2){
-                stop(
-                    error(
-                        "You specified a population based distance, but there is either no population or only a single population specified within your genlight object. Check via table(pop(genlight)).\n"
-                    )
-                )
-            }
-            
-            if (is.null(Dgeo) & typedis == "pop") {
-                if (nPop(x) > 1) {
-                    pop.xy <-
-                        apply(coords, 2, function(a)
-                            tapply(a, pop(x), mean, na.rm = TRUE))
-                    Dgeo <- dist(pop.xy)
+        }
+        return(list(gen = gen, geo = geo))
+    }
+    if (!is.null(Dgen)) Dgen <- as.distance(Dgen, "Dgen")
+    if (!is.null(Dgeo)) Dgeo <- as.distance(Dgeo, "Dgeo")
+
+    # CALCULATE ONLY THE MISSING DISTANCES
+    coordstring <- "Dgeo provided."
+    if (supplied) {
+        typedis <- "ind"
+        distance <- "Dgen provided"
+        if (verbose >= 2) {
+            cat(report("Using supplied distance matrices; x is ignored.\n"))
+        }
+    } else {
+        typedis <- if (distance %in% c("Fst", "D")) "pop" else "ind"
+        if (typedis == "pop" && nPop(x) < 3) {
+            stop(error("Population distances require at least three populations.\n"))
+        }
+        if (typedis == "ind" && nInd(x) < 3) {
+            stop(error("Individual distances require at least three individuals.\n"))
+        }
+        if (is.null(Dgeo)) {
+            explicit <- is.data.frame(coordinates)
+            if (explicit) {
+                coords <- coordinates
+                if (setequal(names(coords), c("lon", "lat"))) {
+                    projection <- TRUE
+                } else if (setequal(names(coords), c("x", "y"))) {
+                    projection <- FALSE
                 } else {
-                    stop(
-                        error(
-                            "Less than 2 populations provided, therefore no pairwise distances can be calculated.\n"
-                        )
-                    )
+                    stop(error("coordinates must have columns lat/lon or x/y.\n"))
+                }
+                coordstring <- "coordinates data.frame"
+            } else if (is.character(coordinates) && length(coordinates) == 1L &&
+                       !is.na(coordinates) && coordinates %in% c("latlon", "xy")) {
+                projection <- coordinates == "latlon"
+                coords <- if (projection) x@other$latlon else x@other$xy
+                if (projection && !is.null(coords) &&
+                    all(c("lon", "lat") %in% colnames(coords))) {
+                    coords <- coords[, c("lon", "lat"), drop = FALSE]
+                }
+                coordstring <- paste0("x@other$", coordinates)
+            } else {
+                stop(error(paste0(
+                    "coordinates must be latlon, xy or a two-column data.frame.\n")))
+            }
+            if (is.null(coords) || length(dim(coords)) != 2L ||
+                nrow(coords) != nInd(x) || ncol(coords) != 2L) {
+                stop(error("Provide two coordinates for every individual.\n"))
+            }
+            ids <- indNames(x)
+            check.ids(ids, "Individual names")
+            # Stored metadata follows genotype order. Only explicit tables carry
+            # independent identities; automatic data.frame row names are positional.
+            if (explicit && .row_names_info(coords) > 0L) {
+                check.ids(rownames(coords), "Coordinate row names")
+                if (!setequal(rownames(coords), ids)) {
+                    stop(error("Coordinate row names must match indNames(x).\n"))
+                }
+                coords <- coords[match(ids, rownames(coords)), , drop = FALSE]
+            }
+            if (!all(vapply(as.data.frame(coords), is.numeric, logical(1)))) {
+                stop(error("Coordinates must be numeric.\n"))
+            }
+            coords <- as.matrix(coords)
+            check.coords <- function(value) {
+                bad <- which(rowSums(!is.finite(value)) > 0)
+                if (length(bad)) {
+                    affected <- if (is.null(ids)) bad else ids[bad]
+                    stop(error(paste0("Non-finite coordinates for individuals: ",
+                                      paste(affected, collapse = ", "), ".\n")))
                 }
             }
-            
-            if (is.null(Dgeo) & typedis == "ind") {
-                if (nInd(x) > 1) {
-                    Dgeo <- dist(coords)
+            check.coords(coords)
+            if (projection) {
+                if (!all(c("lon", "lat") %in% colnames(coords))) {
+                    stop(error(paste0(
+                        "Latitude/longitude coordinates need lon and lat columns.\n")))
+                }
+                if (!requireNamespace("dismo", quietly = TRUE)) {
+                    stop(error(paste0(
+                        "Install package dismo to project longitude/latitude coordinates.\n")))
+                }
+                coords <- dismo::Mercator(coords[, c("lon", "lat"), drop = FALSE])
+                check.coords(coords)
+                coordstring <- paste(coordstring, "(Mercator transformed)")
+            }
+            rownames(coords) <- ids
+            if (typedis == "pop") {
+                pop.xy <- apply(coords, 2, function(a) tapply(a, pop(x), mean))
+                if (any(!is.finite(pop.xy))) {
+                    stop(error(paste0(
+                        "Population mean coordinates must be finite; check population ",
+                        "membership.\n")))
+                }
+                Dgeo <- stats::dist(pop.xy)
+            } else {
+                Dgeo <- stats::dist(coords)
+            }
+        }
+        if (is.null(Dgen)) {
+            helper.verbose <- if (verbose >= 2) verbose else 0
+            if (distance %in% c("Fst", "D")) {
+                if (methods::.hasSlot(x, "fbm") &&
+                    !is.null(methods::slot(x, "fbm"))) {
+                    x <- gl.fbm2gen(x, verbose = helper.verbose)
+                }
+                class(x) <- "genlight" # StAMPP requires the base class.
+                Dgen <- if (distance == "Fst") {
+                    stats::as.dist(StAMPP::stamppFst(x, nboots = 1))
                 } else {
-                    stop(
-                        error(
-                            "Less than 2 individuals provided, therefore no pairwise distances can be calculated.\n"
-                        )
-                    )
+                    stats::as.dist(StAMPP::stamppNeisD(x, pop = TRUE))
                 }
+            } else if (distance == "propShared") {
+                Dgen <- stats::as.dist(1 - gl.propShared(x))
+            } else if (distance == "euclidean") {
+                Dgen <- stats::dist(as.matrix(x))
+            } else {
+                Dgen <- stats::as.dist(gl.kosman(x, verbose = helper.verbose)$kosman)
             }
-            
-            # apply logarithm to distance
-            .fbm_or_null <- function(x) {
-              if (methods::.hasSlot(x, "fbm")) {
-                val <- methods::slot(x, "fbm")
-                return(if (is.null(val)) NULL else val)
-              }
-              NULL
-            }
-            
-            
-            if (is.null(Dgen) & distance == "Fst") {
-              fbm <- .fbm_or_null(x)
-              if (!is.null(fbm)) {
-                
-                if (!exists('gl.fbm2gen', mode="function")) {gl.fbm2gen <- function() return (-1);
-                error("You need to update dartR.base >=1.2.2 to have the fbm version installed.\n")}  
-                
-                x <- gl.fbm2gen(x)
-              }
-                class(x)<- "genlight" #stampp issue
-                Dgen <- as.dist(StAMPP::stamppFst(x, nboots = 1))
-            }
-            
-            if (is.null(Dgen) & distance == "D") {
-              fbm <- .fbm_or_null(x)
-              if (!is.null(fbm)) {
-                if (!exists('gl.fbm2gen', mode="function")) {
-                  gl.fbm2gen <- function() return (-1);
-                  error("You need to update dartR.base >=1.2.2 to have the fbm version installed.\n")
-                  }  
-              x <- gl.fbm2gen(x)
-              }
-              class(x)<- "genlight" #stampp issue
-                Dgen <-
-                    as.dist(StAMPP::stamppNeisD(x, pop = TRUE))
-            }
-            
-            if (is.null(Dgen) & distance == "propShared") {
-                Dgen <- as.dist(1 - gl.propShared(x))
-            }
-            
-            if (is.null(Dgen) & distance == "euclidean") {
-                Dgen <- as.dist(dist(as.matrix(x)))
-            }
-            if (is.null(Dgen) & distance == "kosman") {
-              Dgen <- as.dist(gl.kosman(x)$kosman)
-            }
-            
-            ### order both matrices to be alphabetically as levels in genlight (ind or pop)
-            if (is(x, "genlight")) {
-                if (typedis == "pop") {
-                    oo <- order(colnames(as.matrix(Dgen)))
-                    Dgen <- as.dist(as.matrix(Dgen)[oo, oo])
-                    oo <- order(colnames(as.matrix(Dgeo)))
-                    Dgeo <- as.dist(as.matrix(Dgeo)[oo, oo])
-                }
-            }
-        } else {
-            # end of ta=='genlight' ta='dgendgeo
-            coordstring <- "Dgeo provided."
-            distance <- "Dgen provided"
-            typedis <- "ind"
         }
-        
-        # use tranformations
-        Dgen <- eval(parse(text = Dgen_trans))
-        Dgeo <- eval(parse(text = Dgeo_trans))
-        
-        if (sum(is.infinite(Dgeo)) > 0) {
-            stop(
-                error(
-                    "Most likely some pairwise individual distances were zero and the transformation created missing values [e.g. log(Dgeo)]. This affects the Mantel test and points are omitted from the plot. Consider adding a suitable tranformation e.g. an offset to your Dgeo transformation if using a log transformation [e.g. Dgeo_trans='log(Dgeo+1)'] or adding some 'noise' to the coordinates.\n"
-                )
-            )
-            
+        Dgen <- as.distance(Dgen, "Dgen")
+        Dgeo <- as.distance(Dgeo, "Dgeo")
+        # Preserve the historical alphabetical order for population results.
+        if (typedis == "pop" && !is.null(attr(Dgen, "Labels"))) {
+            order <- order(attr(Dgen, "Labels"))
+            Dgen <- stats::as.dist(as.matrix(Dgen)[order, order, drop = FALSE])
+            if (is.null(attr(Dgeo, "Labels"))) {
+                Dgeo <- stats::as.dist(as.matrix(Dgeo)[order, order, drop = FALSE])
+                attr(Dgeo, "Labels") <- NULL
+            }
         }
-        
-        if (is.null(Dgeo))
-            stop(error(
-                "Cannot calculate distance matrix or no distance matrix provided\n!"
-            ))
-        if (is.null(Dgen))
-            stop(
-                error(
-                    "Cannot calculate genetic distance matrix or no genetic distance matrix provided!\n"
-                )
-            )
-        
-        manteltest <-
-            vegan::mantel(Dgen, Dgeo, na.rm = TRUE, permutations = permutations)
-        
+    }
+    aligned <- align.distances(Dgen, Dgeo)
+    Dgen <- aligned$gen
+    Dgeo <- aligned$geo
+
+    # TRANSFORM, NORMALISE AND CHECK STATISTICAL PRECONDITIONS
+    Dgen <- as.distance(eval(parse(text = Dgen_trans)), "Transformed Dgen")
+    Dgeo <- as.distance(eval(parse(text = Dgeo_trans)), "Transformed Dgeo")
+    aligned <- align.distances(Dgen, Dgeo)
+    Dgen <- aligned$gen
+    Dgeo <- aligned$geo
+    if (attr(Dgen, "Size") < 3L) {
+        stop(error("Mantel analysis requires at least three observations.\n"))
+    }
+    for (label in c("Dgen", "Dgeo")) {
+        value <- get(label)
+        if (any(!is.finite(value))) {
+            stop(error(label, paste0(
+                "contains non-finite pairwise distances after transformation. Check ",
+                "missing data and transformations (including log(0)); no pairs are ",
+                "omitted.\n")))
+        }
+        if (length(unique(as.numeric(value))) < 2L) {
+            stop(error(label, "must vary across observation pairs for a Mantel test.\n"))
+        }
+    }
+    manteltest <- if (verbose >= 2) {
+        vegan::mantel(Dgen, Dgeo, na.rm = FALSE, permutations = permutations)
+    } else {
+        suppressMessages(vegan::mantel(Dgen, Dgeo, na.rm = FALSE,
+                                      permutations = permutations))
+    }
+
+    # BUILD A PLOT ONLY WHEN DISPLAYING OR SAVING IT
+    if (plot.out || !is.null(plot.file)) {
         lm_eqn <-
             function(df,
                      r = manteltest$statistic,
@@ -381,18 +368,18 @@ gl.ibd <- function(x = NULL,
                     )
                 as.character(as.expression(eq))
             }
-        
-        ####### Printing outputs, using package patchwork
-        
+
+        # Plot the aligned pairwise distances.
+
         res <-
             data.frame(Dgen = as.numeric(Dgen), Dgeo = as.numeric(Dgeo))
         if (is.null(paircols)) {
-          
+
             p3 <-
-                ggplot(res, aes(x = Dgeo, y = Dgen)) + 
-              geom_point() + 
-              geom_smooth(method = "lm", se = TRUE) + 
-              ylab(Dgen_trans) + 
+                ggplot(res, aes(x = Dgeo, y = Dgen)) +
+              geom_point() +
+              geom_smooth(method = "lm", se = TRUE) +
+              ylab(Dgen_trans) +
               xlab(Dgeo_trans) +
                 annotate(
                     "text",
@@ -401,9 +388,9 @@ gl.ibd <- function(x = NULL,
                     y = -Inf,
                     parse = TRUE,
                     hjust = 1.05,
-                    vjust = 0) + 
+                    vjust = 0) +
               plot.theme
-            
+
         } else {
             Legend <- col2 <- NA  #ggplot bug
             cols <- which(lower.tri(as.matrix(Dgen)), arr.ind = T)
@@ -412,8 +399,8 @@ gl.ibd <- function(x = NULL,
             cn <- colnames(as.matrix(Dgen))
             # if someone wants to color pairwise individuals by pairwise colors
             if (typedis == "ind" & paircols == "pop") {
-                if (is(x, "genlight"))
-                    cn <- pop(x)
+                if (!supplied && is(x, "genlight"))
+                    cn <- pop(x)[match(cn, indNames(x))]
                 else
                     cn <-rownames(as.matrix(Dgen))
             }
@@ -425,53 +412,39 @@ gl.ibd <- function(x = NULL,
                     col2 = cn[c2]
                 )
             p3 <-
-                ggplot(res) + 
-              geom_point(aes(Dgeo, Dgen, col = Legend), size = 5) + 
-              geom_point(aes(Dgeo, Dgen, col = col2), size = 2) + 
-              geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) + 
-              guides(size = "none",color = guide_legend(title = "Populations")) + 
-              geom_smooth(aes(x = Dgeo, y = Dgen),method = "lm", se = TRUE) + 
-              ylab(Dgen_trans) + 
-              annotate("text",label = lm_eqn(res), 
+                ggplot(res) +
+              geom_point(aes(Dgeo, Dgen, col = Legend), size = 5) +
+              geom_point(aes(Dgeo, Dgen, col = col2), size = 2) +
+              geom_point(aes(Dgeo, Dgen),size = 2,shape = 1) +
+              guides(size = "none",color = guide_legend(title = "Populations")) +
+              geom_smooth(aes(x = Dgeo, y = Dgen),method = "lm", se = TRUE) +
+              ylab(Dgen_trans) +
+              annotate("text",label = lm_eqn(res),
                        x = Inf,
-                       y = -Inf, 
+                       y = -Inf,
                        parse = TRUE,
                        hjust = 1.05,
                        vjust = 0) +
               xlab(Dgeo_trans) + plot.theme
-            
+
         }
-        
+
         if (plot.out) {
             suppressMessages(print(p3))
         }
-        
-        if (verbose > 0) {
-            cat(report("  Coordinates used from:", coordstring, "\n"))
-            cat(report("  Transformation of Dgeo:", Dgeo_trans, "\n"))
-            cat(report("  Genetic distance:", distance, "\n"))
-            cat(report("  Tranformation of Dgen: ", Dgen_trans, "\n"))
-            print(manteltest)
-        }
-        
-        
-        # Optionally save the plot ---------------------
-        if(!is.null(plot.file)){
-          tmp <- utils.plot.save(p3,
-                                 dir=plot.dir,
-                                 file=plot.file,
-                                 verbose=verbose)
-        }
-        
-        
-        # FLAG SCRIPT END
-        if (verbose >= 1) {
-            cat(report("\nCompleted:", funname, "\n\n"))
-        }
-        
-        out <- list(Dgen = Dgen,
-                    Dgeo = Dgeo,
-                    mantel = manteltest)
-        return(out)
+
     }
+    if (verbose >= 3) {
+        cat(report("  Coordinates used from:", coordstring, "\n"))
+        cat(report("  Transformation of Dgeo:", Dgeo_trans, "\n"))
+        cat(report("  Genetic distance:", distance, "\n"))
+        cat(report("  Transformation of Dgen:", Dgen_trans, "\n"))
+        print(manteltest)
+    }
+    if (!is.null(plot.file)) {
+        plot.dir <- gl.check.wd(plot.dir, verbose = 0)
+        utils.plot.save(p3, dir = plot.dir, file = plot.file, verbose = verbose)
+    }
+    if (verbose >= 1) cat(report("\nCompleted:", funname, "\n\n"))
+    return(list(Dgen = Dgen, Dgeo = Dgeo, mantel = manteltest))
 }

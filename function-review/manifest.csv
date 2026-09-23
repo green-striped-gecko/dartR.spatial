@@ -1,2 +1,3 @@
-function,package,family,claimed_by,status
-gl.run.eems,dartR.spatial,analysis,Luis,approved-for-publication
+function,package,family,claimed_by,status,pr
+gl.run.eems,dartR.spatial,analysis,Luis,done,36
+gl.ibd,dartR.spatial,analysis,luis,awaiting-commit,

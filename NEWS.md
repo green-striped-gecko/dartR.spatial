@@ -1,5 +1,18 @@
 # dartR.spatial (development)
 
+* `gl.ibd()` aligns labelled distances and explicitly named coordinate tables.
+  Misaligned inputs can therefore produce different results; mismatched or
+  duplicate identities now error. Stored coordinates retain individual order.
+* `gl.ibd()` rejects incomplete coordinates, missing/non-finite pairwise
+  distances, fewer than three observations and constant distance vectors.
+  Square matrices and matrix-valued transformations are handled consistently.
+  Supplying both distance matrices ignores `x`; partial inputs calculate only
+  the missing distance. Negative Fst estimates remain supported.
+* `gl.ibd()` constructs plots only for display or saving, reports projection
+  dependency failures as errors, honours verbosity and accepts function-object
+  `do.call()` invocations. Documentation now describes the unchanged identity
+  transformation defaults and `stats::dist()` scaling for missing loci.
+
 * `gl.run.eems()` now errors on failed or incomplete EEMS runs instead of
   reading earlier output. Each call writes to a unique `eems-run-*` directory
   under `out.dir`; raw results and logs survive cleanup, which removes only
