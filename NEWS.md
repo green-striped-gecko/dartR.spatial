@@ -1,4 +1,4 @@
-# dartR.spatial (development)
+# dartR.spatial 1.2.3
 
 * `gl.ibd()` calculates geodesic distances (package terra) for longitude/
   latitude instead of Euclidean distances on Mercator coordinates, which
