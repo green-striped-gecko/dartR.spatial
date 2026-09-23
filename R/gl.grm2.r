@@ -1,6 +1,10 @@
 #' @name gl.grm2
 #' @title Calculates an identity by descent matrix
 #' @description
+#' This function is the dartR.spatial copy of \code{gl.grm} (package
+#' dartR.captive), kept so that spatial analyses do not depend on
+#' dartR.captive. Both return the same matrix.
+#'
 #' This function calculates the mean probability of identity by state (IBS)
 #' across loci that would result from all the possible crosses of the
 #' individuals analyzed. IBD is calculated by an additive relationship matrix
@@ -9,12 +13,16 @@
 #'
 #' @param x Name of the genlight object containing the SNP data [required].
 #' @param plotheatmap A switch if a heatmap should be shown [default TRUE].
-#' @param palette_discrete The color of populations [NULL].
+#' @param palette_discrete the color of populations [gl.select.colors].
 #' @param palette_convergent A convergent palette for the IBD values
-#'  [default convergent_palette].
+#'  or vector of colours [default RdYlBu from gl.select.colors].
 #' @param legendx x coordinates for the legend[default 0].
-#' @param legendy y coordinates for the legend[default 1].
-#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
+#' @param legendy y coordinates for the legend[default 0.5].
+#' @param label.size Specify the size of the population labels [default 0.75].
+#' @param legend.title Legend title [default "Populations"].
+#' @param plot.file Name for the RDS binary file to save (base name only,
+#'  exclude extension); saved only when \code{plotheatmap = TRUE}
+#'  [default NULL]
 #' @param plot.dir Directory in which to save files [default = working directory]
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
 #'  progress log ; 3, progress and results summary; 5, full report
@@ -22,11 +30,14 @@
 #' @param ... Parameters passed to function A.mat from package rrBLUP.
 #'
 #' @details
-#' Two or more alleles are identical by descent (IBD) if they are identical
-#' copies of the same ancestral allele in a base population. The additive
-#' relationship matrix is a theoretical framework for estimating a relationship
-#' matrix that is consistent with an approach to estimate the probability that
-#' the alleles at a random locus are identical in state (IBS).
+#' This function uses the A.mat function from the rrBLUP package. This method 
+#' follows the approach developed by Endelman and Jannink (2012).
+#' 
+#' Two alleles are Identical by State (IBS) if they are the same in state, 
+#' regardless of whether they come from a common ancestor. Two alleles are 
+#' Identical by Descent (IBD) if they are inherited from a common ancestor. 
+#' While IBS does not necessarily imply IBD, using high-density SNP data 
+#' improves the estimation of IBD probabilities from IBS measures.
 #'
 #' This function also plots a heatmap, and a dendrogram, of IBD values where
 #' each diagonal element has a mean that equals 1+f, where f is the inbreeding
@@ -38,8 +49,13 @@
 #'  Individual names are shown in the margins of the heatmap and colors
 #'  represent different populations.
 #'
+#'  This function densifies the genotype matrix (\code{as.matrix(x)}) before
+#'  calling \link[rrBLUP]{A.mat}, which requires a dense matrix. It is not
+#'  suited to full-size FBM-backed objects, where densification defeats the
+#'  memory savings FBM backing is meant to provide.
+#'
 #' @return An identity by descent matrix
-#' @author Custodian: Arthur Georges -- Post to
+#' @author Author(s): Arthur Georges. Custodian: Arthur Georges -- Post to
 #' \url{https://groups.google.com/d/forum/dartr}
 #' @references \itemize{
 #' \item Endelman, J. B. (2011). Ridge regression and other kernels for genomic
@@ -48,9 +64,11 @@
 #' realized relationship matrix. G3: Genes, Genomics, Genetics 2, 1405.
 #' }
 #' @examples
-#' require(dartR.base)  
-#' gl.grm2(platypus.gl[1:10,1:100])
+#' if (isTRUE(getOption("dartR_fbm"))) platypus.gl <- gl.gen2fbm(platypus.gl)
+#' gl.grm2(platypus.gl[1:10, 1:100])
 #'
+#' @seealso \code{gl.grm} and \code{gl.grm.network} in package dartR.captive,
+#' which compute the same matrix.
 #' @family inbreeding functions
 #' @export
 
@@ -60,35 +78,75 @@ gl.grm2 <- function(x,
                    palette_convergent = NULL,
                    legendx = 0,
                    legendy = 0.5,
-                   plot.file=NULL,
-                   plot.dir=NULL,
+                   label.size = 0.75,
+                   legend.title = "Populations",
+                   plot.file = NULL,
+                   plot.dir = NULL,
                    verbose = NULL,
                    ...) {
-    # SET VERBOSITY
-    verbose <- gl.check.verbosity(verbose)
-    
-    # FLAG SCRIPT START
-    funname <- match.call()[[1]]
-    utils.flag.start(func = funname,
-                     build = "Jody",
-                     verbose = verbose)
-    
-    # CHECK DATATYPE
-    datatype <- utils.check.datatype(x, verbose = verbose)
-    
-    # FUNCTION SPECIFIC ERROR CHECKING
-    
-    # check if package is installed
-    pkg <- "rrBLUP"
-    if (!(requireNamespace(pkg, quietly = TRUE))) {
-      cat(error(
-        "Package",
-        pkg,
-        " needed for this function to work. Please install it.\n"
-      ))
-      return(-1)
+  # SET VERBOSITY
+  verbose <- gl.check.verbosity(verbose)
+
+  # SET WORKING DIRECTORY
+  plot.dir <- gl.check.wd(plot.dir, verbose = 0)
+
+  # FLAG SCRIPT START
+  funname <- match.call()[[1]]
+  utils.flag.start(
+    func = funname,
+    build = "Jody",
+    verbose = verbose
+  )
+
+  # CHECK DATATYPE
+  datatype <- utils.check.datatype(x, verbose = verbose)
+
+  # FUNCTION SPECIFIC ERROR CHECKING
+
+  # check if package is installed
+  pkg <- "rrBLUP"
+  if (!(requireNamespace(pkg, quietly = TRUE))) {
+    cat(error(
+      "Package",
+      pkg,
+      " needed for this function to work. Please install it.\n"
+    ))
+    return(-1)
+  }
+
+  # gl.grm2 computes an additive relationship matrix intended for SNP
+  # (diploid, 0/1/2) dosage; it is not valid for SilicoDArT (presence/
+  # absence, ploidy 1) data
+  if (datatype == "SilicoDArT") {
+    stop(error(
+      "Fatal Error: gl.grm2 computes an additive relationship matrix for",
+      "SNP (diploid) data; it is not valid for SilicoDArT",
+      "(presence/absence) data.\n"
+    ))
+  }
+
+  # Set a population if none is specified (such as if the genlight object has been generated manually)
+  if (is.null(pop(x)) |
+    is.na(length(pop(x))) | length(pop(x)) <= 0) {
+    if (verbose >= 2) {
+      cat(
+        important(
+          "  Population assignments not detected, individuals assigned to a single population labelled 'pop1'\n"
+        )
+      )
     }
-    
+    pop(x) <- array("pop1", dim = nInd(x))
+    pop(x) <- as.factor(pop(x))
+  }
+
+  # DO THE JOB
+
+  # calculating the realized additive relationship matrix
+
+  G <- rrBLUP::A.mat(as.matrix(x) - 1, ...)
+
+  if (plotheatmap == TRUE) {
+    # check if package is installed
     pkg <- "gplots"
     if (!(requireNamespace(pkg, quietly = TRUE))) {
       cat(error(
@@ -98,89 +156,92 @@ gl.grm2 <- function(x,
       ))
       return(-1)
     }
-    
-    # Set a population if none is specified (such as if the genlight object has been generated manually)
-    if (is.null(pop(x)) |
-        is.na(length(pop(x))) | length(pop(x)) <= 0) {
-        if (verbose >= 2) {
-            cat(
-                important(
-                    "  Population assignments not detected, individuals assigned to a single population labelled 'pop1'\n"
-                )
-            )
-        }
-        pop(x) <- array("pop1", dim = nInd(x))
-        pop(x) <- as.factor(pop(x))
-    }
-    
-    # DO THE JOB
-    
+
     # assigning colors to populations
-    
-    colors_pops <- gl.select.colors(x, verbose = 0)
+    if (!is.null(palette_discrete)) {
+      # if pop colors is a palette
+      if (is(palette_discrete, "function")) {
+        colors_pops <- palette_discrete(length(levels(pop(x))))
+      }
+      # if pop colors is a vector
+      if (!is(palette_discrete, "function")) {
+        colors_pops <- palette_discrete
+      }
+    } else {
+      colors_pops <- gl.select.colors(x, verbose = 0)
+    }
+
     names(colors_pops) <- as.character(levels(x$pop))
-    
-    # calculating the realized additive relationship matrix
-    
-    G <- rrBLUP::A.mat(as.matrix(x) - 1, ...)
-    
+
     df_colors_temp_1 <-
-        as.data.frame(cbind(indNames(x), as.character(pop(x)), 1:nInd(x)))
+      as.data.frame(cbind(indNames(x), as.character(pop(x)), 1:nInd(x)))
     colnames(df_colors_temp_1) <- c("ind", "pop", "order")
     df_colors_temp_2 <-
-        as.data.frame(cbind(names(colors_pops), colors_pops))
+      as.data.frame(cbind(names(colors_pops), colors_pops))
     colnames(df_colors_temp_2) <- c("pop", "color")
     df_colors <-
-        merge(df_colors_temp_1, df_colors_temp_2, by = "pop")
+      merge(df_colors_temp_1, df_colors_temp_2, by = "pop")
     df_colors$order <- as.numeric(df_colors$order)
     df_colors <- df_colors[order(df_colors$order), ]
     df_colors_2 <- df_colors[, c("pop", "color")]
     df_colors_2 <- unique(df_colors_2)
-    
-    if (plotheatmap == T) {
-        if (is.null(palette_convergent)) 
-          cols <- gl.select.colors(library="gr.hcl",palette="RdYBu",ncolors = 255, verbose = 0) else cols <- palette_convergent
-        # plotting heatmap
-          oldpar <- par(no.readonly = TRUE)
-          on.exit(par(oldpar))
-          par(mar = c(1, 1, 1, 1))
-        p3 <- gplots::heatmap.2(
-            G,
-            col = cols,
-            dendrogram = "column",
-            ColSideColors = df_colors$color,
-            RowSideColors = df_colors$color,
-            trace = "none",
-            density.info = "none",
-            scale = "none",
-            main = "Probability of identity by descent"
-        )
-        legend(
-            legendx,
-            legendy,
-            legend = df_colors_2$pop,
-            fill = df_colors_2$color,
-            cex = 0.75,
-            title = "Populations"
-        )
+
+    if (is.null(palette_convergent)) {
+      cols <- gl.select.colors(library = "gr.hcl", palette = "RdYBu", ncolors = 255, verbose = 0)
+    } else if (is.function(palette_convergent)) {
+      cols <- palette_convergent(255)
+    } else {
+      cols <- palette_convergent
     }
-    
+    # plotting heatmap
+
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+    par(mar = c(1, 1, 1, 1))
+    p3 <- gplots::heatmap.2(
+      G,
+      col = cols,
+      dendrogram = "column",
+      ColSideColors = df_colors$color,
+      RowSideColors = df_colors$color,
+      trace = "none",
+      density.info = "none",
+      scale = "none",
+      main = "Probability of identity by descent"
+    )
+    legend(
+      legendx,
+      legendy,
+      legend = df_colors_2$pop,
+      fill = df_colors_2$color,
+      cex = label.size,
+      title = legend.title
+    )
+
     # Optionally save the plot ---------------------
-    
-    if(!is.null(plot.file)){
+
+    if (!is.null(plot.file)) {
       tmp <- utils.plot.save(p3,
-                             dir=plot.dir,
-                             file=plot.file,
-                             verbose=verbose)
+        dir = plot.dir,
+        file = plot.file,
+        verbose = verbose
+      )
     }
-    
-    # FLAG SCRIPT END
-    
+  } else if (!is.null(plot.file)) {
     if (verbose >= 1) {
-        cat(report("Completed:", funname, "\n"))
+      cat(warn(
+        "  plot.file was set but plotheatmap = FALSE; no plot is",
+        "generated, so nothing was saved.\n"
+      ))
     }
-    
-    # RETURN
-    invisible(G)
-    
+  }
+
+  # FLAG SCRIPT END
+
+  if (verbose >= 1) {
+    cat(report("Completed:", funname, "\n"))
+  }
+
+  # RETURN
+  invisible(G)
 }

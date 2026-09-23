@@ -1,5 +1,10 @@
 # dartR.spatial (development)
 
+* `gl.grm2()` is synchronised with the reviewed `dartR.captive::gl.grm()`.
+  SilicoDArT input now stops with an error, `plot.file` with
+  `plotheatmap = FALSE` warns instead of failing, `palette_discrete` is used,
+  `label.size` and `legend.title` are added, and gplots is required only
+  for the heatmap. SNP matrices are unchanged.
 * `gl.genleastcost()` accepts a file path, RasterLayer, RasterStack,
   RasterBrick or SpatRaster and processes every layer. Raster objects had
   failed on every call since December 2024. Cost distances now come from

@@ -4,4 +4,5 @@ gl.ibd,dartR.spatial,analysis,luis,done,37
 gl.costdistances,dartR.spatial,analysis,luis,done,38
 gl2shp,dartR.spatial,io,luis,done,39
 gl.kosman,dartR.spatial,analysis,luis,done,40
-gl.genleastcost,dartR.spatial,analysis,luis,pr-open,41
+gl.genleastcost,dartR.spatial,analysis,luis,done,41
+gl.grm2,dartR.spatial,analysis,luis,pr-open,
