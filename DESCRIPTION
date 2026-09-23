@@ -24,6 +24,7 @@ Suggests:
   mmod,
   Rcpp,
   testthat (>= 3.0.0),
+  withr,
   gdistance,
   gplots,
   rrBLUP,

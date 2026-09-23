@@ -1,4 +1,4 @@
-# dartR.spatial (development)
+# dartR.spatial 1.2.3
 
 * `gl.spatial.autoCorr()` uses genetic distances as distances: `Simple` and
   `Absolute` (and SilicoDArT `Simple`) were reversed, which flipped the sign

@@ -374,7 +374,8 @@ gl.run.eems <- function(x,
       for (i in seq_len(4)) {
         plots[[i]] <- plots[[i]] +
           ggplot2::geom_point(data = xy_plot,
-                             ggplot2::aes(x = x, y = y, color = pop)) +
+                             ggplot2::aes(x = .data$x, y = .data$y,
+                                          color = .data$pop)) +
           ggplot2::scale_color_manual(values = colors_pops) +
           ggplot2::coord_equal()
       }
