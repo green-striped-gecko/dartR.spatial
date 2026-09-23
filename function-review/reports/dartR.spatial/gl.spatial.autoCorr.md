@@ -170,6 +170,6 @@ Approved by Luis and applied; a data.frame now gives the same result as `x@other
   "addenda": [{"id": "A1", "severity": "LOW", "rule": "FS6", "status": "approved"}, {"id": "A2", "severity": "INFO", "rule": "FS6", "status": "not-actioned"}],
   "coverage_skipped": ["GenAlEx comparison: not available", "Bootstrap coverage: not assessed", "Google Group / GitHub issues: not searched"],
   "status": "pr-open",
-  "pr": null
+  "pr": 42
 }
 ```
