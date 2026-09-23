@@ -142,7 +142,8 @@ barriers in landscape genetics. Molecular ecology, 4179-4191.
 \code{\link{gl.costdistances}}
 
 Other spatial analysis functions: 
-\code{\link{gl.costdistances}()}
+\code{\link{gl.costdistances}()},
+\code{\link{gl.spatial.autoCorr}()}
 }
 \author{
 Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to

@@ -1,0 +1,98 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+  Processing genlight object with SNP data
+=== P1 sign of r in first three classes (strong IBD, expect positive) ===
+Euclidean   r = 0.1681  0.0613  -0.0847
+Simple      r = 0.122  0.0422  -0.0647
+Absolute    r = 0.2994  0.1172  -0.1413
+propShared  r = 0.122  0.0422  -0.0647
+grm         r = 0.1681  0.0613  -0.0847
+sqEuclid    r = 0.1681  0.0613  -0.0847
+Euclid raw  r = 0.0846  0.0285  -0.0458
+1-Euclid    r = 0.0891  0.0301  -0.0483
+Registered S3 method overwritten by 'gdata':
+  method         from  
+  reorder.factor gplots
+Registered S3 method overwritten by 'genetics':
+  method      from 
+  [.haplotype pegas
+PopGenReport spautocor (sqEuclid) r.uc: 0.1554 0.0487 -0.0974 
+utils.spautocor (sqEuclid) r.uc:         0.1554 0.0487 -0.0974 
+
+=== P2 log(Dgeo + 1), bins = 5 ===
+       Bin   N
+1  2.13900  51
+2  4.27800   0
+3  6.41700  12
+4  8.55600 168
+5 10.69601 589
+range of log distances: 0 10.829  total pairs: 820 
+
+=== P3 genlight + matrices ===
+Starting gl.spatial.autoCorr 
+  Warning: a genlight object was provided, so Dgeo and Dgen are ignored.
+  Analysis performed on the genlight object.
+  Coordinates used from: x@other$latlon (geodesic distances) 
+  Transformation of Dgeo: Dgeo 
+  Genetic distance: Euclidean 
+  Tranformation of Dgen:  Dgen 
+Completed: gl.spatial.autoCorr 
+    Bin   N
+1 14730 531
+2 29460 235
+3 44190  54
+
+===  P5 matrices without x  ===
+
+===  P4 named list, x = NULL  ===
+
+===  P9 matrix input, plot.out = TRUE  ===
+
+=== P6 returned Bin values ===
+[1] 14730 29460 44190
+
+=== P11 Mercator / geodesic distance ratio (TENTERFIELD, lat ~ -29) ===
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  0.000   1.143   1.143   1.121   1.143   1.149      36 
+expected 1/cos(29 deg) = 1.1434 
+
+=== P12 p.one.tail with reps = 19 ===
+[1] 0.05 0.05 0.05 0.05 0.05
+
+=== P13 dartR.popgen references in code ===
+character(0)
+
+=== P14 new tempdir files: Boots_Pop12647bf8bb0e Perm_Pop126477cbbc6cc 
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+  Processing genlight object with SNP data
+=== Q1 SNP distances passed without reversal (expect positive first class) ===
+Simple    raw r = 0.122 0.0422 -0.0647 | reversed (as function) r = -0.0696 -0.0239 0.0373
+Absolute  raw r = 0.2994 0.1172 -0.1413 | reversed (as function) r = -0.0438 -0.0165 0.0211
+grm as distance (as function): r = 13.6674 5.0257 -6.8422 | grm converted to distance (max - G): r = 0.1681 0.0613 -0.0847 
+
+=== Q2 SilicoDArT (presence/absence) ===
+Euclidean   function r = 0.1187 0.0432 -0.0634 | raw distance r = 0.0598 0.0206 -0.0333
+Simple      function r = 0.1187 0.0432 -0.0634 | raw distance r = 0.1187 0.0432 -0.0634
+Jaccard     function r = 0.0948 0.0334 -0.0519 | raw distance r = 0.0948 0.0334 -0.0519
+Bray-Curtis function r = 0.1197 0.0441 -0.0625 | raw distance r = 0.1197 0.0441 -0.0625
+
+=== Q3 automatic bins when the minimum distance is far from zero ===
+       Bin   N
+1 51807.93 140
+2 53592.93 126
+3 55377.93  93
+4 57162.93  53
+5 58948.18  23
+distance range: 50023 58948  pairs: 435 
+
+=== Q4 list inputs (x = NULL) ===
+unnamed list of dist : ok 
+named list of dist : ok 
+unnamed list of matrices : ok 

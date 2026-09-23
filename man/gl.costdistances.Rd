@@ -80,6 +80,7 @@ if (requireNamespace("gdistance", quietly = TRUE)) {
 \link[gdistance]{commuteDistance}, \link[gdistance]{geoCorrection}
 
 Other spatial analysis functions: 
-\code{\link{gl.genleastcost}()}
+\code{\link{gl.genleastcost}()},
+\code{\link{gl.spatial.autoCorr}()}
 }
 \concept{spatial analysis functions}

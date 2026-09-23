@@ -28,21 +28,28 @@
 #' distance
 #' for \code{Dgeo} and the relevant \code{Dgen} matrix (see \code{Dgen_method}) 
 #' for each population. 
-#' When the method selected is a genetic similarity matrix (e.g. "simple" 
-#' distance), the matrix is internally transformed with \code{1 - Dgen} so that 
-#' positive values of autocorrelation coefficients indicates more related 
-#' individuals similarly as implemented in GenAlEx. If the user provide the 
-#' distance matrices, care must be taken in interpreting the results because
-#' similarity matrix will generate negative values for closely related 
-#' individuals.
-#' 
-#' If \code{max(Dgeo)>1000} (e.g. the geographic distances are in thousands of 
-#' metres), values are divided by 1000 (in the example before these would then 
-#' become km) to facilitate readability of the plots.
+#' Genetic distances are used as distances, so that positive
+#' autocorrelation coefficients indicate more related individuals, as in
+#' GenAlEx. The Euclidean distance is squared, as in Smouse and Peakall (1999)
+#' and GenAlEx. Similarity matrices are converted to distances: 'propShared'
+#' as \code{1 - Dgen} and 'grm' (a relationship matrix G) as
+#' \code{G[i,i] + G[j,j] - 2 * G[i,j]}. If the user provides the matrices,
+#' \code{Dgen} must be a distance: a similarity matrix will generate negative
+#' values for closely related individuals.
+#'
+#' With \code{coordinates = "latlon"} (or a lat/lon data.frame), geographic
+#' distances are geodesic distances in metres (package terra). With 'xy' or an
+#' x/y data.frame, they are Euclidean distances in the coordinate units.
+#'
+#' If \code{max(Dgeo)>1000} (e.g. the geographic distances are in thousands of
+#' metres), the distance class labels in the plot are divided by 1000 (in the
+#' example before these would then become km) to facilitate readability. The
+#' returned table keeps the original units.
 #'
 #' If \code{bins} is of length = 1 it is interpreted as the number of (even)
-#' bins to use. In this case the starting point is always the minimum value in 
-#' the distance matrix, and the last is the maximum. If it is a numeric vector 
+#' bins to use. In this case the first class starts at the minimum value in
+#' the distance matrix, the classes have equal width, and the last ends at the
+#' maximum. If it is a numeric vector 
 #' of length>1, it is interpreted as the breaking points. In this case, the 
 #' first has to be the lowest value, and the last has to be the highest. There 
 #' are no internal checks for this and it is user responsibility to ensure that
@@ -52,7 +59,8 @@
 #'
 #' The permutation constructs the 95\% confidence intervals around the null
 #' hypothesis of no spatial structure (this is a two-tail test). The same data
-#' are also used to calculate the probability of the one-tail test (See 
+#' are also used to calculate the probability of the one-tail test as
+#' (number of permutations at least as extreme + 1) / (reps + 1) (See
 #' references below for details).
 #'
 #' Bootstrap calculations are skipped and \code{NA} is returned when the number 
@@ -82,17 +90,20 @@
 #'  \url{https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/}
 #'  }
 #'  
-#' @param x Name of the genlight object containing the SNP data [required].
-#' @param Dgen Genetic distance matrix if no genlight object is provided
-#' [default NULL].
-#' @param Dgeo Geographic distance matrix if no genlight object is provided.
+#' @param x Name of the genlight object containing the SNP or SilicoDArT data.
+#' If provided, Dgen and Dgeo are ignored [default NULL].
+#' @param Dgen Genetic distance matrix, dist object or list of them (one per
+#' population) if no genlight object is provided [default NULL].
+#' @param Dgeo Geographic distance matrix, dist object or list of them (one per
+#' population, in the same order as Dgen; list names are used as population
+#' names) if no genlight object is provided.
 #'  This is typically an Euclidean distance but it can be any meaningful 
 #'  (geographical) distance metrics [default NULL].
 #' @param coordinates Can be either 'latlon', 'xy' or a two column data.frame
 #' with column names 'lat','lon', 'x', 'y')  Coordinates are provided via
-#' \code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. If latlon
-#' data will be projected to meters using Mercator system [google maps] or if
-#' xy then distance is directly calculated on the coordinates [default "latlon"].
+#' \code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. For
+#' latlon, geodesic distances in metres are calculated; for xy, Euclidean
+#' distances are calculated on the coordinates [default "latlon"].
 #' @param Dgen_method Method to calculate genetic distances. See details
 #'  [default "Euclidean"].
 #' @param Dgeo_trans Transformation to be used on the geographic distances. See
@@ -113,21 +124,21 @@
 #' of no spatial structure should be carried out [default TRUE].
 #' @param bootstrap Whether bootstrap calculations to compute the 95\% 
 #' confidence intervals around r should be carried out [default TRUE].
-#' @param plot.theme Theme for the plot. See details [default NULL].
+#' @param plot.theme Theme for the plot. See details [default theme_dartR()].
 #' @param plot.colors.pop A color palette for populations or a list with
 #' as many colors as there are populations in the dataset [default NULL].
 #' @param CI.color Color for the shade of the 95\% confidence intervals around 
 #' the r estimates [default "red"].
 #' @param plot.out Specify if plot is to be produced [default TRUE].
 #' @param plot.dir Directory in which to save files [default = working directory]
-#' @param plot.file Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
-#' temporary directory (tempdir) [default FALSE].
+#' @param plot.file Name for the RDS binary file to save (base name only,
+#' exclude extension) [default NULL].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-##  progress log ; 3, progress and results summary; 5, full report [default
-##  NULL, unless specified using gl.set.verbosity].
-## #@inheritParams dartR.base::utils.plot.save
-#'   
-#' @return Returns a data frame with the following columns:
+#' brief progress messages; 3, progress and results summary; 5, full report
+#' [default 2, unless specified using gl.set.verbosity].
+#'
+#' @return Returns a list with one data frame per population (named by
+#' population), each with the following columns:
 #' \enumerate{
 #' \item Bin  The distance classes
 #' \item N The number of pairwise comparisons within each distance class
@@ -151,8 +162,8 @@
 #'  Plots and table are saved plot.file in plot.dir if specified.
 #'  Bootstraps and permutations (if requested) are saved in a temporary directory 
 #'
-#' @author Carlo Pacioni, Bernd Gruber & Luis Mijangos 
-#' (Post to \url{https://groups.google.com/d/forum/dartr})
+#' @author Author(s): Carlo Pacioni, Bernd Gruber & Luis Mijangos. Custodian:
+#' Carlo Pacioni -- Post to \url{https://groups.google.com/d/forum/dartr}
 #' @references
 #' \itemize{
 #' \item Smouse PE, Peakall R. 1999. Spatial autocorrelation analysis of
@@ -181,12 +192,11 @@
 #' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
 #' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 #' }
-#' test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-#' res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
+#' @family spatial analysis functions
 #' @importFrom tidyr pivot_wider
 #' @export
 
-gl.spatial.autoCorr <- function(x,
+gl.spatial.autoCorr <- function(x = NULL,
                                 Dgeo = NULL,
                                 Dgen = NULL,
                                 coordinates = "latlon", 
@@ -206,36 +216,15 @@ gl.spatial.autoCorr <- function(x,
                                 plot.dir=NULL,
                                 verbose = NULL) {
   
-  # CHECK IF PACKAGES ARE INSTALLED
-  pkg <- "dartR.popgen"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(error(
-      "Package",
-      pkg,
-      " needed for this function to work. Please install it.\n"
-    ))
-    return(-1)
-  }
-  pkg <- "dismo"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(error(
-      "Package",
-      pkg,
-      " needed for this function to work. Please install it.\n"
-    ))
-    return(-1)
-  }
-  
   # SET VERBOSITY
   verbose <- gl.check.verbosity(verbose)
-
+  
   # SET WORKING DIRECTORY
-  plot.dir <- gl.check.wd(plot.dir,verbose=0)  
-    
+  plot.dir <- gl.check.wd(plot.dir,verbose=0)
+  
   # FLAG SCRIPT START
   funname <- match.call()[[1]]
   utils.flag.start(func = funname,
-                   build = "Jackson",
                    verbose = verbose)
   
   # CHECK DATATYPE
@@ -245,37 +234,71 @@ gl.spatial.autoCorr <- function(x,
   
   # specific error checks
   if (!is.numeric(bins)) {
-    stop(error("  The argument 'bins' should be a numeric vector\n"))
+    stop(error(" The argument 'bins' should be a numeric vector\n"))
   }
   
-  if (!is.null(Dgen) & !is.null(Dgeo)) {
+  if (is(x, "genlight")) {
+    if ((!is.null(Dgen) | !is.null(Dgeo)) & verbose >= 1) {
+      cat(warn(
+        "  Warning: a genlight object was provided, so Dgeo and Dgen are ignored.\n"
+      ))
+    }
+    if (verbose > 0)
+      cat(report("  Analysis performed on the genlight object.\n"))
+    ta <-"genlight"
+  } else {
+    if (is.null(Dgen) | is.null(Dgeo)) {
+      stop(error(
+        " Provide either a genlight object (x) or both Dgeo and Dgen.\n"
+      ))
+    }
     if (verbose > 0)
       cat(
         report(
-          "  Analysis performed using provided genetic and Euclidean distance matrices. If a genlight object is provided, it is ignored.\n"
+          "  Analysis performed using provided genetic and Euclidean distance matrices.\n"
         )
       )
     ta <-"dgendgeo"
   }
   
-  if (is(x, "genlight")) {
-    if (verbose > 0)
-      cat(report("  Analysis performed on the genlight object.\n"))
-    ta <-"genlight"
+  # geodesic distances need terra
+  lonlat.input <- ta == "genlight" &&
+    ((is.character(coordinates) && coordinates == "latlon") ||
+       (is.data.frame(coordinates) &&
+          all(c("lat", "lon") %in% colnames(coordinates))))
+  if (lonlat.input) {
+    pkg <- "terra"
+    if (!(requireNamespace(pkg, quietly = TRUE))) {
+      stop(error(
+        "Package",
+        pkg,
+        " needed for this function to work. Please install it.\n"
+      ))
+    }
   }
   
   # avoid global binding error
   Bin <-
     r <-
     L.r <-
-    U.r <- L.r.null <- U.r.null <- Freq <- Var1 <-  NULL 
+    U.r <- L.r.null <- U.r.null <- Freq <- Var1 <- NULL
   
   # DO THE JOB #
   
   #### if a genlight object is provided ####
-  if (!is.null(x) & is(x, "genlight")) {
+  if (ta == "genlight") {
     
     pop_list <- seppop(x)
+    
+    # rows of a coordinates data.frame follow the individuals of x
+    if (is(coordinates, "data.frame")) {
+      if (nrow(coordinates) != nInd(x)) {
+        stop(error(
+          "The coordinates data.frame must have one row per individual.\n"
+        ))
+      }
+      coord_rows <- split(seq_len(nInd(x)), pop(x))
+    }
     
     Dgen_list <- list()
     Dgeo_list <- list()
@@ -293,14 +316,16 @@ gl.spatial.autoCorr <- function(x,
       
       # check coordinates (if no Dgen and Dgeo is provided)
       coords <- NULL
+      lonlat <- FALSE
       if (is(coordinates, "character")) {
         if (coordinates == "latlon") {
           if (is.null(x_temp@other$latlon))
             stop(error(
               "Cannot find coordinates in x@other$latlon"
             ))
-          coords <- dismo::Mercator(x_temp@other$latlon[, c("lon", "lat")])
-          coordstring <-"x@other$latlon (Mercator transformed)"
+          coords <- x_temp@other$latlon[, c("lon", "lat")]
+          lonlat <- TRUE
+          coordstring <-"x@other$latlon (geodesic distances)"
         }
         
         if (coordinates == "xy") {
@@ -313,12 +338,13 @@ gl.spatial.autoCorr <- function(x,
       
       if (is(coordinates, "data.frame")) {
         if (length(setdiff(colnames(coordinates), c("lat", "lon"))) == 0) {
-          coords <- dismo::Mercator(coordinates[, c("lon", "lat")])
-          coordstring <-"data.frame lat/lon (Mercator transformed)"
+          coords <- coordinates[coord_rows[[names(pop_list)[i]]], c("lon", "lat")]
+          lonlat <- TRUE
+          coordstring <-"data.frame lat/lon (geodesic distances)"
         }
         
         if (length(setdiff(colnames(coordinates), c("x", "y"))) == 0) {
-          coords <- coordinates[, c("x", "y")]
+          coords <- coordinates[coord_rows[[names(pop_list)[i]]], c("x", "y")]
           coordstring <-"data.frame x/y"
         }
         
@@ -343,7 +369,12 @@ gl.spatial.autoCorr <- function(x,
       }
       
       if (nInd(x_temp) > 1) {
-        Dgeo <- dist(coords)
+        if (lonlat) {
+          Dgeo <- as.dist(as.matrix(terra::distance(as.matrix(coords),
+                                                    lonlat = TRUE)))
+        } else {
+          Dgeo <- dist(coords)
+        }
       } else {
         stop(
           error(
@@ -352,27 +383,23 @@ gl.spatial.autoCorr <- function(x,
         )
       }
       
-      # calculate genetic distances
+      # calculate genetic distances; similarities are converted to distances
+      # so that positive r indicates more related individuals, as in GenAlEx
       if (Dgen_method == "propShared") {
-        Dgen <- as.dist(gl.propShared(x_temp))
+        Dgen <- 1 - gl.propShared(x_temp)
       } else {
         if (Dgen_method == "grm") {
-          Dgen <- as.dist(gl.grm2(x_temp, plotheatmap=FALSE, verbose = 0))
+          G <- as.matrix(gl.grm2(x_temp, plotheatmap=FALSE, verbose = 0))
+          # squared distance implied by a relationship matrix
+          Dgen <- outer(diag(G), diag(G), "+") - 2 * G
         } else {
-          Dgen <- gl.dist.ind(x_temp, method = Dgen_method,
-                              verbose = 0)
+          Dgen <- as.matrix(gl.dist.ind(x_temp, method = Dgen_method,
+                                        verbose = 0))
+          # Smouse and Peakall (1999) and GenAlEx use squared distances
+          if (tolower(Dgen_method) == "euclidean") {
+            Dgen <- Dgen ^ 2
+          }
         }
-      }
-      if ((dt == "SNP" &
-           Dgen_method == "propShared" |
-           Dgen_method == "Euclidean" |
-           Dgen_method == "Simple" |
-           Dgen_method == "Absolute") |
-          (dt == "SilicoDArT" & Dgen_method == "Euclidean")) {
-        
-        # Reverse genetic distance matrix so that correlated values
-        # indicated more similar individuals as we are used to see plots in GenAleEx
-        Dgen <- 1 - Dgen
       }
       
       distance <- Dgen_method
@@ -386,10 +413,10 @@ gl.spatial.autoCorr <- function(x,
   
   
   #### if distances are provided ####
-  if (is.null(x)) {
+  if (ta == "dgendgeo") {
     chk.D <- function(D, name.D) {
-      if(!(is(D, "dist") | is.matrix(D))) 
-        stop(error(paste0("  ", name.D, 
+      if(!(is(D, "dist") | is.matrix(D)))
+        stop(error(paste0(" ", name.D, 
                           " is neither a list, a matrix nor a distance\n")))
       if(is.matrix(D)) D <- as.dist(D)
       return(list(D))
@@ -402,24 +429,30 @@ gl.spatial.autoCorr <- function(x,
     }
     if(!is(Dgen, "list")) {
       Dgen_list <- chk.D(D=Dgen, name.D = "Dgen")
-    }  else {
+    } else {
       Dgen_list <- Dgen
     }
     
     # now distances are a list
-    if(length(Dgeo_list) != length(Dgen_list))
-      stop(error( "  The arguments Dgen and Dgeo should be of same length\n"))
+    if(length(Dgeo_list) != length(Dgen_list)) 
+      stop(error( " The arguments Dgen and Dgeo should be of same length\n"))
     
-    if(is.null(names(Dgeo_list))) pop.names <- paste0("Pop", seq_along(Dgen_list))
+    if(is.null(names(Dgeo_list))) {
+      pop.names <- paste0("Pop", seq_along(Dgen_list))
+    } else {
+      pop.names <- names(Dgeo_list)
+    }
     
     chk.D.list <- function(D.list, name.D) {
-      if(length(unique(sapply(D.list, class))) != 1) {
-        stop(error(paste0("  ", name.D, 
+      # first class only: a matrix has class c("matrix", "array")
+      classes <- vapply(D.list, function(D) class(D)[1], character(1))
+      if(length(unique(classes)) != 1) {
+        stop(error(paste0(" ", name.D, 
                           " is a list, but its elements are of different classes. These should be either all matrices or distances\n")))
       }
       
       if(!(is(D.list[[1]], "dist") | is.matrix(D.list[[1]]))) {
-        stop(error(paste0("  ", name.D, 
+        stop(error(paste0(" ", name.D, 
                           " is a list, but its element are neither all matrices nor distances\n")))
       }
       
@@ -434,14 +467,13 @@ gl.spatial.autoCorr <- function(x,
     len.elements.Dgen <- sapply(Dgen_list, length)
     
     if (is.character(all.equal(len.elements.Dgeo, len.elements.Dgen))) {
-      stop(error("  The arguments Dgen and Dgeo should have identical dimensions\n"))
+      stop(error(" The arguments Dgen and Dgeo should have identical dimensions\n"))
     }
     coordstring <- "Dgeo provided."
     distance <- "Dgen provided"
     typedis <- "ind"
   } # Close if matrices are provided
   #----------------------------------------------------------------------------#
-  
   #### Apply transformations ####
   apply.transformation <- function(D, transFUN, name.D) {
     assign(name.D, value = D)
@@ -522,14 +554,15 @@ gl.spatial.autoCorr <- function(x,
       bs.u <- apply(bs, 2, quantile, probs = 0.975, na.rm = TRUE)
       
       p.one.tail <-
-        sapply(seq_along(splist$r.uc), function(i, r.rc, r, crt = crt) {
+        sapply(seq_along(splist$r.uc), function(i, r.rc, r) {
           if (is.na(r[i])) {
             NA
           } else{
+            # the observed value counts as one of the permutations
             if (r[i] >= 0) {
-              sum(r.rc[, i] >= r[i]) / length(r.rc[, i])
+              (sum(r.rc[, i] >= r[i]) + 1) / (length(r.rc[, i]) + 1)
             } else{
-              sum(r.rc[, i] <= r[i]) / length(r.rc[, i])
+              (sum(r.rc[, i] <= r[i]) + 1) / (length(r.rc[, i]) + 1)
             }
           }
         }, r = splist$r.uc + crt,  r.rc = bs + crt)
@@ -600,48 +633,49 @@ gl.spatial.autoCorr <- function(x,
       lbls <- spa_multi$Bin
     }
     
-    p3 <- ggplot(spa_multi, aes_string("Bin", "r", col="Population")) +
-      geom_line(size=1) +
-      geom_point(size=2) +
-      geom_hline(yintercept = 0, col = "black", size=1) +
+    if (length(Dgen_list) == 1) {
+      x.scale <- scale_x_continuous(breaks = spa_multi$Bin,
+                                    labels = lbls,
+                                    sec.axis = sec_axis(
+                                      ~ .,
+                                      breaks = spa_multi$Bin,
+                                      labels = spa_multi$N))
+    } else {
+      x.scale <- scale_x_continuous(breaks = spa_multi$Bin,
+                                    labels = lbls)
+    }
+    
+    p3 <- ggplot(spa_multi, aes(x = .data$Bin, y = .data$r,
+                                col = .data$Population)) +
+      geom_line(linewidth = 1) +
+      geom_point(size = 2) +
+      geom_hline(yintercept = 0, col = "black", linewidth = 1) +
       scale_color_manual(values = plot.colors.pop) +
-      scale_x_continuous(breaks = spa_multi$Bin,
-                         labels = lbls) +
+      x.scale +
       ylab("Autocorrelation (r)") + 
       xlab("Distance class") + 
       plot.theme
     
     if (bootstrap) {
       p3 <- p3 +   
-        geom_errorbar(aes(ymin=L.r, ymax=U.r), 
+        geom_errorbar(aes(ymin = .data$L.r, ymax = .data$U.r), 
                       width=spa_multi[, mean(tail(Bin, -1) - head(Bin, -1))]/10) 
     }
     
     if (permutation & plot.pops.together == FALSE) {
       p3 <- p3 +  
-        geom_ribbon(aes(ymin=L.r.null,ymax=U.r.null), fill = CI.color, 
-                    alpha=0.25,show.legend = FALSE) + 
-        geom_line(aes(y = L.r.null), col = "black", linetype = "dashed") +
-        geom_point(aes(y = L.r.null), col = "black") +
-        geom_line(aes(y = U.r.null), col = "black", linetype = "dashed") +
-        geom_point(aes(y = U.r.null), col = "black") +
+        geom_ribbon(aes(ymin = .data$L.r.null, ymax = .data$U.r.null),
+                    fill = CI.color, alpha=0.25,show.legend = FALSE) + 
+        geom_line(aes(y = .data$L.r.null), col = "black", linetype = "dashed") +
+        geom_point(aes(y = .data$L.r.null), col = "black") +
+        geom_line(aes(y = .data$U.r.null), col = "black", linetype = "dashed") +
+        geom_point(aes(y = .data$U.r.null), col = "black") +
         facet_wrap(~Population, nrow = length(Dgen_list), scales = "free_y") +
-        theme(
-          #   strip.text.x = element_text(size = 12),
-          #   axis.text.x = element_text(
-          #     size = 12
-          #   ), 
-          legend.position = "none") 
+        theme(legend.position = "none") 
     }
     
     if(length(Dgen_list) == 1) {
       p3 <- p3 + 
-        scale_x_continuous(breaks = spa_multi$Bin,
-                           labels = lbls,
-                           sec.axis = sec_axis(
-                             trans = ~ .,
-                             breaks = spa_multi$Bin,
-                             labels = spa_multi$N)) +
         theme(strip.text = element_blank(), legend.position = "none")
     }
     suppressWarnings(
@@ -654,6 +688,8 @@ gl.spatial.autoCorr <- function(x,
     cat(report("  Transformation of Dgeo:", Dgeo_trans, "\n"))
     cat(report("  Genetic distance:", distance, "\n"))
     cat(report("  Tranformation of Dgen: ", Dgen_trans, "\n"))
+  }
+  if (verbose >= 3) {
     print(res)
   }
   
