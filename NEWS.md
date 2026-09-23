@@ -5,6 +5,11 @@
   are inflated by 1/cos(latitude). For `testset.gl` the geographic
   distances are about 15% shorter and the Mantel statistic changes
   (0.2658 to 0.2638). Out-of-range degrees now stop with an error.
+* `gl.grm2()` is synchronised with the reviewed `dartR.captive::gl.grm()`.
+  SilicoDArT input now stops with an error, `plot.file` with
+  `plotheatmap = FALSE` warns instead of failing, `palette_discrete` is used,
+  `label.size` and `legend.title` are added, and gplots is required only
+  for the heatmap. SNP matrices are unchanged.
 * `gl.spatial.autoCorr()` uses genetic distances as distances: `Simple` and
   `Absolute` (and SilicoDArT `Simple`) were reversed, which flipped the sign
   of r, and `grm` is now converted to a distance instead of giving values
