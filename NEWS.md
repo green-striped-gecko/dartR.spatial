@@ -1,5 +1,11 @@
 # dartR.spatial (development)
 
+* `gl2shp()` removes individuals only when their coordinates are missing.
+  Previously an NA in any `ind.metrics` column also removed the individual,
+  so outputs can now contain more points. The attribute table is written
+  once: duplicated `.1` columns and the `optional` column are gone, and `id`
+  holds sample names instead of row numbers. Invalid `type`, a missing
+  `outpath`, missing terra and data with no complete coordinates now error.
 * `gl.ibd()` aligns labelled distances and explicitly named coordinate tables.
   Misaligned inputs can therefore produce different results; mismatched or
   duplicate identities now error. Stored coordinates retain individual order.

@@ -1,3 +1,4 @@
 function,package,family,claimed_by,status,pr
 gl.run.eems,dartR.spatial,analysis,Luis,done,36
 gl.ibd,dartR.spatial,analysis,luis,awaiting-commit,
+gl2shp,dartR.spatial,io,luis,pr-open,
