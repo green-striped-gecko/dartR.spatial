@@ -151,7 +151,7 @@ All ten approved changes are implemented in `R/gl.genleastcost.r`. `devtools::do
     {"id": "F11", "severity": "LOW", "confidence": "high", "rule": "DOC1", "status": "approved", "change": 10}
   ],
   "coverage_skipped": ["pathlength units on lon/lat rasters: not checked", "Google Group / GitHub issues: not searched"],
-  "status": "applied",
-  "pr": null
+  "status": "pr-open",
+  "pr": 41
 }
 ```
