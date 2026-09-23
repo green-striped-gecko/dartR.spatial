@@ -5,6 +5,19 @@
   `plotheatmap = FALSE` warns instead of failing, `palette_discrete` is used,
   `label.size` and `legend.title` are added, and gplots is required only
   for the heatmap. SNP matrices are unchanged.
+* `gl.spatial.autoCorr()` uses genetic distances as distances: `Simple` and
+  `Absolute` (and SilicoDArT `Simple`) were reversed, which flipped the sign
+  of r, and `grm` is now converted to a distance instead of giving values
+  outside [-1, 1]. Euclidean distances are squared, as in Smouse & Peakall
+  (1999) and GenAlEx, so default r values roughly double. Lon/lat distances
+  are geodesic instead of Mercator (about 13% shorter at 29 degrees), and
+  one-tail p-values count the observed value, so they are never 0.
+  `Dgeo`/`Dgen` input works without `x = NULL` and with named lists or lists
+  of matrices, and a `coordinates` data.frame works with several
+  populations.
+* `utils.spautocor()` starts automatic distance classes at the minimum
+  distance, as documented; before, classes started at 0 and could leave all
+  pairs in the last class.
 * `gl.genleastcost()` accepts a file path, RasterLayer, RasterStack,
   RasterBrick or SpatRaster and processes every layer. Raster objects had
   failed on every call since December 2024. Cost distances now come from

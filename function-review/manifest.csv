@@ -5,4 +5,5 @@ gl.costdistances,dartR.spatial,analysis,luis,done,38
 gl2shp,dartR.spatial,io,luis,done,39
 gl.kosman,dartR.spatial,analysis,luis,done,40
 gl.genleastcost,dartR.spatial,analysis,luis,done,41
+gl.spatial.autoCorr,dartR.spatial,analysis,luis,done,42
 gl.grm2,dartR.spatial,analysis,luis,pr-open,43
