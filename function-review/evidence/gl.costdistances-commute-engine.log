@@ -1,0 +1,55 @@
+function (x, coords) 
+{
+    if (isFALSE(is(transitionMatrix(x), "dsCMatrix"))) {
+        stop("symmetric transition matrix required", "(dsCMatrix) in TransitionLayer object x")
+    }
+    coords <- .coordsToMatrix(coords)
+    rd <- matrix(NA, nrow = length(coords[, 1]), ncol = length(coords[, 
+        1]))
+    rownames(rd) <- rownames(coords)
+    colnames(rd) <- rownames(coords)
+    allFromCells <- cellFromXY(x, coords)
+    if (!all(!is.na(allFromCells))) {
+        warning("some coordinates not found and omitted")
+        allFromCells <- allFromCells[!is.na(allFromCells)]
+    }
+    x <- .transitionSolidify(x)
+    fromCells <- allFromCells[allFromCells %in% transitionCells(x)]
+    if (length(fromCells) < length(allFromCells)) {
+        warning(length(fromCells), " out of ", length(allFromCells), 
+            " locations were found in the fully connected transition", 
+            " matrix. NAs introduced.")
+    }
+    else {
+    }
+    fromCells <- unique(allFromCells)
+    Lr <- .Laplacian(x)
+    n <- max(Lr@Dim)
+    Lr <- Lr[-n, -n]
+    C <- 9.99999999999999e-301 * n
+    Lplus <- matrix(ncol = length(fromCells), nrow = length(fromCells))
+    index <- match(fromCells, transitionCells(x))
+    for (i in 1:length(fromCells)) {
+        ei <- matrix(-C/n, ncol = 1, nrow = n - 1)
+        ei[index[i], ] <- C - (C/n)
+        xi <- solve(Lr, ei)
+        xi <- as.vector(xi)
+        Lplusallrows <- c(xi - sum(xi/n), (sum(xi)/n))
+        Lplus[, i] <- as.vector(Lplusallrows)[index]
+    }
+    Lplus <- Lplus/C
+    rdSS <- (-2 * Lplus + matrix(diag(Lplus), nrow = length(fromCells), 
+        ncol = length(fromCells)) + t(matrix(diag(Lplus), nrow = length(fromCells), 
+        ncol = length(fromCells))))
+    Volume <- sum(transitionMatrix(x))
+    rdSS <- rdSS * Volume
+    index1 <- which(allFromCells %in% fromCells)
+    index2 <- match(allFromCells[allFromCells %in% fromCells], 
+        fromCells)
+    rd[index1, index1] <- rdSS[index2, index2]
+    rd <- as.dist(rd)
+    attr(rd, "method") <- "commute"
+    return(rd)
+}
+<bytecode: 0x144edea90>
+<environment: namespace:gdistance>
