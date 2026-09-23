@@ -34,8 +34,9 @@ individual-based 'propShared' (1 - gl.propShared), 'euclidean'
 lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow
 individual order. Explicit data.frames with row names are matched to
 indNames(x); automatic row names use positional order. All used coordinates
-must be numeric and finite. Longitude/latitude is projected to Mercator
-metres; x/y is used directly [default "latlon"].}
+must be numeric and finite. Longitude/latitude gives geodesic distances in
+metres (population centres are the mean longitude and latitude); x/y gives
+Euclidean distances in coordinate units [default "latlon"].}
 
 \item{Dgen}{Genetic distances as a dist object or symmetric numeric square
 matrix. If NULL, calculated from x [default NULL].}
@@ -96,7 +97,7 @@ and variation in both distance vectors are required after transformation.
 Missing pairs are rejected, not omitted from the Mantel test. Finite negative
 Fst estimates and transformed distances are permitted.
 
-The Mantel test uses vegan::mantel. Dismo is needed for Mercator projection.
+The Mantel test uses vegan::mantel. Terra is needed for geodesic distances.
 If an explicitly requested log(Dgeo) produces log(0), choose a scientifically
 appropriate transformation such as log(Dgeo + 1). No offset is added
 automatically. A plot is constructed only when plot.out is TRUE or plot.file

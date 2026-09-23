@@ -1,6 +1,8 @@
 # Characterisation captured before critical source review at 15a4c7c.
 # Approved F3 snapshot changes: incomplete Fst distances now error.
-# The four valid Euclidean snapshots retain their original numerical values.
+# The four valid Euclidean snapshots retained their original values until
+# geodesic distances replaced Mercator (gl.spatial.autoCorr report A2):
+# Dgeo is about 15% shorter and the Mantel statistic changes accordingly.
 # Original snapshots are preserved in function-review/evidence.
 test_that("IBD reference-data behaviour is unchanged", {
   local_edition(3)
