@@ -119,7 +119,7 @@ All seven approved changes are implemented in `R/gl.kosman.r`; `devtools::docume
     {"id": "F7", "severity": "LOW", "confidence": "high", "rule": "DOC1", "status": "approved", "change": 7}
   ],
   "coverage_skipped": ["devtools::check(): not run", "Large-data memory: estimated, not measured", "Polyploid real data: not tested", "Google Group / GitHub issues: not searched"],
-  "status": "applied",
-  "pr": null
+  "status": "pr-open",
+  "pr": 40
 }
 ```
