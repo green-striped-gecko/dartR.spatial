@@ -85,7 +85,7 @@ Change 1 is implemented in `R/gl.grm2.r`; `devtools::document()` regenerated `ma
     {"id": "F5", "severity": "LOW", "confidence": "high", "rule": "DOC1", "status": "approved", "change": 1}
   ],
   "coverage_skipped": ["gplots-missing path: not testable in-session", "FBM input: not tested", "Sync review: full standards walk not repeated; gl.grm was reviewed in dartR.captive"],
-  "status": "applied",
-  "pr": null
+  "status": "pr-open",
+  "pr": 43
 }
 ```
