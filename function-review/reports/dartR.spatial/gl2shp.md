@@ -148,7 +148,7 @@ A1 and A2: approved by Luis, applied.
   ],
   "addenda": [{"id": "A1", "severity": "LOW", "rule": "FS5", "status": "approved"}, {"id": "A2", "severity": "LOW", "rule": "VRB3", "status": "approved"}],
   "coverage_skipped": ["devtools::check(): not run", "Google Group / GitHub issues: not searched", "KML reprojection accuracy: not verified"],
-  "status": "applied",
-  "pr": null
+  "status": "pr-open",
+  "pr": 39
 }
 ```
