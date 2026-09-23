@@ -2,42 +2,81 @@
 % Please edit documentation in R/gl.costdistances.r
 \name{gl.costdistances}
 \alias{gl.costdistances}
-\title{Calculates cost distances for a given landscape (resistance matrix)}
+\title{Calculates distances across a resistance landscape}
 \usage{
-gl.costdistances(landscape, locs, method, NN, verbose = NULL)
+gl.costdistances(landscape, locs, method, NN, verbose = NULL, theta = 1)
 }
 \arguments{
-\item{landscape}{A raster object coding the resistance of the landscape
-[required].}
+\item{landscape}{Single-layer RasterLayer of resistance values [required].}
 
-\item{locs}{Coordinates of the subpopulations. If a genlight object is
-provided coordinates are taken from @other$latlon and centers for population
-(pop(gl)) are calculated. In case you want to calculate costdistances between
-individuals redefine pop(gl) via: \code{pop(gl)<- indNames(gl)} [required].}
+\item{locs}{Genlight with named lon/lat columns in @other$latlon, or a numeric
+two-column matrix/data.frame in x/y order in the raster CRS. Supplied row
+names must be unique. For individual distances from a genlight with existing
+populations, set pop(x) <- indNames(x) [required].}
 
-\item{method}{Defines the type of cost distance, types are 'leastcost',
-'rSPDistance' or 'commute' (Circuitscape type) [required].}
+\item{method}{One of 'leastcost', 'rSPDistance' or 'commute' [required].}
 
-\item{NN}{Number of next neighbours recommendation is 8 [required].}
+\item{NN}{Neighbourhood: 4, 8, 16 or 'bishop' (diagonals only). Eight neighbours
+is a common choice [required].}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log ; 3, progress and results summary; 5, full report
+brief progress messages; 3, progress and results summary; 5, full report
 [default 2, unless specified using gl.set.verbosity].}
+
+\item{theta}{RSP parameter, strictly between 0 and 20. Used only when method
+is 'rSPDistance'; changing it changes the path model [default 1].}
 }
 \value{
-A costdistance matrix between all pairs of locs.
+A numeric square matrix of pairwise distances, with location or
+population names on both axes when supplied. Input objects are unchanged.
 }
 \description{
-Calculates a cost distance matrix, to be used with run.popgensim.
+Calculates pairwise least-cost, randomised shortest-path or
+random-walk commute distances between locations on a resistance raster.
+}
+\details{
+Adjacent cells have conductance equal to the reciprocal of their mean
+resistance. Connections are symmetric. Geographic correction uses inter-cell
+distance, with type 'c' for least-cost and randomised shortest paths (RSP), and
+type 'r' for commute. For geographic rasters, distances use metres; projected
+rasters use their coordinate units. Explicit x/y coordinates on rasters with
+no CRS use local grid units; no projection or metre units are inferred.
+
+Least-cost and RSP distances combine resistance and distance units. Commute
+is expected random-walk travel time (steps there and back), equal to effective
+resistance multiplied by graph volume (the sum of conductance over both
+directions). It is not the unscaled effective resistance used by Circuitscape.
+RSP retains gdistance's default net-movement method. Theta controls the path
+model and interacts with cost scale; decrease it explicitly if theta = 1
+underflows on large costs. No automatic cost or theta scaling is performed.
+Type 'c' is the RSP correction convention here; gdistance has no unique
+geographic correction for intermediate RSP regimes.
+
+NA and positive Inf raster values are barriers. Traversable cells must have
+strictly positive, finite resistance. Locations on barriers or outside the
+raster are rejected. Disconnected least-cost pairs return Inf; commute and
+RSP require a connected traversable graph. A single location, or locations
+in the same cell, have zero pairwise distance.
+
+Genlight coordinates are interpreted as WGS84 longitude/latitude. Arithmetic
+population centres are calculated in those coordinates, then transformed to
+the raster CRS. Stored coordinate rows must follow individual order. With no
+population assignments, individuals are used instead. Missing assignments
+or coordinates are rejected; no observations are silently omitted.
 }
 \examples{
-data(possums.gl)
-library(raster)  #needed for that example
-landscape.sim <- readRDS(system.file('extdata','landscape.sim.rdata', 
-package='dartR.data'))
-#calculate mean centers of individuals per population
-xy <- apply(possums.gl@other$xy, 2, function(x) tapply(x, pop(possums.gl),
- mean))
-cd <- gl.costdistances(landscape.sim, xy, method='leastcost', NN=8)
-round(cd,3)
+if (requireNamespace("gdistance", quietly = TRUE)) {
+  landscape.sim <- readRDS(system.file("extdata", "landscape.sim.rdata",
+                                       package = "dartR.data"))
+  # This synthetic landscape uses local grid coordinates, not a named CRS.
+  xy <- apply(possums.gl@other$xy, 2, function(a)
+    tapply(a, pop(possums.gl), mean))
+  cd <- gl.costdistances(landscape.sim, xy, method = "leastcost", NN = 8)
+  round(cd, 3)
 }
+}
+\seealso{
+\link[gdistance]{costDistance}, \link[gdistance]{rSPDistance},
+\link[gdistance]{commuteDistance}, \link[gdistance]{geoCorrection}
+}
+\concept{spatial analysis functions}

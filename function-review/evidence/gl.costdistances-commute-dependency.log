@@ -1,0 +1,38 @@
+Loading required package: raster
+Loading required package: sp
+Loading required package: igraph
+
+Attaching package: ‘igraph’
+
+The following object is masked from ‘package:raster’:
+
+    union
+
+The following objects are masked from ‘package:stats’:
+
+    decompose, spectrum
+
+The following object is masked from ‘package:base’:
+
+    union
+
+Loading required package: Matrix
+
+Attaching package: ‘gdistance’
+
+The following object is masked from ‘package:igraph’:
+
+    normalize
+
+Warning messages:
+1: package ‘sp’ was built under R version 4.4.3 
+2: package ‘igraph’ was built under R version 4.4.3 
+Function: commuteDistance (package gdistance)
+x="TransitionLayer", coords="Coords"
+function (x, coords) 
+{
+    return(.rD(x, coords))
+}
+
+
+
