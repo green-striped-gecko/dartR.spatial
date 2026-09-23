@@ -1,0 +1,121 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+===  P1 NA in sex only (coords complete)  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  Shapefile saved as: gl.shp 
+  in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//Rtmp6MOWBP/file24373504b53f 
+Completed: gl2shp 
+points: 20 
+
+===  P2 two NA lat  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  Warning: Removed 2 individual(s) due to missing coordinates: AA010915, UC_00126 
+  Shapefile saved as: gl.shp 
+  in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//Rtmp6MOWBP/file24373504b53f 
+Completed: gl2shp 
+points: 18 
+
+===  P3 ind.metrics NULL  ===
+points: 20 
+
+===  P4 type='gpkg'  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+[1] "ERROR: Fatal Error: type must be 'shp' or 'kml'\n"
+files written: 0 
+
+===  P4b type='KML'  ===
+[1] "ERROR: Fatal Error: type must be 'shp' or 'kml'\n"
+files written: 0 
+
+===  P5 latlon matrix  ===
+points: 20 
+
+===  P6 lat/long names  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  Warning: Names given as lat long, instead of lat lon. Rectifying
+  Shapefile saved as: gl.shp 
+  in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//Rtmp6MOWBP/file24373504b53f 
+Completed: gl2shp 
+points: 20 
+
+===  P7 missing outpath  ===
+[1] "ERROR: Fatal Error: output folder does not exist: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//Rtmp6MOWBP/file24373504b53f/nope \n"
+[1] "id"       "pop"      "lat"      "lon"      "sex"      "maturity"
+[1] TRUE
+Error in `[.data.frame`(as.data.frame(r), , c("id", "id.1")) : 
+  undefined columns selected
+Calls: print -> head -> [ -> [.data.frame
+Execution halted
+        id           pop
+1 AA010915  EmmacMDBForb
+2 UC_00126 EmmacMaclGeor
+3 AA032760  EmmacMDBMaci
+ class       : SpatVector 
+ geometry    : points 
+ dimensions  : 20, 7  (geometries, attributes)
+ extent      : 141.8169, 152.1935, -33.382, -22.56372  (xmin, xmax, ymin, ymax)
+ coord. ref. : +proj=longlat +datum=WGS84 +no_defs 
+ names       :       id           pop    lat   lon    sex maturity
+ type        :    <chr>        <fact>  <num> <num> <fact>   <fact>
+ values      : AA010915  EmmacMDBForb -33.38   148   Male    Adult
+               UC_00126 EmmacMaclGeor -30.72 152.2   Male    Adult
+               AA032760  EmmacMDBMaci -28.55 150.3   Male SubAdult
+ a_very_long_column_name
+                   <num>
+                       1
+                       1
+                       1
+[1] "id"         "pop"        "lat"        "lon"        "sex"       
+[6] "maturity"   "a_very_lon"
+--- verbose 3, full testset.gl, kml
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  KML file saved as: gl.kml 
+  in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpjfbzSI/file25f36b5805a9 
+Completed: gl2shp 
+ class       : SpatVector 
+ geometry    : points 
+ dimensions  : 250, 6  (geometries, attributes)
+ extent      : 130.6974, 153.3333, -36.09298, -14.78241  (xmin, xmax, ymin, ymax)
+ coord. ref. : +proj=longlat +datum=WGS84 +no_defs 
+ names       :       id           pop    lat   lon    sex maturity
+ type        :    <chr>        <fact>  <num> <num> <fact>   <fact>
+ values      : AA010915  EmmacMDBForb -33.38   148   Male    Adult
+               UC_00126 EmmacMaclGeor -30.72 152.2   Male    Adult
+               AA032760  EmmacMDBMaci -28.55 150.3   Male SubAdult
+--- all coords NA
+Starting gl2shp 
+  Warning: Removed 20 individual(s) due to missing coordinates: AA010915, UC_00126, AA032760, AA013214, AA011723, AA012411, AA019237, AA019238, AA019239, AA019235, AA019240, AA019241, AA019242, AA019243, AA019251, AA019252, AA012405, AA012406, AA012409, AA012499 
+Completed: gl2shp 
+ class       : SpatVector 
+ geometry    : none 
+ dimensions  : 0, 0  (geometries, attributes)
+ extent      : NaN, NaN, NaN, NaN  (xmin, xmax, ymin, ymax)
+ coord. ref. :  
+--- example
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  Shapefile saved as: gl.shp 
+  in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpjfbzSI 
+Completed: gl2shp 
+[1] 250   6

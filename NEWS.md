@@ -1,5 +1,11 @@
 # dartR.spatial (development)
 
+* `gl2shp()` removes individuals only when their coordinates are missing.
+  Previously an NA in any `ind.metrics` column also removed the individual,
+  so outputs can now contain more points. The attribute table is written
+  once: duplicated `.1` columns and the `optional` column are gone, and `id`
+  holds sample names instead of row numbers. Invalid `type`, a missing
+  `outpath`, missing terra and data with no complete coordinates now error.
 * `gl.costdistances()` now uses mean cell resistance for symmetric edges.
   This changes distances on heterogeneous landscapes. Genlight coordinates
   are selected by lon/lat names, interpreted as WGS84, and their population
