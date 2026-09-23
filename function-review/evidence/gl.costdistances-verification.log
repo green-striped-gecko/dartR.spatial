@@ -1,0 +1,39 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+Starting gl.costdistances 
+Calculating leastcost for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating commute for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating leastcost for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating commute for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating rSPDistance for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating leastcost for 10 locations.
+Returned 10 by 10 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+Starting gl.costdistances 
+Calculating commute for 3 locations.
+Returned 3 by 3 distance matrix; 0 unreachable entries.
+Completed: gl.costdistances 
+All integration assertions passed.

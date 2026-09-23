@@ -1,3 +1,4 @@
+local_edition(3)
 ibd_distances <- function() {
   stats::dist(matrix(c(0, 1, 4, 6, 10, 17), ncol = 1,
                      dimnames = list(LETTERS[1:6], "position")))
