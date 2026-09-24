@@ -1,8 +1,8 @@
 Package: dartR.spatial
 Type: Package
 Title: Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 1.2.3
-Date: 2026-05-26
+Version: 1.2.6
+Date: 2026-09-24
 Revision: Elastic Elapid
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
