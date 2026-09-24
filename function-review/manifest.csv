@@ -6,4 +6,5 @@ gl2shp,dartR.spatial,io,luis,done,39
 gl.kosman,dartR.spatial,analysis,luis,done,40
 gl.genleastcost,dartR.spatial,analysis,luis,done,41
 gl.spatial.autoCorr,dartR.spatial,analysis,luis,done,42
-gl.grm2,dartR.spatial,analysis,luis,pr-open,43
+gl.grm2,dartR.spatial,analysis,luis,done,43
+gl.propShared,dartR.spatial,analysis,luis,approved,

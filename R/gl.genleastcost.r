@@ -393,7 +393,7 @@ gl.genleastcost <- function(x,
     
     if (gen.distance == "propShared") {
         # gl.propShared returns a similarity
-        gendist.mat <- 1 - gl.propShared(x)
+        gendist.mat <- 1 - gl.propShared(x, verbose = 0)
     }
     
     if (gen.distance == "dist") {

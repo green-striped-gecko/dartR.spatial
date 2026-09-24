@@ -1,8 +1,8 @@
 # Characterization tests for gl.propShared
-# Baseline snapshotted before review (dev at ddaed27; `git diff upstream/dev
-# -- R/gl.propShared.r` empty, so the loaded code is the reviewed code).
-# Pins current behaviour, defects included; assertions tagged [pins defect]
-# flip when the matching approved finding is applied.
+# Baseline snapshotted before review (dartR.base dev at ddaed27), re-run
+# unchanged on dartR.spatial dev at 3bba9b7. Assertions tagged [fixed: n]
+# were flipped by approved change n of
+# function-review/reports/dartR.spatial/gl.propShared.md.
 #
 # The equivalence pins in the last block compare against gl.dist.ind, whose
 # SNP engine (utils.dist.ind.snp) carries its applied PR #315 fixes on this
@@ -46,9 +46,9 @@ test_that("statistic is 1 - mean(|g_i - g_j|)/2 with pairwise-complete NA omissi
   expect_equal(unname(diag(hand)), rep(1, 8))
 })
 
-test_that("pairs with no overlapping calls return NaN, not an error or 1", {
-  # [pins defect] an all-NA individual and a disjoint-call pair both yield
-  # NaN; the diagonal is still forced to 1 for the all-NA individual
+test_that("pairs with no overlapping calls return NA, not an error or 1", {
+  # [fixed: 1] was NaN from the C++ kernel; gl.dist.ind returns NA. The
+  # diagonal is still forced to 1 for the all-NA individual
   set.seed(1)
   m <- matrix(sample(0:2, 6 * 10, replace = TRUE), nrow = 6,
               dimnames = list(paste0("ind", 1:6), paste0("loc", 1:10)))
@@ -60,46 +60,36 @@ test_that("pairs with no overlapping calls return NaN, not an error or 1", {
   gm <- suppressMessages(gl.compliance.check(gm, verbose = 0))
 
   r <- gl.propShared(gm)
-  expect_true(all(is.nan(r[1, -1])))
+  expect_true(all(is.na(r[1, -1])))
+  expect_false(any(is.nan(r)))
   expect_equal(r[1, 1], 1)            # undefined self-similarity reported as 1
-  expect_true(is.nan(r[2, 3]))
+  expect_true(is.na(r[2, 3]))
   expect_equal(round(r[4, 5], 6), 0.65)
 })
 
-test_that("SilicoDArT data is accepted although the dosage halving does not apply", {
-  # [pins defect] DAT7: no utils.check.datatype gate. For 0/1 presence-
-  # absence the |g1 - g2|/2 term halves the dissimilarity, so the returned
-  # similarity is exactly (1 + simple matching) / 2 and can never fall
-  # below 0.5.
-  gs <- testset.gs[1:6, 1:60]
-  rs <- gl.propShared(gs)
-  expect_equal(round(rs[lower.tri(rs)][1:4], 6),
-               c(0.955357, 0.947917, 1, 0.925926))
-
-  ms <- as.matrix(gs)
-  n <- nrow(ms)
-  correct <- matrix(NA_real_, n, n)
-  for (i in 1:n) {
-    for (j in 1:n) {
-      d <- abs(ms[i, ] - ms[j, ])
-      correct[i, j] <- 1 - mean(d[!is.na(d)])
-    }
-  }
-  expect_equal((1 - rs[lower.tri(rs)]) * 2, 1 - correct[lower.tri(correct)])
+test_that("SilicoDArT input stops with an error", {
+  # [fixed: 2] was accepted and returned (1 + simple matching) / 2, a
+  # similarity squeezed into [0.5, 1]
+  expect_error(gl.propShared(testset.gs[1:6, 1:60], verbose = 0),
+               "found SilicoDArT expecting SNP")
 })
 
-test_that("non-genlight input fails late with an opaque S4 dispatch error", {
-  # [pins defect] FS4: no utils.check.datatype call, so the matrix is
-  # converted and the C++ kernel is compiled before indNames() errors
-  expect_error(gl.propShared(as.matrix(testset.gl[1:3, 1:10])),
-               "unable to find an inherited method")
+test_that("non-genlight input fails early with a dartR message", {
+  # [fixed: 2] was an S4 dispatch error from indNames() after compiling
+  expect_error(gl.propShared(as.matrix(testset.gl[1:3, 1:10]), verbose = 0),
+               "inappropriate object passed to function")
 })
 
-test_that("function has no verbose argument and prints nothing on success", {
-  # [pins defect] FS2/FS3/FS9: no verbosity control, no start/end flags
-  expect_equal(names(formals(gl.propShared)), "x")
-  out <- capture.output(r <- gl.propShared(testset.gl[1:5, 1:50]))
-  expect_length(out, 0L)
+test_that("verbose controls messaging", {
+  # [fixed: 2] the function had no verbose argument and printed nothing
+  expect_equal(names(formals(gl.propShared)), c("x", "verbose"))
+  out0 <- capture.output(r <- gl.propShared(testset.gl[1:5, 1:50],
+                                            verbose = 0))
+  expect_length(out0, 0L)
+  out1 <- capture.output(r <- gl.propShared(testset.gl[1:5, 1:50],
+                                            verbose = 1))
+  expect_true(any(grepl("Starting gl.propShared", out1)))
+  expect_true(any(grepl("Completed: gl.propShared", out1)))
 })
 
 test_that("edge cases: one and two individuals", {
@@ -122,17 +112,28 @@ test_that("duplicate individual names produce duplicate dimnames", {
   expect_false(isTRUE(all.equal(rd[1, 3], rd[2, 3])))
 })
 
-test_that("roxygen @name does not match the function name", {
-  # [pins defect] DOC1: @name is gl.prop.shared, so roxygen writes
-  # man/gl.prop.shared.Rd (?gl.propShared still resolves via the alias),
-  # and the indented @family tag is swallowed into \title
+test_that("man page is named after the function and joins the distance family", {
+  # [fixed: 3] @name was gl.prop.shared and "@family distance" was part of
+  # the title
   man <- test_path("..", "..", "man")
   skip_if_not(dir.exists(man), "man/ not available (installed package)")
-  expect_true(file.exists(file.path(man, "gl.prop.shared.Rd")))
-  expect_false(file.exists(file.path(man, "gl.propShared.Rd")))
-  rd <- readLines(file.path(man, "gl.prop.shared.Rd"), warn = FALSE)
-  expect_true(any(grepl("@family distance", rd, fixed = TRUE)))
-  expect_false(any(grepl("\\seealso", rd, fixed = TRUE)))
+  expect_false(file.exists(file.path(man, "gl.prop.shared.Rd")))
+  expect_true(file.exists(file.path(man, "gl.propShared.Rd")))
+  rd <- readLines(file.path(man, "gl.propShared.Rd"), warn = FALSE)
+  expect_false(any(grepl("@family", rd, fixed = TRUE)))
+  expect_true(any(grepl("\\seealso", rd, fixed = TRUE)))
+})
+
+test_that("no C++ is compiled and the result equals 1 - Manhattan distance", {
+  # [fixed: 1] the body delegates to gl.dist.ind(method = "manhattan"),
+  # exact at every dartR.base release
+  expect_false(any(grepl("cppFunction", deparse(body(gl.propShared)))))
+  gli <- testset.gl[1:8, 1:60]
+  D <- as.matrix(gl.dist.ind(gli, method = "manhattan", type = "matrix",
+                             plot.display = FALSE, verbose = 0))
+  expect_equal(as.vector(1 - D)[as.vector(lower.tri(D))],
+               as.vector(gl.propShared(gli, verbose = 0))[
+                 as.vector(lower.tri(D))])
 })
 
 test_that("gl.propShared equals 1 - gl.dist.ind(method = 'simple') cell for cell", {

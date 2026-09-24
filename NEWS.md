@@ -1,5 +1,12 @@
 # dartR.spatial 1.2.3
 
+* `gl.propShared()` calculates its similarity with
+  `dartR.base::gl.dist.ind(method = "manhattan")` instead of compiling its own
+  C++ code in every R session, so it no longer needs Rcpp or a compiler. SNP
+  values are unchanged (max difference 2.2e-16); pairs with no locus called in
+  both return `NA` instead of `NaN`. It gains a `verbose` argument, and
+  SilicoDArT input now stops with an error: before, it returned a similarity
+  squeezed into 0.5-1. A missing Rcpp no longer returns `-1`.
 * `gl.ibd()` calculates geodesic distances (package terra) for longitude/
   latitude instead of Euclidean distances on Mercator coordinates, which
   are inflated by 1/cos(latitude). For `testset.gl` the geographic
