@@ -2,9 +2,21 @@
 # (function-review/reports/dartR.spatial/gl.grm2.md)
 x <- dartR.data::platypus.gl[1:12, 1:200]
 
-test_that("SNP matrix equals rrBLUP::A.mat", {
+test_that("SNP matrix equals rrBLUP::A.mat with a tolerant min.MAF", {
   G <- gl.grm2(x, plotheatmap = FALSE, verbose = 0)
-  expect_equal(G, rrBLUP::A.mat(as.matrix(x) - 1))
+  expect_equal(G, rrBLUP::A.mat(as.matrix(x) - 1,
+                                min.MAF = 1 / (2 * nInd(x)) - 1e-10))
+  # a user-supplied min.MAF is passed through unchanged
+  G2 <- gl.grm2(x, plotheatmap = FALSE, verbose = 0, min.MAF = 0.1)
+  expect_equal(G2, rrBLUP::A.mat(as.matrix(x) - 1, min.MAF = 0.1))
+})
+
+test_that("single-copy loci are kept, so the matrix is platform independent", {
+  # value from x86 Linux/Windows CI; arm64 macOS gave 0.943133 before the
+  # tolerance because mean() put some single-copy loci below 1/(2n)
+  G <- gl.grm2(x, plotheatmap = FALSE, verbose = 0)
+  expect_equal(round(unname(G["T27", c("T27", "T35", "SDS4", "SDS12")]), 6),
+               c(0.985509, -0.173415, -0.098468, -0.090907))
 })
 
 test_that("SilicoDArT input stops with a clear error", {

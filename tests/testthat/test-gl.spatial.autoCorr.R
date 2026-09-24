@@ -43,8 +43,11 @@ test_that("gl.spatial.autoCorr reference-data behaviour is unchanged", {
            gl.spatial.autoCorr(one, bins = 4, permutation = FALSE,
                                bootstrap = FALSE, plot.out = FALSE,
                                verbose = 0))
+  # every testset.gs population sits at one location, so three are pooled
+  # to give non-zero distances (a single one left r = 0 plus rounding noise)
   gs <- dartR.data::testset.gs[, 1:200]
-  gs <- gs[pop(gs) == "EmmacMaclGeor", ]
+  gs <- gs[pop(gs) %in% c("EmmacMaclGeor", "EmmacBrisWive", "EmmacBurdMist"), ]
+  pop(gs) <- factor(rep("pooled", nInd(gs)))
   run_case("gs-Jaccard",
            gl.spatial.autoCorr(gs, Dgen_method = "Jaccard", bins = 3,
                                reps = 19, plot.out = FALSE, verbose = 0))
