@@ -270,7 +270,8 @@ gl.run.eems <- function(x,
 
   # Keep final results in a fresh directory under the caller's destination.
   # Running there directly avoids unchecked export copies and stale outputs.
-  run.dir <- tempfile("eems-run-", tmpdir = out.dir)
+  # tempfile(tmpdir = ) joins with "\\" on Windows; file.path keeps "/"
+  run.dir <- file.path(out.dir, basename(tempfile("eems-run-")))
   if (!dir.create(run.dir)) {
     stop(error(paste0("Cannot create an EEMS run directory in ", out.dir)),
          call. = FALSE)
