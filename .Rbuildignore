@@ -7,3 +7,17 @@ README[.]
 ^function-review$
 ^Rplots\.pdf$
 ^\.git$
+^runeems_snps$
+^eems_mac\.zip$
+^eems_mrates.*\.tif$
+^test\.eems\.R$
+^CLAUDE\.md$
+^KNOWLEDGE\.md$
+^info$
+^reports$
+^articles$
+^figures$
+^scripts$
+^outputs$
+^input_files$
+^\.DS_Store$
