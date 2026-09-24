@@ -146,10 +146,10 @@ gl.grm2 <- function(x,
   # calculating the realized additive relationship matrix
 
   # A.mat keeps loci with MAF >= 1/(2n) by default, i.e. at least one copy
-  # of the minor allele. A single copy sits exactly on that cut-off, and
-  # mean() rounds it differently on arm64 macOS and on x86, so those loci
-  # were kept on one platform and dropped on the other. A small tolerance
-  # keeps them everywhere.
+  # of the minor allele. A single copy sits exactly on that cut-off, so
+  # rounding in mean() decided whether it passed: arm64 macOS dropped it,
+  # x86 dropped it only when the minor allele was counted as 2. A small
+  # tolerance keeps such loci on every platform and allele coding.
   dots <- list(...)
   if (is.null(dots$min.MAF)) {
     dots$min.MAF <- 1 / (2 * nInd(x)) - 1e-10
