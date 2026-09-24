@@ -569,7 +569,7 @@ Numbering follows **Proposed changes (dartR.spatial)**.
 - Callers outside the package: none in dartR.base, captive, popgen,
   sexlinked, sim, data or dartRverse. dartr2shiny calls
   `gl.propShared(x = MyData)`, which is unaffected by the new argument.
-- PR: pending.
+- PR: #46.
 
 ```json
 {"function": "gl.propShared", "package": "dartR.spatial", "family_mode": "analysis",
@@ -597,7 +597,7 @@ Numbering follows **Proposed changes (dartR.spatial)**.
  "datasets": ["testset.gl", "testset.gs", "bandicoot.gl", "constructed"],
  "baseline_test": "tests/testthat/test-gl.propShared.R",
  "recommendation_revised": "delegate via gl.dist.ind(method='manhattan'), exact at every dartR.base release",
- "status": "applied", "pr": null}
+ "status": "pr-open", "pr": 46}
 ```
 
 
