@@ -386,7 +386,7 @@ gl.spatial.autoCorr <- function(x = NULL,
       # calculate genetic distances; similarities are converted to distances
       # so that positive r indicates more related individuals, as in GenAlEx
       if (Dgen_method == "propShared") {
-        Dgen <- 1 - gl.propShared(x_temp)
+        Dgen <- 1 - gl.propShared(x_temp, verbose = 0)
       } else {
         if (Dgen_method == "grm") {
           G <- as.matrix(gl.grm2(x_temp, plotheatmap=FALSE, verbose = 0))

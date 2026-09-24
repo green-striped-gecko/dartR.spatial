@@ -311,7 +311,7 @@ gl.ibd <- function(x = NULL,
                     stats::as.dist(StAMPP::stamppNeisD(x, pop = TRUE))
                 }
             } else if (distance == "propShared") {
-                Dgen <- stats::as.dist(1 - gl.propShared(x))
+                Dgen <- stats::as.dist(1 - gl.propShared(x, verbose = 0))
             } else if (distance == "euclidean") {
                 Dgen <- stats::dist(as.matrix(x))
             } else {

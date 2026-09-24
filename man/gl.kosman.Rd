@@ -56,6 +56,10 @@ for haploid, diploid, and polyploid species. Molecular Ecology, 14(2),
 415-424.
 }
 }
+\seealso{
+Other distance: 
+\code{\link{gl.propShared}()}
+}
 \author{
 Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to
 \url{https://groups.google.com/d/forum/dartr}
