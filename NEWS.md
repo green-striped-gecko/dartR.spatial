@@ -1,4 +1,4 @@
-# dartR.spatial 1.2.3
+# dartR.spatial 1.2.6
 
 * `gl.grm2()` passes `min.MAF = 1/(2n) - 1e-10` to `rrBLUP::A.mat()` unless
   `min.MAF` is given. With the default `1/(2n)`, a locus with a single
