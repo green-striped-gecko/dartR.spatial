@@ -28,6 +28,8 @@
 #'  progress log ; 3, progress and results summary; 5, full report
 #'  [default 2 or as specified using gl.set.verbosity].
 #' @param ... Parameters passed to function A.mat from package rrBLUP.
+#' Unless min.MAF is given, it is set to 1/(2n) - 1e-10, so loci with a
+#' single copy of the minor allele are kept on every platform.
 #'
 #' @details
 #' This function uses the A.mat function from the rrBLUP package. This method 
@@ -143,7 +145,16 @@ gl.grm2 <- function(x,
 
   # calculating the realized additive relationship matrix
 
-  G <- rrBLUP::A.mat(as.matrix(x) - 1, ...)
+  # A.mat keeps loci with MAF >= 1/(2n) by default, i.e. at least one copy
+  # of the minor allele. A single copy sits exactly on that cut-off, and
+  # mean() rounds it differently on arm64 macOS and on x86, so those loci
+  # were kept on one platform and dropped on the other. A small tolerance
+  # keeps them everywhere.
+  dots <- list(...)
+  if (is.null(dots$min.MAF)) {
+    dots$min.MAF <- 1 / (2 * nInd(x)) - 1e-10
+  }
+  G <- do.call(rrBLUP::A.mat, c(list(as.matrix(x) - 1), dots))
 
   if (plotheatmap == TRUE) {
     # check if package is installed

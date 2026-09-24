@@ -1,5 +1,12 @@
 # dartR.spatial 1.2.3
 
+* `gl.grm2()` passes `min.MAF = 1/(2n) - 1e-10` to `rrBLUP::A.mat()`
+  unless `min.MAF` is given. With the default `1/(2n)`, a locus with a single
+  minor-allele copy sat exactly on the cut-off and was kept on Linux and
+  Windows but dropped on Apple Silicon Macs, because `mean()` rounds
+  differently there. Results on Apple Silicon change (on
+  `platypus.gl[1:12, 1:200]` 5 of 105 loci were dropped and the T27 diagonal
+  goes from 0.943 to 0.986); Linux and Windows results are unchanged.
 * `gl.propShared()` calculates its similarity with
   `dartR.base::gl.dist.ind(method = "manhattan")` instead of compiling its own
   C++ code in every R session, so it no longer needs Rcpp or a compiler. SNP
