@@ -35,7 +35,4 @@
       $file_rows
       [1] 20
       
-      $file_names
-      [1] "Name"        "Description"
-      
 

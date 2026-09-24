@@ -26,7 +26,9 @@ test_that("gl2shp reference-data behaviour is unchanged", {
         summary$coords_head <- round(head(terra::crds(result), 3), 5)
         back <- terra::vect(file.path(out, paste0("pts.", type)))
         summary$file_rows <- nrow(back)
-        summary$file_names <- names(back)
+        # KML field names read back depend on the GDAL driver (LIBKML on
+        # Linux returns every attribute, KML on macOS only Name/Description)
+        if (type == "shp") summary$file_names <- names(back)
       }
       expect_snapshot(print(summary), variant = paste(dataset, type, sep = "-"))
     }

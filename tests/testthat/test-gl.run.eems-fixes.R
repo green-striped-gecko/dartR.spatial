@@ -121,8 +121,11 @@ test_that("relative paths, spaces and NULL plot saving work (F4/F5/F7)", {
   z$args$out.dir <- "relative output"
   z$args$plot.dir <- "relative output"
   do.call(z$f, z$args)
-  expect_identical(getwd(), normalizePath(z$root))
-  expect_identical(dirname(z$calls$runs[1]), normalizePath("relative output"))
+  # compare normalised paths: Windows reports short names and "\\"
+  expect_identical(normalizePath(getwd(), winslash = "/"),
+                   normalizePath(z$root, winslash = "/"))
+  expect_identical(normalizePath(dirname(z$calls$runs[1]), winslash = "/"),
+                   normalizePath("relative output", winslash = "/"))
   expect_false(file.exists(file.path("relative output", "eems.RDS")))
   z$args$plot.file <- "review output"
   expect_length(do.call(z$f, z$args), 8L)
