@@ -29,7 +29,9 @@ Suggests:
   rrBLUP,
   terra (>= 1.7-39),
   sf,
-  PopGenReport
+  PopGenReport,
+  reemsplots2
+Remotes: dipetkov/reemsplots2
 License: GPL (>= 3)
 RoxygenNote: 7.3.3
 NeedsCompilation: no
