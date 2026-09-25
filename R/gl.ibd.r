@@ -16,7 +16,8 @@
 #' @param distance Distance to calculate: population-based 'Fst'
 #' [\link[StAMPP]{stamppFst}] or 'D' [\link[StAMPP]{stamppNeisD}], or
 #' individual-based 'propShared' (1 - gl.propShared), 'euclidean'
-#' [\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"].
+#' [\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"]. SilicoDArT
+#' data accept only 'euclidean' and 'kosman'.
 #' @param coordinates 'latlon', 'xy', or a two-column data.frame named
 #' lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow
 #' individual order. Explicit data.frames with row names are matched to
@@ -121,6 +122,13 @@ gl.ibd <- function(x = NULL,
         if (length(distance) != 1L || is.na(distance) ||
             !distance %in% c("Fst", "D", "propShared", "euclidean", "kosman")) {
             stop(error("distance must be Fst, D, propShared, euclidean or kosman.\n"))
+        }
+        # Fst and D are allele-frequency distances and propShared refuses
+        # presence/absence scores, so none is valid for SilicoDArT.
+        if (dt == "SilicoDArT" && distance %in% c("Fst", "D", "propShared")) {
+            stop(error(paste0(
+                "distance '", distance, "' requires SNP data. For SilicoDArT ",
+                "data use distance = 'euclidean' or 'kosman', or supply Dgen.\n")))
         }
     }
     check.ids <- function(ids, label) {

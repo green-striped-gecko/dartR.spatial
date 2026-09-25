@@ -25,6 +25,6 @@
       [1] "simpleError" "error"       "condition"  
       
       $error
-      [1] "Dgen contains non-finite pairwise distances after transformation. Check missing data and transformations (including log(0)); no pairs are omitted.\n"
+      [1] "distance 'Fst' requires SNP data. For SilicoDArT data use distance = 'euclidean' or 'kosman', or supply Dgen.\n"
       
 

@@ -234,3 +234,13 @@ test_that("small file-backed inputs agree and retain genotype metadata (F2)", {
   expect_identical(list(ploidy=ploidy(backed),loc=backed@other$loc.metrics,
                         ind=backed@other$ind.metrics),metadata)
 })
+
+test_that("RSP underflow error suggests a smaller theta that works", {
+  skip_if_not_installed("gdistance")
+  r <- cost_raster(width=3000)
+  xy <- raster::xyFromCell(r,c(1,5,9))
+  msg <- tryCatch(cost_run(r,xy,"rSPDistance"),error=conditionMessage)
+  suggested <- as.numeric(sub(".*theta = ([0-9.e-]+) gives finite.*","\\1",msg))
+  expect_true(is.finite(suggested) && suggested < 1)
+  expect_true(all(is.finite(cost_run(r,xy,"rSPDistance",theta=suggested))))
+})

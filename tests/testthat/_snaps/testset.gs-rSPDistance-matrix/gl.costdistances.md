@@ -34,6 +34,6 @@
       character(0)
       
       $error
-      [1] "RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).\n"
+      [1] "RSP produced non-finite distances with theta = 1 (numerical underflow on large path costs). No theta down to 0.0156 gave finite distances; rescale the costs.\n"
       
 
