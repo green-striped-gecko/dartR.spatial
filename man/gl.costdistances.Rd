@@ -47,8 +47,9 @@ is expected random-walk travel time (steps there and back), equal to effective
 resistance multiplied by graph volume (the sum of conductance over both
 directions). It is not the unscaled effective resistance used by Circuitscape.
 RSP retains gdistance's default net-movement method. Theta controls the path
-model and interacts with cost scale; decrease it explicitly if theta = 1
-underflows on large costs. No automatic cost or theta scaling is performed.
+model and interacts with cost scale. If theta underflows on large costs,
+the error names a smaller theta that gives finite distances; theta is not
+changed automatically.
 Type 'c' is the RSP correction convention here; gdistance has no unique
 geographic correction for intermediate RSP regimes.
 

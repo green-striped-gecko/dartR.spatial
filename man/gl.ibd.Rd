@@ -28,7 +28,8 @@ both Dgen and Dgeo are supplied [default NULL].}
 \item{distance}{Distance to calculate: population-based 'Fst'
 [\link[StAMPP]{stamppFst}] or 'D' [\link[StAMPP]{stamppNeisD}], or
 individual-based 'propShared' (1 - gl.propShared), 'euclidean'
-[\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"].}
+[\link[stats]{dist}] or 'kosman' [gl.kosman] [default "Fst"]. SilicoDArT
+data accept only 'euclidean' and 'kosman'.}
 
 \item{coordinates}{'latlon', 'xy', or a two-column data.frame named
 lat/lon or x/y. Stored coordinates in x@other$latlon or x@other$xy follow

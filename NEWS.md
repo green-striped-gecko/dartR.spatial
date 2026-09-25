@@ -1,5 +1,16 @@
 # dartR.spatial 1.2.6
 
+* `gl.ibd()` stops on SilicoDArT data when `distance` is `"Fst"` (the
+  default), `"D"` or `"propShared"`, and names `"euclidean"` and `"kosman"`
+  as the distances that work on presence/absence scores. Before, Fst and D ran
+  StAMPP on the scores: on `testset.gs` pairwise Fst ranged from -14.7 to 19.0
+  and a Mantel test was still reported.
+* `gl.costdistances()` and `gl.genleastcost()`: when RSP underflows, the error
+  now names a smaller `theta` that gives finite distances, found by halving
+  `theta` up to six times, or says that none did. On `possums.gl` populations
+  A-C with `landscape.sim` aggregated by 5, the default `theta = 1` fails and
+  the error suggests `theta = 0.5`. The default is unchanged, so existing
+  results are too.
 * `gl.grm2()` passes `min.MAF = 1/(2n) - 1e-10` to `rrBLUP::A.mat()` unless
   `min.MAF` is given. With the default `1/(2n)`, a locus with a single
   minor-allele copy sat exactly on the cut-off, and rounding decided whether

@@ -16,8 +16,9 @@
 #' resistance multiplied by graph volume (the sum of conductance over both
 #' directions). It is not the unscaled effective resistance used by Circuitscape.
 #' RSP retains gdistance's default net-movement method. Theta controls the path
-#' model and interacts with cost scale; decrease it explicitly if theta = 1
-#' underflows on large costs. No automatic cost or theta scaling is performed.
+#' model and interacts with cost scale. If theta underflows on large costs,
+#' the error names a smaller theta that gives finite distances; theta is not
+#' changed automatically.
 #' Type 'c' is the RSP correction convention here; gdistance has no unique
 #' geographic correction for intermediate RSP regimes.
 #'
@@ -201,9 +202,28 @@ gl.costdistances <- function(landscape,
                 cd.mat <- gdistance::rSPDistance(transition, locs, locs,
                                                 theta = theta)
                 if (any(!is.finite(cd.mat))) {
-                    stop(error(paste0("RSP produced non-finite distances. ",
-                        "Check cost scale and choose theta explicitly ",
-                        "(a smaller theta may avoid underflow).\n")))
+                    # Halve theta until RSP is finite, to suggest a value
+                    # (theta is a modelling choice, so it is not applied).
+                    working <- NA
+                    for (candidate in theta / 2^(1:6)) {
+                        trial <- gdistance::rSPDistance(transition, locs, locs,
+                                                        theta = candidate)
+                        if (all(is.finite(trial))) {
+                            working <- candidate
+                            break
+                        }
+                    }
+                    hint <- if (is.na(working)) {
+                        paste0("No theta down to ", signif(theta / 64, 3),
+                               " gave finite distances; rescale the costs.")
+                    } else {
+                        paste0("theta = ", signif(working, 3), " gives finite ",
+                               "distances; smaller theta moves paths towards ",
+                               "a random walk.")
+                    }
+                    stop(error(paste0("RSP produced non-finite distances with ",
+                        "theta = ", theta, " (numerical underflow on large ",
+                        "path costs). ", hint, "\n")))
                 }
             } else {
                 # Normalising conductance leaves volume * resistance invariant.

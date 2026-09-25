@@ -236,3 +236,15 @@ test_that("small file-backed inputs preserve ordinary results and stay quiet (F8
   }
   expect_equal(as.matrix(backed), before)
 })
+
+test_that("SilicoDArT refuses allele-frequency distances", {
+  x <- gl.compliance.check(testset.gs[1:12, 1:200], verbose = 0)
+  for (d in c("Fst", "D", "propShared")) {
+    expect_error(ibd_run(x, distance = d), "requires SNP data.*euclidean.*kosman")
+  }
+  x <- x[1:6, ]
+  x@other$xy <- data.frame(x = c(0, 1, 4, 6, 10, 17),
+                         y = c(0, 1, 0, 4, 6, 2), row.names = indNames(x))
+  expect_s3_class(ibd_run(x, distance = "euclidean", coordinates = "xy")$mantel,
+                  "mantel")
+})
