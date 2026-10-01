@@ -1,0 +1,63 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+bandicoot.gl: 96 individuals, 1000 SNPs
+latitude span: 18.5 deg; longitude span: 39.8 deg
+max great-circle distance between samples (km): 4006 
+
+P1 eems.coord first row (as written): 13552406 -3928719 
+P1 input lon/lat first row:           121.7433 -33.25139 
+P1 rdist03 x-axis range (km, as plotted):  1486 17433 
+P1 true great-circle range (km, same demes): 388 3570 
+P1 correlation plotted vs true distance: 0.034 
+P1 mrates01 x-axis range: 12,409,020 17,310,180 
+P1 params.ini has a distance line: FALSE 
+P1 Mercator scale factor at mean latitude -31.1 deg: 1.168 -> buffer = 10000 is 8561 ground metres there
+
+Joining with `by = join_by(id)`
+New names:
+• `x` -> `x...1`
+• `y` -> `y...2`
+• `x` -> `x...3`
+• `y` -> `y...4`
+Generate effective migration surface (posterior mean of m rates). See plots$mrates01 and plots$mrates02.
+Generate effective diversity surface (posterior mean of q rates). See plots$qrates01 and plots$qrates02.
+Generate average dissimilarities within and between demes. See plots$rdist01, plots$rdist02 and plots$rdist03.
+Generate posterior probability trace. See plots$pilog01.
+P2 longlat = FALSE mrates01 x-axis range: -4,782,528 -2,144,982 (axes swapped: x now shows northing)
+P2 longlat = FALSE rdist03 range (km): 1736 19495 
+
+P3 EEMS exit status (distance = greatcirc): 0 
+P3 eemsrun.txt distance line:                distance = greatcirc 
+Joining with `by = join_by(id)`
+New names:
+• `x` -> `x...1`
+• `y` -> `y...2`
+• `x` -> `x...3`
+• `y` -> `y...4`
+Generate effective migration surface (posterior mean of m rates). See plots$mrates01 and plots$mrates02.
+Generate effective diversity surface (posterior mean of q rates). See plots$qrates01 and plots$qrates02.
+Generate average dissimilarities within and between demes. See plots$rdist01, plots$rdist02 and plots$rdist03.
+Generate posterior probability trace. See plots$pilog01.
+P3 rdist03 x-axis range (km): 353 3621 
+P3 deme coordinates are within the sample lon/lat box (+/- 5 deg): TRUE 
+P3 mrates01 x-axis range (degrees): 111.46 155.51 
+P3 observed demes: 22 for 96 distinct sample locations
+
+P4 concave habitat geometry type: POLYGON ; rings: 1 
+P4 EEMS exit status with concave user habitat: 0 
+P4 EEMS habitat check passed: TRUE 
+
+P5 YFT sites: 6 ; lon -109.9 -77.5 ; lat -11.1 29.4 
+although coordinates are longitude/latitude, st_union assumes that they are
+planar
+although coordinates are longitude/latitude, st_union assumes that they are
+planar
+Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is FALSE
+P5 hull minus land: 2 polygons; largest two (km^2): 7,461,037 1,611,499 
+Warning message:
+package ‘sf’ was built under R version 4.4.3 
+null device 
+          1 

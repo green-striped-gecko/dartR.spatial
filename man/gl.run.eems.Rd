@@ -29,6 +29,7 @@ gl.run.eems(
   plot.file = NULL,
   verbose = NULL,
   cleanup = TRUE,
+  habitat = NULL,
   ...
 )
 }
@@ -38,7 +39,9 @@ gl.run.eems(
 \item{eems.path}{Path to the folder containing the eems executable
 [default working directory ("./")].}
 
-\item{buffer}{Buffer distance for all the elements [default 10000].}
+\item{buffer}{Distance in metres by which the convex hull of the sampling
+locations is expanded to form the habitat. Measured on the ground at any
+latitude. Ignored when habitat is supplied [default 10000].}
 
 \item{nDemes}{The approximate number of demes in the population graph 
 [default 500].}
@@ -102,6 +105,12 @@ progress log; 3, progress and results summary; 5, full report
 after success. Raw EEMS results and logs are retained; failed runs retain
 all files for diagnosis [default TRUE].}
 
+\item{habitat}{Habitat outline for EEMS: an sf or sfc polygon in any
+coordinate reference system (transformed to longitude/latitude), or a
+two-column matrix of longitude and latitude in decimal degrees. It must be
+a single polygon without holes. NULL uses the convex hull of the sampling
+locations expanded by buffer [default NULL].}
+
 \item{...}{Extra parameters to add to function reemsplots2::make_eems_plots.}
 }
 \value{
@@ -156,10 +165,18 @@ Choose the number of demes to match geographic scale: 100–250 for local or
 island studies and 300–500 for continental datasets. Run time grows 
 cubically with number of demes, so anything above 1000 rarely pays off. 
 
-Draw the habitat polygon with a small buffer (in meters), so every sample 
-sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
-sample bounding box (or a few kilometers for fine‑scale work) is usually 
-adequate.
+Coordinates are passed to EEMS as longitude/latitude with great-circle
+distance, so maps are returned in degrees and the rdist03 plot shows
+distances in kilometres.
+
+By default the habitat is the convex hull of the sampling locations,
+expanded by buffer (in metres), so every sample sits at least one grid
+spacing inside the edge. A 5–10 % expansion of the sample bounding box
+(or a few kilometers for fine‑scale work) is usually adequate. When the
+hull covers unsuitable areas, for example land between sampling sites of a
+marine species, supply the habitat outline with habitat. EEMS does not
+check that samples fall inside the habitat: each sample is assigned to the
+closest deme, and the function warns when samples fall outside.
 
 The dpi argument controls sampling of the contour grid in reemsplots2,
 not the dots per inch of an exported image. Higher values increase grid

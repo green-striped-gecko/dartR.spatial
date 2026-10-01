@@ -13,7 +13,14 @@
 #' @param x Name of the genlight object containing the SNP data [required].
 #' @param eems.path Path to the folder containing the eems executable
 #'  [default working directory ("./")].
-#' @param buffer Buffer distance for all the elements [default 10000].
+#' @param buffer Distance in metres by which the convex hull of the sampling
+#' locations is expanded to form the habitat. Measured on the ground at any
+#' latitude. Ignored when habitat is supplied [default 10000].
+#' @param habitat Habitat outline for EEMS: an sf or sfc polygon in any
+#' coordinate reference system (transformed to longitude/latitude), or a
+#' two-column matrix of longitude and latitude in decimal degrees. It must be
+#' a single polygon without holes. NULL uses the convex hull of the sampling
+#' locations expanded by buffer [default NULL].
 #' @param nDemes The approximate number of demes in the population graph 
 #' [default 500].
 #' @param diploid Whether the organism is diploid. TRUE requires ploidy 2
@@ -69,10 +76,18 @@
 #' island studies and 300–500 for continental datasets. Run time grows 
 #' cubically with number of demes, so anything above 1000 rarely pays off. 
 #' 
-#' Draw the habitat polygon with a small buffer (in meters), so every sample 
-#' sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
-#' sample bounding box (or a few kilometers for fine‑scale work) is usually 
-#' adequate.
+#' Coordinates are passed to EEMS as longitude/latitude with great-circle
+#' distance, so maps are returned in degrees and the rdist03 plot shows
+#' distances in kilometres.
+#'
+#' By default the habitat is the convex hull of the sampling locations,
+#' expanded by buffer (in metres), so every sample sits at least one grid
+#' spacing inside the edge. A 5–10 % expansion of the sample bounding box
+#' (or a few kilometers for fine‑scale work) is usually adequate. When the
+#' hull covers unsuitable areas, for example land between sampling sites of a
+#' marine species, supply the habitat outline with habitat. EEMS does not
+#' check that samples fall inside the habitat: each sample is assigned to the
+#' closest deme, and the function warns when samples fall outside.
 #' 
 #' The dpi argument controls sampling of the contour grid in reemsplots2,
 #' not the dots per inch of an exported image. Higher values increase grid
@@ -112,9 +127,7 @@
 #'  \item{pilogl01}{Posterior probability trace}
 #' }
 #' @export
-#' @importFrom grDevices chull
 #' @importFrom utils write.table
-#' @importFrom dismo Mercator
 #' @importFrom stats runif
 #' @author Bernd Gruber  & Robyn (bugs? Post to
 #' \url{https://groups.google.com/d/forum/dartr})
@@ -160,14 +173,18 @@ gl.run.eems <- function(x,
                         plot.file = NULL,
                         verbose = NULL,
                         cleanup = TRUE,
+                        habitat = NULL,
                         ...) {
   # SET VERBOSITY AND FLAG SCRIPT START
   verbose <- gl.check.verbosity(verbose)
   funname <- match.call()[[1]]
+  # do.call(gl.run.eems, ...) puts the function itself in the call, which
+  # the start and end messages cannot print.
+  if (is.function(funname)) funname <- "gl.run.eems"
   utils.flag.start(func = funname, verbose = verbose)
 
   # CHECK DEPENDENCIES AND INPUTS BEFORE CREATING FILES
-  for (pkg in c("reemsplots2", "sf", "dismo")) {
+  for (pkg in c("reemsplots2", "sf")) {
     if (!requireNamespace(pkg, quietly = TRUE)) {
       advice <- if (pkg == "reemsplots2") {
         "Install it with devtools::install_github('dipetkov/reemsplots2')."
@@ -210,6 +227,54 @@ gl.run.eems <- function(x,
       stop(error(paste0(
         "Extra plotting arguments must have unique supported names: ",
         paste(allowed, collapse = ", "), ".")), call. = FALSE)
+    }
+  }
+  if (!is.null(habitat)) {
+    habitat_error <- paste0("habitat must be an sf/sfc polygon or a ",
+                            "two-column matrix of longitude and latitude.")
+    if (inherits(habitat, c("sf", "sfc"))) {
+      if (is.na(sf::st_crs(habitat))) {
+        stop(error(paste("habitat has no coordinate reference system;",
+                         "set one with sf::st_set_crs().")), call. = FALSE)
+      }
+      habitat <- sf::st_geometry(sf::st_transform(habitat, 4326))
+      if (length(habitat) != 1L ||
+          !inherits(habitat, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {
+        stop(error(paste("habitat must be a single polygon; EEMS accepts",
+                         "one outline.")), call. = FALSE)
+      }
+      if (inherits(habitat, "sfc_MULTIPOLYGON")) {
+        if (length(habitat[[1]]) != 1L) {
+          stop(error(paste("habitat must be a single polygon; EEMS accepts",
+                           "one outline.")), call. = FALSE)
+        }
+        habitat <- sf::st_cast(habitat, "POLYGON")
+      }
+      if (length(habitat[[1]]) != 1L) {
+        stop(error("habitat must not contain holes; EEMS accepts one ring."),
+             call. = FALSE)
+      }
+      habitat <- sf::st_coordinates(habitat)[, 1:2, drop = FALSE]
+    }
+    if (!is.matrix(habitat) && !is.data.frame(habitat)) {
+      stop(error(habitat_error), call. = FALSE)
+    }
+    habitat <- as.matrix(habitat)
+    if (!is.numeric(habitat) || ncol(habitat) != 2L || nrow(habitat) < 3L ||
+        any(!is.finite(habitat)) || any(abs(habitat[, 1]) > 180) ||
+        any(abs(habitat[, 2]) > 90)) {
+      stop(error(habitat_error), call. = FALSE)
+    }
+    habitat <- unname(habitat)
+    if (any(habitat[1, ] != habitat[nrow(habitat), ])) {
+      habitat <- rbind(habitat, habitat[1, ])
+    }
+    # EEMS tests the ring as a planar polygon in lon/lat; check it the same
+    # way (no CRS, so sf uses GEOS rather than spherical geometry).
+    if (nrow(habitat) < 4L ||
+        !sf::st_is_valid(sf::st_polygon(list(habitat)))) {
+      stop(error(paste("habitat must be a valid simple polygon",
+                       "(no self-intersections).")), call. = FALSE)
     }
   }
   if (is.null(out.dir)) out.dir <- tempdir()
@@ -293,27 +358,48 @@ gl.run.eems <- function(x,
     paste0("nSites = ", adegenet::nLoc(x)),
     paste0("nDemes = ", nDemes),
     paste0("diploid = ", diploid),
+    # Coordinates are lon/lat in degrees; EEMS defaults to Euclidean.
+    "distance = greatcirc",
     paste0("numMCMCIter = ", format(numMCMCIter, scientific = FALSE)),
     paste0("numBurnIter = ", format(numBurnIter, scientific = FALSE)),
     paste0("numThinIter = ", format(numThinIter, scientific = FALSE))
   ), param_file)
 
+  # EEMS and reemsplots2 both expect longitude/latitude in degrees:
+  # reemsplots2 measures rdist03 distances as great circles on these values.
   ll <- data.frame(x = x@other$latlon$lon, y = x@other$latlon$lat)
-  xy <- dismo::Mercator(ll)
-  hpts <- grDevices::chull(xy)
-  hpts <- c(hpts, hpts[1])
-  poly <- xy[hpts, ]
-  p <- sf::st_polygon(list(as.matrix(poly)))
-  pbuf <- sf::st_buffer(p, buffer)
-  if (verbose >= 3) {
-    plot(pbuf, axes = TRUE, border = "green", lwd = 2)
-    plot(p, add = TRUE, col = "red")
-    graphics::points(xy, pch = 20, col = "blue")
+  if (is.null(habitat)) {
+    # Hull and buffer in an equal-area projection centred on the samples,
+    # so buffer is in ground metres at any latitude. Short edges keep the
+    # outline's shape when it is converted back to lon/lat.
+    laea <- sprintf(
+      "+proj=laea +lat_0=%.6f +lon_0=%.6f +datum=WGS84 +units=m",
+      mean(ll$y), mean(ll$x))
+    pts <- sf::st_transform(sf::st_as_sf(ll, coords = c("x", "y"),
+                                         crs = 4326), laea)
+    hull <- sf::st_buffer(sf::st_convex_hull(sf::st_union(pts)), buffer)
+    hull <- sf::st_transform(sf::st_segmentize(hull, dfMaxLength = 50000),
+                             4326)
+    habitat <- sf::st_coordinates(hull)[, 1:2, drop = FALSE]
   }
-  pxy <- sf::st_coordinates(pbuf)[, 1:2]
-  utils::write.table(pxy, paste0(data_path, ".outer"), quote = FALSE,
+  habitat_poly <- sf::st_polygon(list(unname(habitat)))
+  outside <- !sf::st_covered_by(sf::st_as_sf(ll, coords = c("x", "y")),
+                                habitat_poly, sparse = FALSE)[, 1]
+  if (any(outside) && verbose >= 2) {
+    out_names <- adegenet::indNames(x)[outside]
+    cat(warn(paste0(
+      "  Warning: ", sum(outside), " sample(s) fall outside the habitat and",
+      " are assigned by EEMS to the closest deme: ",
+      paste(utils::head(out_names, 10), collapse = ", "),
+      if (length(out_names) > 10) ", ..." else "", "\n")))
+  }
+  if (verbose >= 3) {
+    plot(habitat_poly, axes = TRUE, border = "green", lwd = 2)
+    graphics::points(ll, pch = 20, col = "blue")
+  }
+  utils::write.table(habitat, paste0(data_path, ".outer"), quote = FALSE,
                      row.names = FALSE, col.names = FALSE)
-  utils::write.table(xy, paste0(data_path, ".coord"), quote = FALSE,
+  utils::write.table(ll, paste0(data_path, ".coord"), quote = FALSE,
                      row.names = FALSE, col.names = FALSE)
   if (is.null(seed)) seed <- round(stats::runif(1, 1, 1000000))
 
@@ -370,7 +456,7 @@ gl.run.eems <- function(x,
       } else {
         plot.colors.pop
       }
-      xy_plot <- data.frame(x = xy[, 1], y = xy[, 2],
+      xy_plot <- data.frame(x = ll$x, y = ll$y,
                             pop = as.character(adegenet::pop(x)))
       for (i in seq_len(4)) {
         plots[[i]] <- plots[[i]] +
@@ -378,7 +464,9 @@ gl.run.eems <- function(x,
                              ggplot2::aes(x = .data$x, y = .data$y,
                                           color = .data$pop)) +
           ggplot2::scale_color_manual(values = colors_pops) +
-          ggplot2::coord_equal()
+          # Degrees: draw longitude shorter than latitude away from the
+          # equator instead of stretching east-west.
+          ggplot2::coord_quickmap()
       }
       plots
     }, message = function(m) {
