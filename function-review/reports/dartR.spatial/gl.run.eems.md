@@ -269,6 +269,8 @@ Caller check: no sibling-package callers. The dartr2shiny module calls with name
 
 Not run: Windows and Linux (CI will run them), antimeridian data, MCMC convergence.
 
+PR: [#54](https://github.com/green-striped-gecko/dartR.spatial/pull/54), approved for publication by Luis on 2026-10-01.
+
 ## 8. Machine block
 
 ```json
@@ -386,9 +388,10 @@ Not run: Windows and Linux (CI will run them), antimeridian data, MCMC convergen
     "Visual/geospatial validation of rendered surfaces",
     "Full package check"
   ],
-  "status": "awaiting-approval",
+  "status": "pr-open",
   "pr": 36,
   "round2": {
+    "pr": 54,
     "date": "2026-10-01",
     "skill_version": "3.0.0",
     "model": "Claude Opus 5.5 (claude-opus-5-5)",
