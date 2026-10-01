@@ -1,5 +1,25 @@
 # dartR.spatial 1.2.6
 
+* `gl.run.eems()` passes coordinates to EEMS as longitude/latitude with
+  `distance = greatcirc`, instead of Mercator metres with EEMS's Euclidean
+  default. reemsplots2 reads coordinates as degrees, so before, the `rdist03`
+  plot measured Mercator metres as if they were degrees: on `bandicoot.gl` it
+  showed 1,486-17,433 km between demes that are 388-3,570 km apart. It now
+  shows the true great-circle distances (353-3,621 km), and the four maps are
+  returned in degrees (drawn with `coord_quickmap()`). `buffer` is now in
+  ground metres at any latitude; before, 10000 Mercator units were 8.6 km on
+  the ground at 31 degrees latitude. EEMS results change for every dataset,
+  because the deme grid is laid out in longitude/latitude: a seeded run does
+  not reproduce an earlier result. dartR.spatial no longer imports dismo.
+* `gl.run.eems()` gains a `habitat` argument: an sf/sfc polygon (any CRS) or a
+  two-column longitude/latitude matrix that replaces the buffered convex hull
+  of the samples, for ranges that the hull misrepresents, such as a marine
+  species sampled on both sides of a landmass. It must be one polygon without
+  holes, because EEMS accepts a single ring. Samples outside it are named in
+  a warning, because EEMS assigns them to the closest deme.
+* `gl.run.eems()` called as `do.call(gl.run.eems, args)` with `verbose > 0`
+  no longer fails while printing its start message.
+
 * `gl.ibd()` stops on SilicoDArT data when `distance` is `"Fst"` (the
   default), `"D"` or `"propShared"`, and names `"euclidean"` and `"kosman"`
   as the distances that work on presence/absence scores. Before, Fst and D ran

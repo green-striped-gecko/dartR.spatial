@@ -1,4 +1,4 @@
-# Regression checks for approved findings F1-F9. These use a disposable
+# Regression checks for approved findings F1-F9 and changes 11-13. These use a disposable
 # executable placeholder and recorded process/plot calls; real integration
 # checks remain opt-in in test-gl.run.eems.R.
 eems_case <- function() {
@@ -103,7 +103,7 @@ test_that("ploidy and dependency checks fail before running (F3/F8)", {
   expect_length(z$calls$runs, 0L)
   z$args$diploid <- FALSE
   expect_length(do.call(z$f, z$args), 8L)
-  for (pkg in c("reemsplots2", "sf", "dismo")) {
+  for (pkg in c("reemsplots2", "sf")) {
     f <- z$f
     environment(f) <- list2env(list(requireNamespace = function(package, ...)
       if (package == pkg) FALSE else base::requireNamespace(package, ...)),
@@ -169,4 +169,90 @@ test_that("quiet mode logs routine diagnostics without printing them (F9)", {
   z$args$verbose <- 1
   run_eems <- z$f
   expect_output(do.call("run_eems", z$args), "Completed:")
+})
+
+test_that("EEMS receives lon/lat with great-circle distance (change 12)", {
+  z <- eems_case()
+  local_mocked_bindings(make_eems_plots = z$plotter, .package = "reemsplots2")
+  z$args$cleanup <- FALSE
+  x <- z$args$x
+  ll <- cbind(x@other$latlon$lon, x@other$latlon$lat)
+  for (buffer in c(10000, 50000)) {
+    do.call(z$f, c(z$args, list(buffer = buffer)))
+    run <- tail(z$calls$runs, 1)
+    coord <- as.matrix(utils::read.table(file.path(run, "eems.coord")))
+    expect_equal(unname(coord), ll)
+    expect_true("distance = greatcirc" %in%
+                  readLines(file.path(run, "params.ini")))
+    # buffer is ground metres: the samples on the hull sit buffer metres
+    # from the outline whatever their latitude.
+    outer <- as.matrix(utils::read.table(file.path(run, "eems.outer")))
+    edge <- sf::st_sfc(sf::st_linestring(outer), crs = 4326)
+    pts <- sf::st_as_sf(data.frame(lon = ll[, 1], lat = ll[, 2]),
+                        coords = c("lon", "lat"), crs = 4326)
+    gap <- min(as.numeric(sf::st_distance(pts, edge)))
+    expect_equal(gap, buffer, tolerance = 0.02)
+  }
+})
+
+test_that("habitat replaces the hull and is validated first (change 13)", {
+  z <- eems_case()
+  local_mocked_bindings(make_eems_plots = z$plotter, .package = "reemsplots2")
+  z$args$cleanup <- FALSE
+  box <- rbind(c(110, -40), c(155, -40), c(155, -15), c(110, -15))
+  do.call(z$f, c(z$args, list(habitat = box, buffer = 1e6)))
+  outer <- as.matrix(utils::read.table(
+    file.path(tail(z$calls$runs, 1), "eems.outer")))
+  expect_equal(unname(outer), rbind(box, box[1, ]))
+  # An sf polygon in a projected CRS is written in lon/lat.
+  albers <- sf::st_transform(
+    sf::st_sfc(sf::st_polygon(list(rbind(box, box[1, ]))), crs = 4326), 3577)
+  do.call(z$f, c(z$args, list(habitat = sf::st_sf(geometry = albers))))
+  outer <- as.matrix(utils::read.table(
+    file.path(tail(z$calls$runs, 1), "eems.outer")))
+  expect_equal(unname(outer), rbind(box, box[1, ]), tolerance = 1e-6)
+  runs <- length(z$calls$runs)
+  ring <- function(m) rbind(m, m[1, ])
+  hole <- sf::st_polygon(list(ring(box), ring(rbind(
+    c(120, -30), c(120, -25), c(130, -25), c(130, -30)))))
+  two <- sf::st_multipolygon(list(list(ring(box)), list(ring(box + 50))))
+  bowtie <- rbind(c(110, -40), c(155, -15), c(155, -40), c(110, -15))
+  bad <- list(
+    list(sf::st_sfc(sf::st_polygon(list(ring(box)))), "no coordinate"),
+    list(sf::st_sfc(hole, crs = 4326), "must not contain holes"),
+    list(sf::st_sfc(two, crs = 4326), "single polygon"),
+    list(cbind(box, 1), "two-column matrix"),
+    list(box * 2, "two-column matrix"),
+    list(bowtie, "valid simple polygon"))
+  for (case in bad) {
+    expect_error(do.call(z$f, c(z$args, list(habitat = case[[1]]))),
+                 case[[2]])
+  }
+  expect_length(z$calls$runs, runs)
+})
+
+test_that("samples outside the habitat are named in a warning (change 13)", {
+  z <- eems_case()
+  local_mocked_bindings(make_eems_plots = z$plotter, .package = "reemsplots2")
+  x <- z$args$x
+  west <- adegenet::indNames(x)[x@other$latlon$lon < 130]
+  east <- rbind(c(130, -45), c(160, -45), c(160, -10), c(130, -10))
+  z$args$verbose <- 2
+  # The mock plotter's own message and warning surface at verbose 2 (F9).
+  out <- utils::capture.output(suppressMessages(suppressWarnings(
+    result <- do.call(z$f, c(z$args, list(habitat = east))))))
+  expect_length(result, 8L)
+  expect_true(any(grepl(paste0(length(west),
+                               " sample\\(s\\) fall outside the habitat"),
+                        out)))
+  expect_true(any(grepl(west[1], out, fixed = TRUE)))
+  z$args$verbose <- 0
+  expect_output(do.call(z$f, c(z$args, list(habitat = east))), NA)
+})
+
+test_that("do.call with the function object prints its name (change 11)", {
+  z <- eems_case()
+  local_mocked_bindings(make_eems_plots = z$plotter, .package = "reemsplots2")
+  z$args$verbose <- 1
+  expect_output(do.call(z$f, z$args), "Completed: gl.run.eems")
 })

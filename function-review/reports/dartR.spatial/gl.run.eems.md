@@ -98,7 +98,7 @@ Proposed change 11: when the call head is a function object, use
 **Consequence: function-object do.call invocations at verbose > 0 can run
 instead of failing during the start message. Numerical output is unchanged.**
 Evidence: [original-state reproduction](../../evidence/gl.run.eems-addendum.log).
-Decision: pending; no addendum fix applied.
+Decision: approved by Luis on 2026-10-01 (round 2, section R2.6).
 
 ## 4. Proposed changes
 
@@ -178,6 +178,98 @@ The real integration run also compared the seeded posterior trace against the or
 Evidence: [regression tests](../../../tests/testthat/test-gl.run.eems-fixes.R), [full-suite log](../../evidence/gl.run.eems-suite.log), [real integration script](../../evidence/gl.run.eems-integration.R), [integration log](../../evidence/gl.run.eems-integration.log), [caller check](../../evidence/gl.run.eems-callers.md). NEWS records the approved behaviour changes. No production sibling-package callers were found. The generated Shiny caller uses named arguments and the returned plot list; its signature remains compatible. Its copied input-generator source was not refreshed, and the Shiny app was not run.
 
 Remaining limitations: native Windows/Linux runs, large FBM data and geographic plot validation remain untested; full R CMD check was not run. Addendum 11 is a reproduced pre-existing call-formatting edge case and remains unmodified pending its own approval. No open PR from dev_luis was present when checked.
+
+## Round 2: coordinate units and habitat (2026-10-01)
+
+### R2.1 Header
+
+- Trigger: bug report relayed from the YFT session (yellowfin tuna; six sites in the Eastern Pacific and Gulf of Mexico).
+- Reviewer: Claude (Opus 5.5, `claude-opus-5-5`), dartr-function-review v3.0.0.
+- Package commit: `2434d28` (`dev_luis` fast-forwarded to `origin/dev`).
+- Datasets: `bandicoot.gl` (96 individuals, 1,000 SNPs, spanning 18.5° of latitude and 39.8° of longitude). For the `clip.land` probe only: the six YFT site coordinates, recovered by inverting the Mercator `.coord` file in `~/YFT/outputs/work/eems_demes100/`.
+- Baseline: test "coordinate units baseline is unchanged" in [test-gl.run.eems.R](../../../tests/testthat/test-gl.run.eems.R), snapshot captured before any change.
+- Environment: macOS arm64, R 4.4 (`/usr/local/bin/Rscript`), sf with GEOS 3.13.0, GDAL 3.8.5 and PROJ 9.5.1, reemsplots2 0.1.0, `~/programs/runeems_snps`.
+
+### R2.2 Verdict
+
+**Standards: Needs work**: `buffer` has no documented unit, and its real unit changes with latitude.
+
+**Spec: Needs work**: the `rdist03` diagnostic is wrong on every run, maps come back in Mercator metres, and the habitat cannot be set.
+
+What works: EEMS runs consistently in Mercator space, and the surfaces and the sample overlay agree with each other.
+
+### R2.3 Findings
+
+**F11 [HIGH, confidence: high]: coordinates reach EEMS in Mercator metres, but `reemsplots2` reads them as degrees (DOC5, proposed rule; geographic-units principle)**
+
+`R/gl.run.eems.r:302` projects lon/lat with `dismo::Mercator()` and writes metres to `eems.coord` and `eems.outer`. `params.ini` (lines 289–299) sets no `distance`, so EEMS uses its Euclidean default. `reemsplots2` computes the `rdist03` x-axis with `sp::spDists(longlat = TRUE)`, which reads any coordinate as degrees.
+Failure scenario: `bandicoot.gl` with `nDemes = 50`. `rdist03` plots deme distances of 1,486–17,433 km. The true great-circle distances between the same demes are 388–3,570 km; the correlation between the two is 0.034. Map axes run from 12.4 to 17.3 million. A coastline or any other lon/lat layer added to `mrates01` lands outside the map. Every run is affected, not only wide-latitude data, because a metre value read as degrees is meaningless at any scale.
+Correction to the bug report: `longlat` in `make_eems_plots()` sets axis order only (`if (!longlat)` swaps the columns; EEMS manual section 3). It does not tell `reemsplots2` the units. The suggested minimal alternative, `longlat = FALSE`, puts northing on the x-axis and leaves `rdist03` wrong (1,736–19,495 km).
+Proposed change: write lon/lat to `eems.coord` and `eems.outer` and add `distance = greatcirc` to `params.ini`. In the EEMS source (`util.cpp`, `greatcirc_dist()`), that option reads column 1 as longitude and column 2 as latitude in degrees. Keep `longlat = TRUE`. Draw the four maps with `coord_quickmap()` instead of `coord_equal()`, so a degree of longitude is drawn shorter than a degree of latitude away from the equator. Drop `dismo` from Imports, because this is its only use. Prototype P3: EEMS exits 0, `rdist03` spans 353–3,621 km, and map axes span 111.5° to 155.5°.
+
+**F12 [MEDIUM, confidence: high]: `buffer` has no documented unit, and its real unit changes with latitude (DOC1, DOC5 proposed)**
+
+`R/gl.run.eems.r:16` documents "Buffer distance for all the elements [default 10000]"; `@details` says metres. The buffer is applied in Mercator units, which equal ground metres only at the equator.
+Failure scenario: at the mean latitude of `bandicoot.gl` (−31.1°), `buffer = 10000` gives 8,561 ground metres; at 60° it gives 5,000.
+Proposed change, folded into change 12 because a lon/lat outline needs a defined unit: keep `buffer` in metres with default 10000. Build the hull and buffer in a Lambert azimuthal equal-area projection centred on the samples, densify the outline to edges of 50 km or less, and convert it back to lon/lat. Document the unit. Switching to kilometres, as the bug report suggests, would turn an existing `buffer = 50000` into 50,000 km.
+
+**F13 [MEDIUM, confidence: high]: the habitat is always the buffered convex hull of the samples (Spec; missing capability)**
+
+`R/gl.run.eems.r:303–307` builds the habitat from `chull()` and `st_buffer()`; no argument can replace it.
+Failure scenario: the YFT sites (longitude −109.9 to −77.5, latitude −11.1 to 29.4) give a hull spanning Central America, so EEMS places demes on land and joins the Pacific directly to the Gulf of Mexico. For terrestrial `bandicoot.gl`, the hull spans the Great Australian Bight. EEMS conditions its migration surface on this outline.
+Proposed change: add `habitat = NULL`, accepting an `sf`/`sfc` polygon in any CRS (transformed to lon/lat) or a two-column lon/lat matrix. Validate it as one valid ring without holes, because EEMS reads a single `boost::geometry` ring and stops on anything else (`habitat.cpp`). Ignore `buffer` when `habitat` is supplied. Warn (VRB3) when samples fall outside it: EEMS assigns each sample to its nearest deme without checking (`graph.cpp:103`; EEMS manual section 1). `NULL` keeps the hull. Probe P4: a concave single-ring habitat (the hull minus the Bight) passes EEMS's habitat check and runs.
+
+**Considered, not proposed**
+
+- `clip.land = TRUE` (subtract Natural Earth land from the hull). On the YFT sites the result is two polygons: the Pacific (7.46 million km²) and the Caribbean and Gulf (1.61 million km²). EEMS accepts one ring only, so the option would fail on the case that motivated it, and it adds `rnaturalearth` as a dependency. With `habitat`, users clip and join pieces themselves.
+- A warning when `nDemes` far exceeds the number of sampling locations. EEMS is designed for a dense grid with few sampled demes; unsampled demes take their rates from the surrounding Voronoi tiles. EEMS already logs "There are N observed demes (out of M demes)" (`graph.cpp:137`), and the wrapper keeps that log and prints it at `verbose >= 3`. In P3, 96 sample locations mapped to 22 observed demes with `nDemes = 50`.
+- Antimeridian. Samples spanning ±180° longitude give a hull around the wrong side of the globe. The Mercator path has the same problem today. Not tested.
+
+### R2.4 Proposed changes
+
+Numbering continues from round 1; change 11 (addendum A1) is still pending.
+
+12. Use lon/lat with great-circle distance throughout, measure `buffer` in ground metres, return maps in degrees, and drop `dismo` (F11, F12). **Consequence: EEMS numerical output changes for every dataset. The deme grid is laid out in lon/lat instead of Mercator metres, and samples and Voronoi tiles are assigned by great-circle distance, so a seeded run no longer reproduces a 1.2.6 result. Returned maps change from Mercator metres to degrees, `rdist03` shows true distances, and the default buffer becomes 10 km on the ground (8.6 km today at 31° latitude).**
+13. Add a `habitat` argument (F13), placed last in the signature before `...` so no positional call shifts, and documented next to `buffer`. **Consequence: the signature gains an argument; calls that omit it behave as under change 12.**
+
+### R2.5 Coverage
+
+Evidence: [probe script](../../evidence/gl.run.eems-round2-probes.R), [probe log](../../evidence/gl.run.eems-round2-probes.log).
+
+- **Real runs:** the current function on `bandicoot.gl` (`nDemes = 50`, 2,000 iterations) and on the baseline subset (WA and NSW, 200 iterations); prototype lon/lat, great-circle and concave-habitat runs with the real binary. Short chains exercise the wrapper only. **MCMC convergence and biological inference were not assessed.**
+- **Independent check:** deme centres from `rdistoDemes.txt` were converted back with `dismo::Mercator(inverse = TRUE)`, measured with `sp::spDists(longlat = TRUE)` and compared with the `rdist03` data, after the same singleton-deme filter.
+- **Source reads:** reemsplots2 0.1.0 (`geo_distm`, `read_dimns`, `make_eems_plots`); EEMS source in `~/eems-master` (`habitat.cpp`, `graph.cpp`, `util.cpp`, `runeems_snps.cpp`) and its manual (`Documentation/EEMS-doc.pdf`). The installed binary was not rebuilt from that source; it accepted `distance = greatcirc` and recorded it in `eemsrun.txt`.
+- **Not done:** a comparison of migration surfaces between the Mercator and lon/lat configurations. No ground truth is available, and neither layout is equal-area, so change 12 rests on correct plots and EEMS's own lon/lat configuration, not on a demonstrated gain in inference. Also not done: Windows and Linux runs, antimeridian data, and the YFT genotypes (only the six site coordinates were used).
+- **Standards walk:** limited to the lines these findings touch; round 1 covered the rest of the function.
+- **Caller grep (API3):** pending; required before merging changes 12 or 13.
+
+### R2.6 Approval
+
+| Change | Decision | By | Note |
+|---|---|---|---|
+| 11 | approved | Luis | Round-1 addendum A1, approved via approval box on 2026-10-01. |
+| 12 | approved | Luis | Approval box on 2026-10-01; question stated that EEMS output changes for every dataset and seeded 1.2.6 runs no longer reproduce. |
+| 13 | approved | Luis | Approval box on 2026-10-01; question stated the placement (last, before `...`) and the outside-habitat warning listing samples. |
+
+### R2.7 Outcome
+
+| Change | Applied result | Verification |
+|---|---|---|
+| 11 | A closure call head is labelled `"gl.run.eems"` in the start and end messages | `do.call(z$f, args)` at `verbose = 1` prints "Completed: gl.run.eems". |
+| 12 | lon/lat to `eems.coord` and `eems.outer`; `distance = greatcirc`; hull and buffer built in a local Lambert azimuthal equal-area projection, outline densified to 50 km edges and converted back; maps drawn with `coord_quickmap()`; `dismo` removed from Imports and NAMESPACE | Real run on `bandicoot.gl` (I1): `rdist03` equals `sp::spDists(longlat = TRUE)` between observed demes (`all.equal` TRUE), range 353–3,621 km, matching prototype P3; map x-axis 111.5–155.5°. Mocked runs: nearest-sample gap to the outline equals `buffer` within 2% for 10 km and 50 km. |
+| 13 | `habitat = NULL` added last before `...`; sf/sfc (any CRS) or lon/lat matrix; checked for CRS, one part, no holes, numeric lon/lat ranges and planar validity before any file is written; ring closed if open; `buffer` ignored; samples outside named in a VRB3 warning | Real run (I2): hull minus the Great Australian Bight runs; the warning names bc18, bc63 and bc80. Mocked runs: a box matrix and its Albers (EPSG:3577) sf version are written as the same lon/lat ring; six invalid inputs error before EEMS starts. |
+
+Snapshot diff: only "coordinate units baseline is unchanged" changed. Every line maps to change 12: coordinates 13552400 → 121.743, outer x-range 12.63–16.99 million → 113.5–152.6, `distance = greatcirc` added, `rdist03` 1,288–19,606 km → 392–3,125 km, map x-range 12.41–17.21 million → 111.5–154.6. The prior snapshot is kept in [evidence](../../evidence/gl.run.eems-round2-before-snapshot.md). Round-1 snapshots and the six distance anchors are unchanged.
+
+Suite: `NOT_CRAN=true DARTR_EEMS_REVIEW=true`, 502 passed, 0 failed, 0 warnings, 0 skipped ([log](../../evidence/gl.run.eems-round2-suite.log)). R CMD check (`--no-manual`): 0 errors, 1 WARNING, 1 NOTE, both from the local machine, not this change: the WARNING lists ade4, ggplot2 and dplyr "built under R version 4.4.3", and the NOTE is "unable to verify current time". No unused-Imports note after dropping dismo ([log](../../evidence/gl.run.eems-round2-check.log)). `devtools::document()` changed `man/gl.run.eems.Rd` and removed `importFrom(dismo,Mercator)` and `importFrom(grDevices,chull)` from NAMESPACE.
+
+Evidence: [integration script](../../evidence/gl.run.eems-round2-integration.R), [integration log](../../evidence/gl.run.eems-round2-integration.log), [caller check](../../evidence/gl.run.eems-round2-callers.md).
+
+Caller check: no sibling-package callers. The dartr2shiny module calls with named arguments, so its call is unaffected, but its GeoTIFF export hard-codes a Mercator CRS on `mrates02` data, which is now longitude/latitude. That module needs `crs(MyData2) <- "EPSG:4326"` before the platform is rebuilt from a `dev` that contains this change. No downstream repository was changed.
+
+Not run: Windows and Linux (CI will run them), antimeridian data, MCMC convergence.
+
+PR: [#54](https://github.com/green-striped-gecko/dartR.spatial/pull/54), approved for publication by Luis on 2026-10-01.
 
 ## 8. Machine block
 
@@ -285,7 +377,7 @@ Remaining limitations: native Windows/Linux runs, large FBM data and geographic 
       "severity": "LOW",
       "confidence": "high",
       "rule": "FS3 (catalogue edge case)",
-      "status": "pending",
+      "status": "applied",
       "change": 11
     }
   ],
@@ -296,8 +388,36 @@ Remaining limitations: native Windows/Linux runs, large FBM data and geographic 
     "Visual/geospatial validation of rendered surfaces",
     "Full package check"
   ],
-  "status": "approved-for-publication",
-  "pr": null,
+  "status": "pr-open",
+  "pr": 36,
+  "round2": {
+    "pr": 54,
+    "date": "2026-10-01",
+    "skill_version": "3.0.0",
+    "model": "Claude Opus 5.5 (claude-opus-5-5)",
+    "commit": "2434d28",
+    "datasets": ["bandicoot.gl", "YFT site coordinates (clip.land probe only)"],
+    "verdict_standards": "needs_work",
+    "verdict_spec": "needs_work",
+    "findings": [
+      {"id": "F11", "severity": "HIGH", "confidence": "high",
+       "rule": "DOC5; geographic-units principle", "proposed_rule": true,
+       "status": "applied", "change": 12},
+      {"id": "F12", "severity": "MEDIUM", "confidence": "high",
+       "rule": "DOC1; DOC5", "proposed_rule": true,
+       "status": "applied", "change": 12},
+      {"id": "F13", "severity": "MEDIUM", "confidence": "high",
+       "rule": "Spec; missing capability",
+       "status": "applied", "change": 13}
+    ],
+    "considered_not_proposed": ["clip.land", "nDemes warning", "antimeridian"],
+    "coverage_skipped": [
+      "Mercator vs lon/lat surface comparison (no ground truth)",
+      "Native Windows/Linux execution",
+      "Antimeridian data",
+      "MCMC convergence and biological inference"
+    ]
+  },
   "verification": {
     "regression_assertions": 53,
     "baseline_assertions": 8,
