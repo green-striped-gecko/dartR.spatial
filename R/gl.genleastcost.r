@@ -266,7 +266,16 @@ gl.genleastcost <- function(x,
       cols <- plot.colors.pop
     }
     
-    colors_pops <- cols[as.numeric(pop(x))]
+    # key colours by population name: names given by the user are kept when
+    # they cover every population, otherwise colours follow levels(pop(x))
+    if (length(cols) < nPop(x)) {
+      stop(error("  plot.colors.pop must be a palette or hold one color per",
+                 "population\n"))
+    }
+    if (!all(popNames(x) %in% names(cols))) {
+      cols <- setNames(cols[seq_len(nPop(x))], popNames(x))
+    }
+    colors_pops <- unname(cols[as.character(pop(x))])
 
     mats <- list()
     mats.names <- NA

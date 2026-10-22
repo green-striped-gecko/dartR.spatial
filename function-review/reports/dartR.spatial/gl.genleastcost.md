@@ -126,6 +126,21 @@ All ten approved changes are implemented in `R/gl.genleastcost.r`. `devtools::do
 - Full package test suite: 404 passed, 2 skipped (opt-in EEMS tests), 0 failed.
 - Not changed (outside the approved scope): the "No projected coordinates in @other$xy" warning still prints regardless of `verbose`.
 
+## Follow-up (2026-10-22): population colours on the wrong populations
+
+Found in the dartRverse audit of population colours (dartR.base
+`function-review/audits/2026-10-22-population-colours.md`), after the
+`gl.report.heterozygosity` fix (dartR.base PR #455).
+
+**FU1 [LOW, confidence: high] — names given to `plot.colors.pop` ignored (spec)**
+Path plot — `cols[as.numeric(pop(x))]` indexed the colours by level number. possums A/B/C with levels B, C, A and named `c(A = "green", B = "red", C = "blue")` gave A red, B blue, C green.
+Change: keep the user's names when they cover every population, otherwise name by `popNames(x)`; index by `as.character(pop(x))`; stop on fewer colours than populations.
+**Consequence: named colours now match by name; unnamed colours unchanged.**
+
+Requested by Luis (2026-10-22, "go ahead" on the audit).
+
+Evidence: new test in `test-gl.genleastcost-fixes.R` ("... follow population names (follow-up 2026-10-22)") fails on `origin/dev` and passes after the change; the function's other tests pass unchanged.
+
 ## 8. Machine block
 
 ```json

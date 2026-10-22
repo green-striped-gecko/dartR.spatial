@@ -41,3 +41,26 @@ test_that("palettes and legend options are used", {
   expect_silent(gl.grm2(x, palette_convergent = grDevices::heat.colors(10),
                         verbose = 0))
 })
+
+test_that("legend colours follow population names (follow-up 2026-10-22)", {
+  # before: names(colors_pops) <- levels(x$pop) overwrote the names given
+  xp <- dartR.data::platypus.gl[, 1:200]
+  pop(xp) <- factor(as.character(pop(xp)),
+                    levels = c("SEVERN_BELOW", "TENTERFIELD", "SEVERN_ABOVE"))
+  shown <- NULL
+  rec <- function(legend, fill) shown <<- setNames(as.character(fill), legend)
+  suppressMessages(trace("legend", tracer = bquote(.(rec)(legend, fill)),
+                         print = FALSE, where = asNamespace("graphics")))
+  on.exit(suppressMessages(untrace("legend",
+                                   where = asNamespace("graphics"))))
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  expected <- c(SEVERN_BELOW = "red", TENTERFIELD = "blue",
+                SEVERN_ABOVE = "green")
+  for (cols in list(c("red", "blue", "green"),
+                    c(TENTERFIELD = "blue", SEVERN_ABOVE = "green",
+                      SEVERN_BELOW = "red"))) {
+    gl.grm2(xp, palette_discrete = cols, verbose = 0)
+    expect_equal(shown[names(expected)], expected)
+  }
+})

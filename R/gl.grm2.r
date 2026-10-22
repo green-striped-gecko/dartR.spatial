@@ -182,7 +182,16 @@ gl.grm2 <- function(x,
       colors_pops <- gl.select.colors(x, verbose = 0)
     }
 
-    names(colors_pops) <- as.character(levels(x$pop))
+    # names given by the user are kept when they cover every population,
+    # otherwise colours follow levels(pop(x))
+    if (length(colors_pops) < nPop(x)) {
+      stop(error("  palette_discrete must be a palette or hold one color per",
+                 "population\n"))
+    }
+    if (!all(popNames(x) %in% names(colors_pops))) {
+      colors_pops <- setNames(colors_pops[seq_len(nPop(x))], popNames(x))
+    }
+    colors_pops <- colors_pops[popNames(x)]
 
     df_colors_temp_1 <-
       as.data.frame(cbind(indNames(x), as.character(pop(x)), 1:nInd(x)))

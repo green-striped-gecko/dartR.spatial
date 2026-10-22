@@ -624,6 +624,18 @@ gl.spatial.autoCorr <- function(x = NULL,
     if (is.null(plot.colors.pop)) {
       plot.colors.pop <- dartR.base::gl.select.colors(x, verbose=0)
     }
+    # key colours by population name: names given by the user are kept when
+    # they cover every population, otherwise colours follow the population
+    # order (levels(pop(x)))
+    if (length(plot.colors.pop) < length(pop.names)) {
+      stop(error("  plot.colors.pop must be a palette or hold one color per",
+                 "population\n"))
+    }
+    if (!all(pop.names %in% names(plot.colors.pop))) {
+      plot.colors.pop <- setNames(plot.colors.pop[seq_along(pop.names)],
+                                  pop.names)
+    }
+    plot.colors.pop <- plot.colors.pop[pop.names]
     
     spa_multi <-data.table::rbindlist(res, use.names = TRUE, 
                                       fill = TRUE, idcol = "Population")

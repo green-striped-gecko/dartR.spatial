@@ -256,3 +256,20 @@ test_that("do.call with the function object prints its name (change 11)", {
   z$args$verbose <- 1
   expect_output(do.call(z$f, z$args), "Completed: gl.run.eems")
 })
+
+test_that("sample colours follow population names (follow-up 2026-10-22)", {
+  # before: pop was a character column, so unnamed colours went to the
+  # populations in alphabetical order, and names given were not used
+  z <- eems_case()
+  local_mocked_bindings(make_eems_plots = z$plotter, .package = "reemsplots2")
+  pop(z$args$x) <- factor(rep(c("C", "A", "B"), each = 4),
+                          levels = c("B", "C", "A"))
+  expected <- c(B = "red", C = "blue", A = "green")
+  for (cols in list(c("red", "blue", "green"),
+                    c(A = "green", B = "red", C = "blue"))) {
+    plots <- do.call(z$f, c(z$args, list(plot.colors.pop = cols)))
+    sc <- ggplot2::ggplot_build(plots[[1]])$plot$scales$get_scales("colour")
+    expect_equal(setNames(as.character(sc$map(names(expected))),
+                          names(expected)), expected)
+  }
+})
