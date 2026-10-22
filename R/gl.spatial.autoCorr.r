@@ -632,8 +632,8 @@ gl.spatial.autoCorr <- function(x = NULL,
                  "population\n"))
     }
     if (!all(pop.names %in% names(plot.colors.pop))) {
-      plot.colors.pop <- setNames(plot.colors.pop[seq_along(pop.names)],
-                                  pop.names)
+      plot.colors.pop <- stats::setNames(plot.colors.pop[seq_along(pop.names)],
+                                         pop.names)
     }
     plot.colors.pop <- plot.colors.pop[pop.names]
     

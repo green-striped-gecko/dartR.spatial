@@ -189,7 +189,7 @@ gl.grm2 <- function(x,
                  "population\n"))
     }
     if (!all(popNames(x) %in% names(colors_pops))) {
-      colors_pops <- setNames(colors_pops[seq_len(nPop(x))], popNames(x))
+      colors_pops <- stats::setNames(colors_pops[seq_len(nPop(x))], popNames(x))
     }
     colors_pops <- colors_pops[popNames(x)]
 

@@ -273,7 +273,7 @@ gl.genleastcost <- function(x,
                  "population\n"))
     }
     if (!all(popNames(x) %in% names(cols))) {
-      cols <- setNames(cols[seq_len(nPop(x))], popNames(x))
+      cols <- stats::setNames(cols[seq_len(nPop(x))], popNames(x))
     }
     colors_pops <- unname(cols[as.character(pop(x))])
 
