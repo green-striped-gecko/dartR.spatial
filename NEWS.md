@@ -1,5 +1,14 @@
 # dartR.spatial 1.2.6
 
+* `gl.spatial.autoCorr()`, `gl.run.eems()`, `gl.grm2()` and
+  `gl.genleastcost()`: population colours now go to the right populations.
+  Named colours that cover every population are matched by name; otherwise
+  colour i goes to `levels(pop(x))[i]`. Before, `gl.spatial.autoCorr()` and
+  `gl.run.eems()` gave unnamed colours to the populations in alphabetical
+  order (wrong when the levels are not alphabetical), and `gl.grm2()` and
+  `gl.genleastcost()` replaced or ignored the names given to the colours.
+  Fewer colours than populations now stops with a clear error. Defaults with
+  alphabetical levels give the same colours as before.
 * `gl.run.eems()` passes coordinates to EEMS as longitude/latitude with
   `distance = greatcirc`, instead of Mercator metres with EEMS's Euclidean
   default. reemsplots2 reads coordinates as degrees, so before, the `rdist03`

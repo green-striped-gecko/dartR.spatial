@@ -271,6 +271,21 @@ Not run: Windows and Linux (CI will run them), antimeridian data, MCMC convergen
 
 PR: [#54](https://github.com/green-striped-gecko/dartR.spatial/pull/54), approved for publication by Luis on 2026-10-01.
 
+## Follow-up (2026-10-22): population colours on the wrong populations
+
+Found in the dartRverse audit of population colours (dartR.base
+`function-review/audits/2026-10-22-population-colours.md`), after the
+`gl.report.heterozygosity` fix (dartR.base PR #455).
+
+**FU1 [MEDIUM, confidence: high] — unnamed colours applied in alphabetical order (spec)**
+Sample overlay — `pop = as.character(pop(x))` with positional `scale_color_manual(values = colors_pops)`. With the mocked EEMS run and levels B, C, A, unnamed `c("red", "blue", "green")` went to A, B, C instead of B, C, A.
+Change: name `colors_pops` by `popNames(x)` unless the user's names cover every population, subset to `popNames(x)`, and stop on fewer colours than populations.
+**Consequence: colours change only when the levels are not alphabetical; EEMS results unchanged.**
+
+Requested by Luis (2026-10-22, "go ahead" on the audit).
+
+Evidence: new test in `test-gl.run.eems-fixes.R` ("... follow population names (follow-up 2026-10-22)") fails on `origin/dev` and passes after the change; the function's other tests pass unchanged.
+
 ## 8. Machine block
 
 ```json

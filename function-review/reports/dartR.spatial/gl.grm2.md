@@ -66,6 +66,21 @@ Change 1 is implemented in `R/gl.grm2.r`; `devtools::document()` regenerated `ma
 - Fix tests (`test-gl.grm2-fixes.R`): 6/6 pass. They check equality with `rrBLUP::A.mat`, the SilicoDArT error, the `plot.file` warning, and palettes as a function and as a vector with the legend options.
 - Full package test suite: 419 passed, 2 skipped (opt-in EEMS tests), 0 failed. R CMD check: 0 errors; its 3 warnings and 5 notes predate this change.
 
+## Follow-up (2026-10-22): population colours on the wrong populations
+
+Found in the dartRverse audit of population colours (dartR.base
+`function-review/audits/2026-10-22-population-colours.md`), after the
+`gl.report.heterozygosity` fix (dartR.base PR #455).
+
+**FU1 [LOW, confidence: high] — names given to `palette_discrete` overwritten (spec)**
+Heatmap colours — `names(colors_pops) <- levels(x$pop)` replaced the user's names by position. Named `c(TENTERFIELD = "blue", SEVERN_ABOVE = "green", SEVERN_BELOW = "red")` with levels SEVERN_BELOW, TENTERFIELD, SEVERN_ABOVE gave the wrong legend and side colours.
+Change: keep the user's names when they cover every population, otherwise name by `popNames(x)`; stop on fewer colours than populations.
+**Consequence: named colours now match by name; unnamed colours unchanged.**
+
+Requested by Luis (2026-10-22, "go ahead" on the audit).
+
+Evidence: new test in `test-gl.grm2-fixes.R` ("... follow population names (follow-up 2026-10-22)") fails on `origin/dev` and passes after the change; the function's other tests pass unchanged.
+
 ## 8. Machine block
 
 ```json

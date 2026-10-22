@@ -121,3 +121,28 @@ test_that("a coordinates data.frame works with several populations (A1)", {
   expect_equal(quiet(x, coordinates = cc), quiet(x))
   expect_error(quiet(x, coordinates = cc[1:5, ]), "one row per individual")
 })
+
+test_that("population colours follow population names (follow-up 2026-10-22)", {
+  # before: Population is a character column, so unnamed colours went to
+  # the populations in alphabetical order, not in the order of the levels
+  x <- dartR.data::platypus.gl[, 1:100]
+  pop(x) <- factor(as.character(pop(x)),
+                   levels = c("SEVERN_BELOW", "TENTERFIELD", "SEVERN_ABOVE"))
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off())
+  colour_of <- function(cols) {
+    d <- tempfile("autocorr_cols")
+    dir.create(d)
+    gl.spatial.autoCorr(x, bins = 3, permutation = FALSE, bootstrap = FALSE,
+                        plot.colors.pop = cols, plot.file = "p", plot.dir = d,
+                        verbose = 0)
+    p <- readRDS(file.path(d, "p.RDS"))
+    sc <- ggplot2::ggplot_build(p)$plot$scales$get_scales("colour")
+    setNames(as.character(sc$map(popNames(x))), popNames(x))
+  }
+  expected <- c(SEVERN_BELOW = "red", TENTERFIELD = "blue",
+                SEVERN_ABOVE = "green")
+  expect_equal(colour_of(c("red", "blue", "green")), expected)
+  expect_equal(colour_of(c(TENTERFIELD = "blue", SEVERN_ABOVE = "green",
+                           SEVERN_BELOW = "red")), expected)
+})

@@ -96,3 +96,25 @@ test_that("default colours are silent at verbose = 0 (change 9)", {
   expect_silent(gl.genleastcost(x, fric, gen.distance = "D", plotpath = FALSE,
                                 verbose = 0))
 })
+
+test_that("point colours follow population names (follow-up 2026-10-22)", {
+  # before: cols[as.numeric(pop(x))] ignored the names given to the colours
+  xl <- x
+  pop(xl) <- factor(as.character(pop(xl)), levels = c("B", "C", "A"))
+  drawn <- list()
+  rec <- function(col) drawn[[length(drawn) + 1]] <<- col
+  suppressMessages(trace("points", tracer = bquote(.(rec)(list(...)$col)),
+                         print = FALSE, where = asNamespace("graphics")))
+  on.exit(suppressMessages(untrace("points",
+                                   where = asNamespace("graphics"))))
+  grDevices::pdf(NULL)
+  on.exit(grDevices::dev.off(), add = TRUE)
+  expected <- c(B = "red", C = "blue", A = "green")[as.character(pop(xl))]
+  for (cols in list(c("red", "blue", "green"),
+                    c(A = "green", B = "red", C = "blue"))) {
+    drawn <- list()
+    gl.genleastcost(xl, fric, gen.distance = "D", plotpath = TRUE,
+                    plot.colors.pop = cols, verbose = 0)
+    expect_equal(unname(drawn[[1]]), unname(expected))
+  }
+})

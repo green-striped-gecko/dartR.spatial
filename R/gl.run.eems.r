@@ -456,6 +456,18 @@ gl.run.eems <- function(x,
       } else {
         plot.colors.pop
       }
+      # key colours by population name: names given by the user are kept
+      # when they cover every population, otherwise colours follow
+      # levels(pop(x))
+      if (length(colors_pops) < adegenet::nPop(x)) {
+        stop(error("  plot.colors.pop must be a palette or hold one color",
+                   "per population\n"))
+      }
+      if (!all(adegenet::popNames(x) %in% names(colors_pops))) {
+        colors_pops <- stats::setNames(
+          colors_pops[seq_len(adegenet::nPop(x))], adegenet::popNames(x))
+      }
+      colors_pops <- colors_pops[adegenet::popNames(x)]
       xy_plot <- data.frame(x = ll$x, y = ll$y,
                             pop = as.character(adegenet::pop(x)))
       for (i in seq_len(4)) {

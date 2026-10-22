@@ -144,6 +144,21 @@ Approved by Luis and applied; a data.frame now gives the same result as `x@other
 `gl.ibd` (line 268) and `gl.run.eems` (line 301) also use `dismo::Mercator()` for lon/lat input. `gl.ibd` was reviewed in PR #37, so this is for the custodian to decide.
 Follow-up (2026-09-23, approved by Luis): `gl.ibd` now uses geodesic distances (see the amendment in its report). `gl.run.eems` was not changed. There, Mercator projects the sample coordinates and the habitat polygon onto the plane where EEMS lays out its deme grid, and `buffer` is in Mercator metres. No pairwise distance is computed from it, so the original A2 suggestion does not apply to that function.
 
+## Follow-up (2026-10-22): population colours on the wrong populations
+
+Found in the dartRverse audit of population colours (dartR.base
+`function-review/audits/2026-10-22-population-colours.md`), after the
+`gl.report.heterozygosity` fix (dartR.base PR #455).
+
+**FU1 [MEDIUM, confidence: high] — unnamed colours applied in alphabetical order (spec)**
+Plot block — `rbindlist(idcol = "Population")` makes a character column, so `scale_color_manual(values = plot.colors.pop)` gave colour i to the i-th population in alphabetical order. platypus.gl with levels SEVERN_BELOW, TENTERFIELD, SEVERN_ABOVE and unnamed `c("red", "blue", "green")` gave SEVERN_BELOW blue, TENTERFIELD green, SEVERN_ABOVE red.
+Change: name the colours by `pop.names` (the population order) unless the user's names cover every population, subset to `pop.names`, and stop on fewer colours than populations.
+**Consequence: colours change only when the levels are not alphabetical; statistics unchanged.**
+
+Requested by Luis (2026-10-22, "go ahead" on the audit).
+
+Evidence: new test in `test-gl.spatial.autoCorr-fixes.R` ("... follow population names (follow-up 2026-10-22)") fails on `origin/dev` and passes after the change; the function's other tests pass unchanged.
+
 ## 8. Machine block
 
 ```json
