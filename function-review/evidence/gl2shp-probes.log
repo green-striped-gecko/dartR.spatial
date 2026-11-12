@@ -1,0 +1,93 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+===  P1 NA in sex only (coords complete)  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Removed 0 individual(s) due to missing coordinates.
+Shapefile saved as: gl.shp 
+in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f6b4f7a9 
+Completed: gl2shp 
+points: 15 
+
+===  P2 two NA lat  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Removed 2 individual(s) due to missing coordinates.
+Removed:  AA010915 
+ Removed:  UC_00126 
+Shapefile saved as: gl.shp 
+in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f6b4f7a9 
+Completed: gl2shp 
+points: 18 
+
+===  P3 ind.metrics NULL  ===
+[1] "ERROR: incorrect number of dimensions"
+
+===  P4 type='gpkg'  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Removed 0 individual(s) due to missing coordinates.
+Shapefile saved as: gl.gpkg 
+in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f52ef7baf 
+Completed: gl2shp 
+points: 20 
+files written: 0 
+
+===  P4b type='KML'  ===
+points: 20 
+files written: 0 
+
+===  P5 latlon matrix  ===
+[1] "ERROR: $ operator is invalid for atomic vectors"
+
+===  P6 lat/long names  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+  Warning: Names given as lat long, instead of lat lon. Rectifying
+Removed 0 individual(s) due to missing coordinates.
+Shapefile saved as: gl.shp 
+in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f6b4f7a9 
+Completed: gl2shp 
+points: 20 
+
+===  P7 missing outpath  ===
+[1] "ERROR: [writeVector] Layer creation failed"
+Warning message:
+Failed to create file /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f6b4f7a9/nope/gl.shp: No such file or directory (GDAL error 1) 
+ [1] "id"         "pop"        "lat"        "lon"        "sex"       
+ [6] "maturity"   "optional"   "id.1"       "pop.1"      "lat.1"     
+[11] "lon.1"      "sex.1"      "maturity.1"
+[1] TRUE
+  id     id.1
+1  1 AA010915
+2  2 UC_00126
+3  3 AA032760
+ [1] "id"         "pop"        "lat"        "lon"        "sex"       
+ [6] "maturity"   "a_very_lo0" "optional"   "id.1"       "pop.1"     
+[11] "lat.1"      "lon.1"      "sex.1"      "maturity.1" "a_very_lo1"
+
+===  P12 verbose=3  ===
+Starting gl2shp 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Removed 0 individual(s) due to missing coordinates.
+Shapefile saved as: gl.shp 
+in folder: /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpDbrCaJ/file17c9f6b4f7a9 
+Completed: gl2shp 
+points: 20 
+
+===  P13 projected proj4 + kml  ===
+points: 20 

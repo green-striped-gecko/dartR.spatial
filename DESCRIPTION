@@ -1,9 +1,9 @@
 Package: dartR.spatial
 Type: Package
 Title: Applying Landscape Genomic Methods on  'SNP' and 'Silicodart' Data 
-Version: 1.2.2
-Date: 2026-02-17
-Revision: Elastic Elapid
+Version: 1.2.7
+Date: 2026-11-12
+Revision: Generous Gecko
 Authors@R: c(
             person("Bernd", "Gruber", email="bernd.gruber@canberra.edu.au", role=c("aut","cre")), 
             person("Arthur", "Georges", email="georges@aerg.edu.au", role="aut"),
@@ -18,16 +18,20 @@ Description: Provides landscape genomic functions to analyse 'SNP' (single nucle
     able to run most of the functions. 'dartR.spatial' is a package that belongs
     to the 'dartRverse' suit of packages and depends on 'dartR.base' and 'dartR.data'.
 Encoding: UTF-8
-Depends: R (>= 3.5), dartR.base, dartR.data
-Imports: adegenet (>= 2.0.0), methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table, grDevices, dismo
+Depends: R (>= 3.5), dartR.base (>= 1.2.7), dartR.data (>= 1.2.5)
+Imports: adegenet (>= 2.0.0), methods, utils, crayon, StAMPP, raster, sp, tidyr, vegan, MASS, ggplot2, data.table, grDevices, Matrix, igraph
 Suggests:
   mmod,
+  testthat (>= 3.0.0),
+  withr,
   gdistance,
   gplots,
   rrBLUP,
   terra (>= 1.7-39),
   sf,
-  PopGenReport
+  PopGenReport,
+  reemsplots2
+Remotes: dipetkov/reemsplots2
 License: GPL (>= 3)
 RoxygenNote: 7.3.3
 NeedsCompilation: no

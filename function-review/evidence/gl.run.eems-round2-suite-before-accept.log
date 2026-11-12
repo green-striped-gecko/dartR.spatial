@@ -1,0 +1,78 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.6 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+Completed: gl.propShared 
+Set of permutations < 'minperm'. Generating entire set.
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include individuals that are scored NA across all loci.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+  Warning: data include loci that are scored NA across all individuals.
+  Consider filtering using gl <- gl.filter.allna(gl)
+Completed: gl.propShared 
+Starting gl.propShared 
+  Processing genlight object with SNP data
+Completed: gl.propShared 
+FAILURE: 'test-gl.run.eems.R:108:3' ---------------
+Snapshot of code has changed:
+     old                      | new                                    
+ [2]   print(summary)         |   print(summary)        [2]            
+ [3] Output                   | Output                  [3]            
+ [4]   $coord_first_rows      |   $coord_first_rows     [4]            
+ [5]              V1       V2 -             V1       V2 [5]            
+ [6]   [1,] 13552400 -3928720 -   [1,] 121.743 -33.2514 [6]            
+ [7]   [2,] 14263000 -3620520 -   [2,] 128.127 -30.9058 [7]            
+ [8]                          |                         [8]            
+ [9]   $outer_x_range         |   $outer_x_range        [9]            
+[10]   [1] 12630000 16990000  -   [1] 113.5 152.6       [10]           
+[11]                          |                         [11]           
+ ... ...                        ...                     and 12 more ...
+* Run `testthat::snapshot_accept("gl.run.eems")` to accept the change.
+* Run `testthat::snapshot_review("gl.run.eems")` to review the change.
+
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 501 ]
+Error:
+! Test failures.
+Execution halted

@@ -1,0 +1,148 @@
+# dartR.spatial 1.2.7
+
+* Functions called through `do.call(fun, ...)` no longer stop with
+  "cannot coerce type 'closure'" at `verbose >= 1`, and functions called as
+  `pkg::fun` print their name in the closing message. Needs the current
+  dartR.base.
+
+* `gl.spatial.autoCorr()`, `gl.run.eems()`, `gl.grm2()` and
+  `gl.genleastcost()`: population colours now go to the right populations.
+  Named colours that cover every population are matched by name; otherwise
+  colour i goes to `levels(pop(x))[i]`. Before, `gl.spatial.autoCorr()` and
+  `gl.run.eems()` gave unnamed colours to the populations in alphabetical
+  order (wrong when the levels are not alphabetical), and `gl.grm2()` and
+  `gl.genleastcost()` replaced or ignored the names given to the colours.
+  Fewer colours than populations now stops with a clear error. Defaults with
+  alphabetical levels give the same colours as before.
+* `gl.run.eems()` passes coordinates to EEMS as longitude/latitude with
+  `distance = greatcirc`, instead of Mercator metres with EEMS's Euclidean
+  default. reemsplots2 reads coordinates as degrees, so before, the `rdist03`
+  plot measured Mercator metres as if they were degrees: on `bandicoot.gl` it
+  showed 1,486-17,433 km between demes that are 388-3,570 km apart. It now
+  shows the true great-circle distances (353-3,621 km), and the four maps are
+  returned in degrees (drawn with `coord_quickmap()`). `buffer` is now in
+  ground metres at any latitude; before, 10000 Mercator units were 8.6 km on
+  the ground at 31 degrees latitude. EEMS results change for every dataset,
+  because the deme grid is laid out in longitude/latitude: a seeded run does
+  not reproduce an earlier result. dartR.spatial no longer imports dismo.
+* `gl.run.eems()` gains a `habitat` argument: an sf/sfc polygon (any CRS) or a
+  two-column longitude/latitude matrix that replaces the buffered convex hull
+  of the samples, for ranges that the hull misrepresents, such as a marine
+  species sampled on both sides of a landmass. It must be one polygon without
+  holes, because EEMS accepts a single ring. Samples outside it are named in
+  a warning, because EEMS assigns them to the closest deme.
+* `gl.run.eems()` called as `do.call(gl.run.eems, args)` with `verbose > 0`
+  no longer fails while printing its start message.
+
+* `gl.ibd()` stops on SilicoDArT data when `distance` is `"Fst"` (the
+  default), `"D"` or `"propShared"`, and names `"euclidean"` and `"kosman"`
+  as the distances that work on presence/absence scores. Before, Fst and D ran
+  StAMPP on the scores: on `testset.gs` pairwise Fst ranged from -14.7 to 19.0
+  and a Mantel test was still reported.
+* `gl.costdistances()` and `gl.genleastcost()`: when RSP underflows, the error
+  now names a smaller `theta` that gives finite distances, found by halving
+  `theta` up to six times, or says that none did. On `possums.gl` populations
+  A-C with `landscape.sim` aggregated by 5, the default `theta = 1` fails and
+  the error suggests `theta = 0.5`. The default is unchanged, so existing
+  results are too.
+* `gl.grm2()` passes `min.MAF = 1/(2n) - 1e-10` to `rrBLUP::A.mat()` unless
+  `min.MAF` is given. With the default `1/(2n)`, a locus with a single
+  minor-allele copy sat exactly on the cut-off, and rounding decided whether
+  it was kept: Apple Silicon Macs dropped it, and Linux and Windows kept it
+  unless the minor allele was the one counted as 2. Such loci are now kept
+  on every platform. Results change mostly on Apple Silicon (on
+  `platypus.gl[1:12, 1:200]` the T27 diagonal goes from 0.943 to 0.986),
+  and on Linux and Windows only for single-copy loci whose minor allele is
+  counted as 2 (2 of the 13 single-copy loci in `testset2.gl`).
+* `gl.propShared()` calculates its similarity with
+  `dartR.base::gl.dist.ind(method = "manhattan")` instead of compiling its own
+  C++ code in every R session, so it no longer needs Rcpp or a compiler. SNP
+  values are unchanged (max difference 2.2e-16); pairs with no locus called in
+  both return `NA` instead of `NaN`. It gains a `verbose` argument, and
+  SilicoDArT input now stops with an error: before, it returned a similarity
+  squeezed into 0.5-1. A missing Rcpp no longer returns `-1`.
+* `gl.ibd()` calculates geodesic distances (package terra) for longitude/
+  latitude instead of Euclidean distances on Mercator coordinates, which
+  are inflated by 1/cos(latitude). For `testset.gl` the geographic
+  distances are about 15% shorter and the Mantel statistic changes
+  (0.2658 to 0.2638). Out-of-range degrees now stop with an error.
+* `gl.grm2()` is synchronised with the reviewed `dartR.captive::gl.grm()`.
+  SilicoDArT input now stops with an error, `plot.file` with
+  `plotheatmap = FALSE` warns instead of failing, `palette_discrete` is used,
+  `label.size` and `legend.title` are added, and gplots is required only
+  for the heatmap. SNP matrices are unchanged.
+* `gl.spatial.autoCorr()` uses genetic distances as distances: `Simple` and
+  `Absolute` (and SilicoDArT `Simple`) were reversed, which flipped the sign
+  of r, and `grm` is now converted to a distance instead of giving values
+  outside [-1, 1]. Euclidean distances are squared, as in Smouse & Peakall
+  (1999) and GenAlEx, so default r values roughly double. Lon/lat distances
+  are geodesic instead of Mercator (about 13% shorter at 29 degrees), and
+  one-tail p-values count the observed value, so they are never 0.
+  `Dgeo`/`Dgen` input works without `x = NULL` and with named lists or lists
+  of matrices, and a `coordinates` data.frame works with several
+  populations.
+* `utils.spautocor()` starts automatic distance classes at the minimum
+  distance, as documented; before, classes started at 0 and could leave all
+  pairs in the last class.
+* `gl.genleastcost()` accepts a file path, RasterLayer, RasterStack,
+  RasterBrick or SpatRaster and processes every layer. Raster objects had
+  failed on every call since December 2024. Cost distances now come from
+  `gl.costdistances()`, so they change (mean-resistance conductance, random-
+  walk correction for commute) and `theta` is used; `rSPDistance` with the
+  default `theta = 1` may now stop with an underflow message. `propShared`
+  is returned as a distance (1 - proportion shared) instead of a
+  similarity, and `kosman` no longer errors. With `plotpath = FALSE`
+  nothing is plotted. Invalid arguments, missing coordinates and
+  SilicoDArT data stop early with clear messages.
+* `gl.kosman()` computes distances with matrix cross-products instead of one
+  matrix per locus, so large datasets no longer exhaust memory (300
+  individuals x 20,000 loci: 2.8 s, 422 MB). Distances are unchanged. The
+  diagonal of `nloci` now holds the loci called in each individual instead
+  of the total number of loci. Mixed or invalid ploidy stops with a clear
+  error, and pairs without shared loci trigger a warning.
+* `gl2shp()` removes individuals only when their coordinates are missing.
+  Previously an NA in any `ind.metrics` column also removed the individual,
+  so outputs can now contain more points. The attribute table is written
+  once: duplicated `.1` columns and the `optional` column are gone, and `id`
+  holds sample names instead of row numbers. Invalid `type`, a missing
+  `outpath`, missing terra and data with no complete coordinates now error.
+* `gl.costdistances()` now uses mean cell resistance for symmetric edges.
+  This changes distances on heterogeneous landscapes. Genlight coordinates
+  are selected by lon/lat names, interpreted as WGS84, and their population
+  centres are transformed to the raster CRS. Geographic commute distances
+  now use random-walk correction, and a sparse solver supports locations in
+  the grounded cell while retaining commute-time scaling.
+* `gl.costdistances()` validates locations, resistance, population assignments
+  and calculation settings. Invalid locations are no longer omitted or
+  recycled into misleading matrices. NA/Inf cells are barriers; zero/negative
+  resistance is rejected. Explicit x/y on unreferenced rasters still uses
+  local grid units. Disconnected least-cost pairs retain Inf; disconnected
+  commute/RSP analyses error. Optional `theta = 1` is appended after `verbose`;
+  it exposes the RSP parameter without changing its default. Non-finite RSP
+  results now error with scale/theta guidance. Dependency errors, verbosity,
+  function-object invocation and method/units documentation are corrected.
+
+* `gl.ibd()` aligns labelled distances and explicitly named coordinate tables.
+  Misaligned inputs can therefore produce different results; mismatched or
+  duplicate identities now error. Stored coordinates retain individual order.
+* `gl.ibd()` rejects incomplete coordinates, missing/non-finite pairwise
+  distances, fewer than three observations and constant distance vectors.
+  Square matrices and matrix-valued transformations are handled consistently.
+  Supplying both distance matrices ignores `x`; partial inputs calculate only
+  the missing distance. Negative Fst estimates remain supported.
+* `gl.ibd()` constructs plots only for display or saving, reports projection
+  dependency failures as errors, honours verbosity and accepts function-object
+  `do.call()` invocations. Documentation now describes the unchanged identity
+  transformation defaults and `stats::dist()` scaling for missing loci.
+
+* `gl.run.eems()` now errors on failed or incomplete EEMS runs instead of
+  reading earlier output. Each call writes to a unique `eems-run-*` directory
+  under `out.dir`; raw results and logs survive cleanup, which removes only
+  that run's intermediate files after success. Relative output paths use the
+  caller's directory, and paths containing spaces are supported.
+* `gl.run.eems()` checks `diploid` against input ploidy and raises errors for
+  missing dependencies. Extra plotting arguments are now honoured and
+  validated. `plot.file = NULL` disables RDS saving; named saves remain
+  available. Routine output follows verbosity, with plots displayed at level
+  3 or above and returned at every level. The `dpi` documentation now
+  distinguishes contour-grid sampling from exported-image resolution.

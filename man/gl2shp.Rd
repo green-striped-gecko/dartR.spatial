@@ -25,26 +25,40 @@ projections) [default WGS84].}
 \item{outfile}{Name (path) of the output shape file [default 'gl']. shp
 extension is added automatically.}
 
-\item{outpath}{Path where to save the output file
+\item{outpath}{Path where to save the output file; the folder must exist
 [default tempdir(), mandated by CRAN]. Use outpath=getwd() or outpath='.'
 when calling this function to direct output files to your working directory.}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
-progress log; 3, progress and results summary; 5, full report
-[default 2 or as specified using gl.set.verbosity].}
+brief progress messages; 3, progress and results summary; 5, full report
+[default 2, unless specified using gl.set.verbosity].}
 }
 \value{
-returns a SpatVector file
+A terra SpatVector with the exported points. The file is written to
+outpath.
 }
 \description{
-This function exports coordinates in a genlight object to a point shape file
- (including also individual meta data if available).
-Coordinates are provided under x@other$latlon and assumed to be in WGS84
-coordinates, if not proj4 string is provided.
+This function exports the coordinates in a genlight object to a point shape
+file or kml file, with the individual metrics as attributes.
+}
+\details{
+Coordinates are taken from x@other$latlon (columns lat and lon; a column
+named long is accepted for lon) and are assumed to be in WGS84 unless a
+proj4 string is provided.
+
+Individuals with a missing lat or lon are removed. Missing values in other
+individual metrics are kept and written as NA.
+
+The attribute table holds the columns of x@other$ind.metrics plus lat and
+lon. If ind.metrics has no id column, an id column with the individual
+names is added. ESRI shapefiles truncate column names to 10 characters.
 }
 \examples{
 out <- gl2shp(testset.gl, outpath=tempdir())
+
 }
 \author{
-Bernd Guber (Post to \url{https://groups.google.com/d/forum/dartr})
+Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to
+\url{https://groups.google.com/d/forum/dartr}
 }
+\concept{linker}

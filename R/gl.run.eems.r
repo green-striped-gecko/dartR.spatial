@@ -13,10 +13,19 @@
 #' @param x Name of the genlight object containing the SNP data [required].
 #' @param eems.path Path to the folder containing the eems executable
 #'  [default working directory ("./")].
-#' @param buffer Buffer distance for all the elements [default 10000].
+#' @param buffer Distance in metres by which the convex hull of the sampling
+#' locations is expanded to form the habitat. Measured on the ground at any
+#' latitude. Ignored when habitat is supplied [default 10000].
+#' @param habitat Habitat outline for EEMS: an sf or sfc polygon in any
+#' coordinate reference system (transformed to longitude/latitude), or a
+#' two-column matrix of longitude and latitude in decimal degrees. It must be
+#' a single polygon without holes. NULL uses the convex hull of the sampling
+#' locations expanded by buffer [default NULL].
 #' @param nDemes The approximate number of demes in the population graph 
 #' [default 500].
-#' @param diploid Whether the organism is diploid [default TRUE].
+#' @param diploid Whether the organism is diploid. TRUE requires ploidy 2
+#' for every individual; FALSE requires ploidy 1. Input must represent SNP
+#' allele dosages, not dominant presence/absence markers [default TRUE].
 #' @param numMCMCIter Number of MCMC iterations [default 10000].
 #' @param numBurnIter Number of burn-in iterations to discard at the start 
 #' [default 2000].
@@ -40,17 +49,20 @@
 #' @param plot.colors.pop A color palette for population plots or a list with
 #' as many colors as there are populations in the dataset
 #' [default gl.colors("dis")].
-#' @param out.dir Path where to save the output file. Use outpath=getwd() or 
-#' out.dir='.' when calling this function to direct output files to your 
-#' working or current directory [default tempdir(), mandated by CRAN].
+#' @param out.dir Existing directory for output. Each call creates a unique
+#' eems-run-* subdirectory containing data_eems/ and eems.log. Relative paths
+#' are resolved from the calling directory. Results in tempdir() last only
+#' for the R session [default tempdir()].
 #' @param plot.dir Directory to save the plot RDS files 
 #' [default as specified by the global working directory or tempdir()].
 #' @param plot.file Name for the RDS binary file to save (base name only, 
-#' exclude extension) [default NULL].
+#' exclude extension); NULL disables RDS saving [default NULL].
 #' @param verbose Verbosity: 0, silent or fatal errors; 1, begin and end; 2, 
 #' progress log; 3, progress and results summary; 5, full report 
 #' [default NULL, unless specified using gl.set.verbosity].
-#' @param cleanup Whether to delete intermediate files [default TRUE].
+#' @param cleanup Whether to delete this run's input and parameter files
+#' after success. Raw EEMS results and logs are retained; failed runs retain
+#' all files for diagnosis [default TRUE].
 #' @param ... Extra parameters to add to function reemsplots2::make_eems_plots.
 #' 
 #' @details
@@ -64,14 +76,25 @@
 #' island studies and 300–500 for continental datasets. Run time grows 
 #' cubically with number of demes, so anything above 1000 rarely pays off. 
 #' 
-#' Draw the habitat polygon with a small buffer (in meters), so every sample 
-#' sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
-#' sample bounding box (or a few kilometers for fine‑scale work) is usually 
-#' adequate.
+#' Coordinates are passed to EEMS as longitude/latitude with great-circle
+#' distance, so maps are returned in degrees and the rdist03 plot shows
+#' distances in kilometres.
+#'
+#' By default the habitat is the convex hull of the sampling locations,
+#' expanded by buffer (in metres), so every sample sits at least one grid
+#' spacing inside the edge. A 5–10 % expansion of the sample bounding box
+#' (or a few kilometers for fine‑scale work) is usually adequate. When the
+#' hull covers unsuitable areas, for example land between sampling sites of a
+#' marine species, supply the habitat outline with habitat. EEMS does not
+#' check that samples fall inside the habitat: each sample is assigned to the
+#' closest deme, and the function warns when samples fall outside.
 #' 
-#' For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
-#' Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
-#' affects file size, not the inference itself.
+#' The dpi argument controls sampling of the contour grid in reemsplots2,
+#' not the dots per inch of an exported image. Higher values increase grid
+#' resolution and plotting work without changing EEMS inference. Set image
+#' dimensions and export DPI separately when saving a rendered plot.
+#' Routine messages are suppressed at verbose = 0; diagnostic plots are
+#' displayed at verbose >= 3. All eight plots are returned at every level.
 #' 
 #' @return A list of contour plots of migration and diversity rates as well as
 #' several diagnostic plots. It is a good idea to examine all these figures,
@@ -104,9 +127,7 @@
 #'  \item{pilogl01}{Posterior probability trace}
 #' }
 #' @export
-#' @importFrom grDevices chull
 #' @importFrom utils write.table
-#' @importFrom dismo Mercator
 #' @importFrom stats runif
 #' @author Bernd Gruber  & Robyn (bugs? Post to
 #' \url{https://groups.google.com/d/forum/dartr})
@@ -152,7 +173,134 @@ gl.run.eems <- function(x,
                         plot.file = NULL,
                         verbose = NULL,
                         cleanup = TRUE,
+                        habitat = NULL,
                         ...) {
+  # SET VERBOSITY AND FLAG SCRIPT START
+  verbose <- gl.check.verbosity(verbose)
+  funname <- match.call()[[1]]
+  # do.call(gl.run.eems, ...) puts the function itself in the call, which
+  # the start and end messages cannot print.
+  if (is.function(funname)) funname <- "gl.run.eems"
+  funname <- utils.flag.start(func = funname, verbose = verbose)
+
+  # CHECK DEPENDENCIES AND INPUTS BEFORE CREATING FILES
+  for (pkg in c("reemsplots2", "sf")) {
+    if (!requireNamespace(pkg, quietly = TRUE)) {
+      advice <- if (pkg == "reemsplots2") {
+        "Install it with devtools::install_github('dipetkov/reemsplots2')."
+      } else {
+        paste0("Install it with install.packages('", pkg, "').")
+      }
+      stop(error(paste0("Package ", pkg, " is required. ", advice)),
+           call. = FALSE)
+    }
+  }
+  utils.check.datatype(x, verbose = 0)
+  if (!is.logical(diploid) || length(diploid) != 1L || is.na(diploid)) {
+    stop(error("diploid must be TRUE or FALSE."), call. = FALSE)
+  }
+  expected_ploidy <- if (diploid) 2L else 1L
+  input_ploidy <- adegenet::ploidy(x)
+  if (length(input_ploidy) == 0L || anyNA(input_ploidy) ||
+      any(input_ploidy != expected_ploidy)) {
+    stop(error(paste0("diploid = ", diploid, " requires input ploidy ",
+                      expected_ploidy, " for every individual.")),
+         call. = FALSE)
+  }
+  if (!is.null(plot.file) &&
+      (!is.character(plot.file) || length(plot.file) != 1L ||
+       is.na(plot.file) || !nzchar(plot.file) ||
+       plot.file %in% c(".", "..") || grepl("[/\\\\]", plot.file))) {
+    stop(error("plot.file must be NULL or a base name without path separators."),
+         call. = FALSE)
+  }
+  extra <- list(...)
+  fixed_plot_args <- c("mcmcpath", "longlat", "dpi", "add_grid", "col_grid",
+                       "add_demes", "col_demes", "add_outline", "col_outline",
+                       "eems_colors")
+  if (length(extra) > 0L) {
+    extra_names <- names(extra)
+    allowed <- setdiff(names(formals(reemsplots2::make_eems_plots)),
+                       c(fixed_plot_args, "..."))
+    if (is.null(extra_names) || any(!nzchar(extra_names)) ||
+        anyDuplicated(extra_names) || any(!extra_names %in% allowed)) {
+      stop(error(paste0(
+        "Extra plotting arguments must have unique supported names: ",
+        paste(allowed, collapse = ", "), ".")), call. = FALSE)
+    }
+  }
+  if (!is.null(habitat)) {
+    habitat_error <- paste0("habitat must be an sf/sfc polygon or a ",
+                            "two-column matrix of longitude and latitude.")
+    if (inherits(habitat, c("sf", "sfc"))) {
+      if (is.na(sf::st_crs(habitat))) {
+        stop(error(paste("habitat has no coordinate reference system;",
+                         "set one with sf::st_set_crs().")), call. = FALSE)
+      }
+      habitat <- sf::st_geometry(sf::st_transform(habitat, 4326))
+      if (length(habitat) != 1L ||
+          !inherits(habitat, c("sfc_POLYGON", "sfc_MULTIPOLYGON"))) {
+        stop(error(paste("habitat must be a single polygon; EEMS accepts",
+                         "one outline.")), call. = FALSE)
+      }
+      if (inherits(habitat, "sfc_MULTIPOLYGON")) {
+        if (length(habitat[[1]]) != 1L) {
+          stop(error(paste("habitat must be a single polygon; EEMS accepts",
+                           "one outline.")), call. = FALSE)
+        }
+        habitat <- sf::st_cast(habitat, "POLYGON")
+      }
+      if (length(habitat[[1]]) != 1L) {
+        stop(error("habitat must not contain holes; EEMS accepts one ring."),
+             call. = FALSE)
+      }
+      habitat <- sf::st_coordinates(habitat)[, 1:2, drop = FALSE]
+    }
+    if (!is.matrix(habitat) && !is.data.frame(habitat)) {
+      stop(error(habitat_error), call. = FALSE)
+    }
+    habitat <- as.matrix(habitat)
+    if (!is.numeric(habitat) || ncol(habitat) != 2L || nrow(habitat) < 3L ||
+        any(!is.finite(habitat)) || any(abs(habitat[, 1]) > 180) ||
+        any(abs(habitat[, 2]) > 90)) {
+      stop(error(habitat_error), call. = FALSE)
+    }
+    habitat <- unname(habitat)
+    if (any(habitat[1, ] != habitat[nrow(habitat), ])) {
+      habitat <- rbind(habitat, habitat[1, ])
+    }
+    # EEMS tests the ring as a planar polygon in lon/lat; check it the same
+    # way (no CRS, so sf uses GEOS rather than spherical geometry).
+    if (nrow(habitat) < 4L ||
+        !sf::st_is_valid(sf::st_polygon(list(habitat)))) {
+      stop(error(paste("habitat must be a valid simple polygon",
+                       "(no self-intersections).")), call. = FALSE)
+    }
+  }
+  if (is.null(out.dir)) out.dir <- tempdir()
+  if (!is.character(out.dir) || length(out.dir) != 1L || is.na(out.dir) ||
+      !dir.exists(out.dir)) {
+    stop(error("out.dir must name an existing directory."), call. = FALSE)
+  }
+  out.dir <- normalizePath(out.dir, winslash = "/", mustWork = TRUE)
+  plot.dir <- normalizePath(gl.check.wd(plot.dir, verbose = 0),
+                            winslash = "/", mustWork = TRUE)
+  prog <- if (.Platform$OS.type == "windows") {
+    "runeems_snps.exe"
+  } else {
+    "runeems_snps"
+  }
+  executable <- file.path(eems.path, prog)
+  if (!file.exists(executable)) {
+    stop(error(paste0("Cannot find ", prog, " in eems.path: ", eems.path)),
+         call. = FALSE)
+  }
+  executable <- normalizePath(executable, winslash = "/", mustWork = TRUE)
+  if (file.access(executable, mode = 1) != 0L) {
+    stop(error(paste0("EEMS executable is not executable: ", executable)),
+         call. = FALSE)
+  }
+
   #util function to calculate similarities
   bed2diffs_v2 <- function(Geno) {
     nIndiv <- nrow(Geno)
@@ -181,282 +329,177 @@ gl.run.eems <- function(x,
     Diffs
   }
   
-  # CHECK IF PACKAGES ARE INSTALLED
-  pkg <- "reemsplots2"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(
-      error(
-        "Package",
-        pkg,
-        " needed for this function to work. Please install it using: \n
-    devtools::install_github('dipetkov/reemsplots2')"
-      )
-    )
-    return(-1)
+  # DO THE JOB
+  x <- gl.filter.allna(x, verbose = 0)
+  D <- bed2diffs_v2(as.matrix(x))
+
+  # Keep final results in a fresh directory under the caller's destination.
+  # Running there directly avoids unchecked export copies and stale outputs.
+  # tempfile(tmpdir = ) joins with "\\" on Windows; file.path keeps "/"
+  run.dir <- file.path(out.dir, basename(tempfile("eems-run-")))
+  if (!dir.create(run.dir)) {
+    stop(error(paste0("Cannot create an EEMS run directory in ", out.dir)),
+         call. = FALSE)
   }
-  
-  pkg <- "sf"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(error(
-      "Package",
-      pkg,
-      " needed for this function to work. Please install it.\n" ))
-    return(-1)
+  data_path <- file.path(run.dir, "eems")
+  eems_results <- file.path(run.dir, "data_eems")
+  param_file <- file.path(run.dir, "params.ini")
+  log_file <- file.path(run.dir, "eems.log")
+  intermediate_files <- c(paste0(data_path, c(".diffs", ".outer", ".coord")),
+                          param_file)
+  if (verbose >= 2) cat(report("  EEMS run directory: ", run.dir, "\n"))
+
+  utils::write.table(D, paste0(data_path, ".diffs"), col.names = FALSE,
+                     row.names = FALSE, quote = FALSE)
+  writeLines(c(
+    paste0("datapath = ", data_path),
+    paste0("mcmcpath = ", eems_results),
+    paste0("nIndiv = ", adegenet::nInd(x)),
+    paste0("nSites = ", adegenet::nLoc(x)),
+    paste0("nDemes = ", nDemes),
+    paste0("diploid = ", diploid),
+    # Coordinates are lon/lat in degrees; EEMS defaults to Euclidean.
+    "distance = greatcirc",
+    paste0("numMCMCIter = ", format(numMCMCIter, scientific = FALSE)),
+    paste0("numBurnIter = ", format(numBurnIter, scientific = FALSE)),
+    paste0("numThinIter = ", format(numThinIter, scientific = FALSE))
+  ), param_file)
+
+  # EEMS and reemsplots2 both expect longitude/latitude in degrees:
+  # reemsplots2 measures rdist03 distances as great circles on these values.
+  ll <- data.frame(x = x@other$latlon$lon, y = x@other$latlon$lat)
+  if (is.null(habitat)) {
+    # Hull and buffer in an equal-area projection centred on the samples,
+    # so buffer is in ground metres at any latitude. Short edges keep the
+    # outline's shape when it is converted back to lon/lat.
+    laea <- sprintf(
+      "+proj=laea +lat_0=%.6f +lon_0=%.6f +datum=WGS84 +units=m",
+      mean(ll$y), mean(ll$x))
+    pts <- sf::st_transform(sf::st_as_sf(ll, coords = c("x", "y"),
+                                         crs = 4326), laea)
+    hull <- sf::st_buffer(sf::st_convex_hull(sf::st_union(pts)), buffer)
+    hull <- sf::st_transform(sf::st_segmentize(hull, dfMaxLength = 50000),
+                             4326)
+    habitat <- sf::st_coordinates(hull)[, 1:2, drop = FALSE]
   }
-  
-  pkg <- "dismo"
-  if (!(requireNamespace(pkg, quietly = TRUE))) {
-    cat(error(
-      "Package",
-      pkg,
-      " needed for this function to work. Please install it.\n"
-    ))
-    return(-1)
-  } else {
-    # SET VERBOSITY
-    verbose <- gl.check.verbosity(verbose)
-    
-    # SET WORKING DIRECTORY
-    plot.dir <- gl.check.wd(plot.dir, verbose = 0)
-    
-    #out.dir
-    
-    if (is.null(out.dir))
-      out.dir <- tempdir()
-    
-    # FLAG SCRIPT START
-    funname <- match.call()[[1]]
-    utils.flag.start(func = funname,
-                     build = "v.2023.2",
-                     verbose = verbose)
-    
-    # CHECK DATATYPE
-    if (!is.null(x)) {
-      dt <- utils.check.datatype(x, verbose = 0)
-    }
-    
-    # FUNCTION SPECIFIC ERROR CHECKING
-    if (is.null(plot.file)){
-      plot.file <- "eems"
-    }
-    
-    #removing loci with all missing data
-    x <- gl.filter.allna(x, verbose = 0)
-    
-    # DO THE JOB
-    # create dissimilarity matrix
-    D <- bed2diffs_v2(as.matrix(x))
-    
-    # Write dissimilarity matrix
-    write.table(
-      D,
-      file.path(tempdir(), paste0(plot.file, ".diffs")),
-      col.names = FALSE,
-      row.names = FALSE,
-      quote = FALSE
-    )
-    
-    write.table(
-      x = matrix(
-        c(
-          paste0("datapath = ", file.path(tempdir(), plot.file)),
-          paste0("mcmcpath = ", file.path(
-            tempdir(), paste0("data_", plot.file)
-          )),
-          paste0("nIndiv = ", nInd(x)),
-          paste0("nSites = ", nLoc(x)),
-          paste0("nDemes = ", nDemes),
-          paste0("diploid = ", diploid),
-          paste0("numMCMCIter = ", format(numMCMCIter, scientific = FALSE)),
-          paste0("numBurnIter = ", format(numBurnIter, scientific = FALSE)),
-          paste0("numThinIter = ", format(numThinIter, scientific = FALSE))
-        ),
-        nrow = 9,
-        ncol = 1
-      ),
-      file = file.path(tempdir(), paste0("param_", plot.file, ".ini")),
-      row.names = FALSE,
-      quote = FALSE,
-      col.names = FALSE
-    )
-    
-    #### create datapath file (outer polygon)
-    y <- NULL
-    
-    ll <- data.frame(x = x@other$latlon$lon,
-                     y = x@other$latlon$lat)
-    xy <- dismo::Mercator(ll)
-    # plot(xy)
-    hpts <- chull(xy)
-    hpts <- c(hpts, hpts[1])
-    poly <- xy[hpts,]
-    
-    p <- sf::st_polygon(list(as.matrix(poly)))
-    pbuf <- sf::st_buffer(p, buffer)
-    plot(pbuf,
-         axes = TRUE,
-         border = "green",
-         lwd = 2)
-    plot(p, add = TRUE, col = "red")
-    points(xy, pch = 20, col = "blue")
-    
-    pxy <- sf::st_coordinates(pbuf)[, 1:2]
-    
-    # Write outer
-    
-    write.table(
-      x = pxy,
-      quote = FALSE,
-      file = file.path(tempdir(), paste0(plot.file, ".outer")),
-      row.names = FALSE,
-      col.names = FALSE
-    )
-    
-    #write coordinates
-    
-    write.table(
-      x = xy,
-      quote = FALSE,
-      file = file.path(tempdir(), paste0(plot.file, ".coord")),
-      row.names = FALSE,
-      col.names = FALSE
-    )
-    
-    if (is.null(seed)){
-      seed <- round(runif(1, 1, 1000000))
-    }
-    
-    if (Sys.info()["sysname"] == "Windows") {
-      prog <- "runeems_snps.exe"
-      cmd <-
-        paste0(
-          "runeems_snps.exe --params ",
-          paste0("param_", plot.file, ".ini"),
-          paste0(" --seed ", seed)
-        )
-    }
-    
-    if (Sys.info()["sysname"] == "Linux")  {
-      prog <- "runeems_snps"
-      cmd <-
-        paste0(
-          "./runeems_snps --params ",
-          paste0("param_", plot.file, ".ini"),
-          paste0(" --seed ", seed)
-        )
-    }
-    
-    if (Sys.info()["sysname"] == "Darwin") {
-      prog <- "runeems_snps"
-      cmd <-
-        paste0(
-          "./runeems_snps --params ",
-          paste0("param_", plot.file, ".ini"),
-          paste0(" --seed ", seed)
-        )
-    }
-    
-    # check if file program can be found
-    if (file.exists(file.path(eems.path, prog))) {
-      ff <- file.copy(file.path(eems.path, prog),
-                      to = tempdir(),
-                      overwrite = TRUE)
-    } else {
-      cat(
-        error(
-          "  Cannot find",
-          prog,
-          "in the specified folder given by eems.path:",
-          eems.path,
-          "\n"
-        )
-      )
-      stop()
-    }
-    
-    # change into tempdir (run it there)
-    old.path <- getwd()
-    setwd(tempdir())
-    on.exit(setwd(old.path))
-    ### run eems
-    if (Sys.info()["sysname"] == "Linux"){
-      system("chmod +x runeems_snps")
-    }
-    
-    #cmd <- paste0(paste0(prog,"  --params ",  paste0("param_", plot.file, ".ini "), paste0("--seed ",seed )))
-    
-    system(cmd)
-    
-    eems_results <- file.path(tempdir(), paste0("data_", plot.file))
-    eems_files <- list.files(tempdir(), pattern = plot.file)
-    if (out.dir != tempdir()) {
-      file.copy(
-        eems_results,
-        to = out.dir,
-        overwrite = TRUE,
-        recursive = TRUE
-      )
-      file.copy(eems_files, to = out.dir, overwrite = TRUE)
-    }
-    if (!exists('make_eems_plots', mode="function")) {make_eems_plots <- function() return (-1);
-    error("You need to load the package reemsplot2 from github via:\n
-          devtools::install_github('dipetkov/reemsplots2 \n")}  
-    p8 <- make_eems_plots(mcmcpath =  eems_results,
-                                       longlat = TRUE,
-                                       dpi = dpi,
-                                       add_grid = add_grid,
-                                       col_grid = col_grid, 
-                                       add_demes = add_demes, 
-                                       col_demes = col_demes,
-                                       add_outline = add_outline,
-                                       col_outline = col_outline, 
-                                       eems_colors = eems_colors
-    )
-    
-    # if pop colors is a palette
-    if (is(plot.colors.pop, "function")) {
-      colors_pops <- plot.colors.pop(length(levels(pop(x))))
-    }
-    # if pop colors is a vector
-    if (!is(plot.colors.pop, "function")) {
-      colors_pops <- plot.colors.pop
-    }
-    
-    xy_plot <-
-      data.frame(x = xy[, 1], y = xy[, 2], pop = as.character(pop(x)))
-    p8[[1]] <- p8$mrates01 +
-      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops) +
-      coord_equal()
-    p8[[2]]  <- p8$mrates02 +
-      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops) +
-      coord_equal()
-    p8[[3]]  <- p8$qrates01 +
-      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops) +
-      coord_equal()
-    p8[[4]]  <- p8$qrates02 +
-      geom_point(data = xy_plot, aes(x = x, y = y, color = pop)) +
-      scale_color_manual(values = colors_pops)  +
-      coord_equal()
-    
-  print(p8)
-    
-    if (cleanup) {
-      unlink(eems_results, recursive = TRUE)
-      unlink(eems_files, recursive = TRUE)
-    }
-    
-    # Optionally save the plot ---------------------
-    
-    if (!is.null(plot.file)) {
-      tmp <- utils.plot.save(p8,
-                             dir = plot.dir,
-                             file = plot.file,
-                             verbose = verbose)
-    }
-    return(p8)
-    
+  habitat_poly <- sf::st_polygon(list(unname(habitat)))
+  outside <- !sf::st_covered_by(sf::st_as_sf(ll, coords = c("x", "y")),
+                                habitat_poly, sparse = FALSE)[, 1]
+  if (any(outside) && verbose >= 2) {
+    out_names <- adegenet::indNames(x)[outside]
+    cat(warn(paste0(
+      "  Warning: ", sum(outside), " sample(s) fall outside the habitat and",
+      " are assigned by EEMS to the closest deme: ",
+      paste(utils::head(out_names, 10), collapse = ", "),
+      if (length(out_names) > 10) ", ..." else "", "\n")))
   }
+  if (verbose >= 3) {
+    plot(habitat_poly, axes = TRUE, border = "green", lwd = 2)
+    graphics::points(ll, pch = 20, col = "blue")
+  }
+  utils::write.table(habitat, paste0(data_path, ".outer"), quote = FALSE,
+                     row.names = FALSE, col.names = FALSE)
+  utils::write.table(ll, paste0(data_path, ".coord"), quote = FALSE,
+                     row.names = FALSE, col.names = FALSE)
+  if (is.null(seed)) seed <- round(stats::runif(1, 1, 1000000))
+
+  # system2 quotes the executable; arguments need their own quoting.
+  status <- system2(executable,
+                    args = c("--params", shQuote(param_file),
+                             "--seed", shQuote(as.character(seed))),
+                    stdout = log_file, stderr = log_file)
+  if (verbose >= 3 && file.exists(log_file)) {
+    cat(report(paste(readLines(log_file, warn = FALSE), collapse = "\n"), "\n"))
+  }
+  if (status != 0L) {
+    stop(error(paste0("EEMS failed (exit status ", status,
+                      "). See log: ", log_file)),
+         call. = FALSE)
+  }
+  # These files are required by the eight plots returned by reemsplots2.
+  required_files <- c("rdistJtDobsJ.txt", "rdistJtDhatJ.txt", "rdistoDemes.txt",
+                      "mcmcmtiles.txt", "mcmcmrates.txt", "mcmcxcoord.txt",
+                      "mcmcycoord.txt", "mcmcqtiles.txt", "mcmcqrates.txt",
+                      "mcmcwcoord.txt", "mcmczcoord.txt", "mcmcpilogl.txt",
+                      "outer.txt", "demes.txt", "edges.txt", "ipmap.txt",
+                      "eemsrun.txt")
+  missing_files <- required_files[
+    !file.exists(file.path(eems_results, required_files))]
+  if (length(missing_files) > 0L) {
+    stop(error(paste0("EEMS output is incomplete: ",
+                      paste(missing_files, collapse = ", "),
+                      ". See log: ", log_file)),
+         call. = FALSE)
+  }
+
+  # Keep third-party diagnostics in the log, including in quiet mode.
+  plot_messages <- character()
+  on.exit({
+    if (length(plot_messages) > 0L) {
+      cat(plot_messages, file = log_file, sep = "\n", append = TRUE)
+    }
+  }, add = TRUE)
+  plot_output <- utils::capture.output(
+    p8 <- withCallingHandlers({
+      plots <- do.call(reemsplots2::make_eems_plots, c(list(
+        mcmcpath = eems_results, longlat = TRUE, dpi = dpi,
+        add_grid = add_grid, col_grid = col_grid,
+        add_demes = add_demes, col_demes = col_demes,
+        add_outline = add_outline, col_outline = col_outline,
+        eems_colors = eems_colors
+      ), extra))
+      if (missing(plot.colors.pop)) {
+        plot.colors.pop <- gl.colors("dis", verbose = 0)
+      }
+      colors_pops <- if (is.function(plot.colors.pop)) {
+        plot.colors.pop(length(levels(adegenet::pop(x))))
+      } else {
+        plot.colors.pop
+      }
+      # key colours by population name: names given by the user are kept
+      # when they cover every population, otherwise colours follow
+      # levels(pop(x))
+      if (length(colors_pops) < adegenet::nPop(x)) {
+        stop(error("  plot.colors.pop must be a palette or hold one color",
+                   "per population\n"))
+      }
+      if (!all(adegenet::popNames(x) %in% names(colors_pops))) {
+        colors_pops <- stats::setNames(
+          colors_pops[seq_len(adegenet::nPop(x))], adegenet::popNames(x))
+      }
+      colors_pops <- colors_pops[adegenet::popNames(x)]
+      xy_plot <- data.frame(x = ll$x, y = ll$y,
+                            pop = as.character(adegenet::pop(x)))
+      for (i in seq_len(4)) {
+        plots[[i]] <- plots[[i]] +
+          ggplot2::geom_point(data = xy_plot,
+                             ggplot2::aes(x = .data$x, y = .data$y,
+                                          color = .data$pop)) +
+          ggplot2::scale_color_manual(values = colors_pops) +
+          # Degrees: draw longitude shorter than latitude away from the
+          # equator instead of stretching east-west.
+          ggplot2::coord_quickmap()
+      }
+      plots
+    }, message = function(m) {
+      plot_messages <<- c(plot_messages, conditionMessage(m))
+      if (verbose < 2) invokeRestart("muffleMessage")
+    }, warning = function(w) {
+      plot_messages <<- c(plot_messages, conditionMessage(w))
+      if (verbose < 2) invokeRestart("muffleWarning")
+    })
+  )
+  cat(plot_output, file = log_file, sep = "\n", append = TRUE)
+  if (verbose >= 2 && length(plot_output) > 0L) {
+    cat(report(paste(plot_output, collapse = "\n"), "\n"))
+  }
+  if (verbose >= 3) print(p8)
+
+  if (!is.null(plot.file)) {
+    utils.plot.save(p8, dir = plot.dir, file = plot.file, verbose = verbose)
+  }
+  # Never select files by a pattern; final results and logs survive cleanup.
+  if (cleanup) unlink(intermediate_files)
+  if (verbose > 0) cat(report("Completed:", funname, "\n"))
+  return(p8)
 }

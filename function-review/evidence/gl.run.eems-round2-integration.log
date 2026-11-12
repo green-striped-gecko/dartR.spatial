@@ -1,0 +1,1552 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+Starting gl.run.eems 
+  EEMS run directory:  /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-after-e81b192a0b3b/eems-run-e81b17475b65 
+Using Boost 1_89 (EEMS was tested with version 1_57)
+      Eigen 3.4.0 (EEMS was tested with version 3.2.2)
+
+[Habitat::initialize]
+  Loaded habitat points from /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-after-e81b192a0b3b/eems-run-e81b17475b65/eems.outer
+  Input habitat: 
+    POLYGON((143.18 -38.6054,143.173 -38.606,143.167 -38.6064,143.161 -38.6066,143.155 -38.6064,142.584 -38.5808,142.014 -38.5528,141.445 -38.5223,140.876 -38.4894,140.307 -38.454,139.74 -38.4162,139.173 -38.3761,138.606 -38.3335,138.041 -38.2885,137.476 -38.2411,136.911 -38.1913,136.348 -38.1392,135.785 -38.0847,135.223 -38.0278,134.662 -37.9685,134.102 -37.907,133.543 -37.843,132.985 -37.7768,132.427 -37.7082,131.87 -37.6373,131.315 -37.5642,130.76 -37.4887,130.207 -37.4109,129.654 -37.3309,129.102 -37.2486,128.552 -37.164,128.002 -37.0772,127.454 -36.9882,126.907 -36.8969,126.36 -36.8034,125.815 -36.7077,125.271 -36.6098,124.728 -36.5098,124.187 -36.4075,123.646 -36.3031,123.107 -36.1966,122.569 -36.0879,122.032 -35.977,121.496 -35.8641,120.962 -35.749,120.429 -35.6318,119.897 -35.5126,119.366 -35.3913,118.836 -35.2679,118.308 -35.1424,117.781 -35.0149,117.778 -35.0142,117.334 -34.8938,116.891 -34.772,116.449 -34.6488,116.009 -34.5242,115.569 -34.3981,115.13 -34.2707,115.124 -34.269,115.119 -34.267,115.114 -34.2648,115.109 -34.2624,115.104 -34.2598,115.099 -34.2569,115.095 -34.2539,115.09 -34.2507,115.086 -34.2473,115.083 -34.2437,115.079 -34.2399,115.076 -34.236,115.073 -34.232,115.07 -34.2278,115.067 -34.2236,115.065 -34.2192,115.063 -34.2147,115.061 -34.2101,115.06 -34.2055,115.059 -34.2008,114.98 -33.7838,114.9 -33.3668,114.821 -32.9497,114.741 -32.5327,114.662 -32.1157,114.582 -31.6987,114.502 -31.2816,114.422 -30.8645,114.341 -30.4475,114.261 -30.0303,114.18 -29.6132,114.099 -29.196,114.018 -28.7788,113.936 -28.3615,113.855 -27.9442,113.773 -27.5268,113.691 -27.1094,113.608 -26.6919,113.608 -26.6879,113.607 -26.684,113.607 -26.68,113.589 -26.2643,113.57 -25.8486,113.55 -25.4327,113.53 -25.0168,113.509 -24.6007,113.487 -24.1846,113.464 -23.7683,113.464 -23.7636,113.464 -23.759,113.465 -23.7544,113.465 -23.7499,113.466 -23.7453,113.468 -23.7409,113.469 -23.7365,113.471 -23.7321,113.473 -23.7279,113.475 -23.7238,113.477 -23.7198,113.48 -23.7159,113.483 -23.7121,113.486 -23.7085,113.489 -23.7051,113.493 -23.7018,113.819 -23.4112,114.143 -23.1194,114.466 -22.8265,114.786 -22.5323,115.104 -22.237,115.42 -21.9406,115.734 -21.643,116.046 -21.3443,116.356 -21.0445,116.664 -20.7436,116.668 -20.7402,116.672 -20.7371,116.676 -20.7341,116.68 -20.7313,116.684 -20.7288,116.689 -20.7264,116.694 -20.7244,116.698 -20.7225,116.703 -20.7209,116.708 -20.7195,117.144 -20.6107,117.58 -20.5001,118.014 -20.3879,118.448 -20.2741,118.88 -20.1586,118.885 -20.1573,118.89 -20.1564,118.896 -20.1557,118.901 -20.1553,118.906 -20.1551,118.912 -20.1553,118.917 -20.1557,119.389 -20.2056,119.862 -20.2537,120.334 -20.3001,120.806 -20.3447,121.279 -20.3876,121.751 -20.4287,122.224 -20.468,122.697 -20.5056,123.169 -20.5414,123.642 -20.5755,124.115 -20.6078,124.588 -20.6384,125.061 -20.6672,125.534 -20.6942,126.007 -20.7195,126.48 -20.743,126.953 -20.7647,127.426 -20.7847,127.899 -20.8029,128.372 -20.8194,128.845 -20.834,129.318 -20.847,129.791 -20.8581,130.264 -20.8675,130.737 -20.8752,131.21 -20.881,131.683 -20.8851,132.156 -20.8875,132.629 -20.8881,133.102 -20.8869,133.575 -20.884,134.047 -20.8793,134.52 -20.8728,134.992 -20.8646,135.465 -20.8546,135.937 -20.8429,136.41 -20.8294,136.882 -20.8142,137.354 -20.7972,137.826 -20.7784,138.298 -20.7579,138.769 -20.7357,139.241 -20.7117,139.712 -20.686,140.184 -20.6585,140.655 -20.6292,141.126 -20.5983,141.597 -20.5655,142.067 -20.5311,142.538 -20.4949,143.008 -20.457,143.479 -20.4173,143.949 -20.3759,144.418 -20.3328,144.888 -20.288,145.358 -20.2414,145.827 -20.1931,146.296 -20.1431,146.765 -20.0913,147.234 -20.0379,147.702 -19.9827,148.17 -19.9258,148.175 -19.9253,148.181 -19.9251,148.186 -19.9251,148.191 -19.9254,148.196 -19.9259,148.201 -19.9267,148.206 -19.9278,148.211 -19.9291,148.216 -19.9306,148.22 -19.9324,148.225 -19.9345,148.229 -19.9367,148.234 -19.9392,148.238 -19.9419,148.242 -19.9449,148.246 -19.948,148.249 -19.9513,148.473 -20.1642,148.476 -20.1673,148.479 -20.1706,148.482 -20.174,148.484 -20.1776,148.732 -20.529,148.982 -20.8797,149.233 -21.2296,149.486 -21.5788,149.741 -21.9272,149.998 -22.2749,150.256 -22.6217,150.516 -22.9678,150.778 -23.3131,151.042 -23.6576,151.308 -24.0012,151.311 -24.0048,151.313 -24.0086,151.556 -24.3955,151.801 -24.7818,152.048 -25.1672,152.297 -25.5519,152.549 -25.9358,152.803 -26.3189,152.805 -26.3223,153.034 -26.7009,153.265 -27.0789,153.498 -27.4562,153.501 -27.4604,153.503 -27.4647,153.505 -27.4691,153.506 -27.4735,153.508 -27.4781,153.509 -27.4827,153.51 -27.4874,153.51 -27.4921,153.51 -27.4968,153.51 -27.5015,153.51 -27.5062,153.51 -27.5109,153.509 -27.5156,153.423 -27.9112,153.337 -28.3077,153.251 -28.7042,153.165 -29.1006,153.078 -29.4969,152.992 -29.8933,152.905 -30.2895,152.819 -30.6857,152.732 -31.0819,152.645 -31.4781,152.644 -31.4827,152.643 -31.4873,152.641 -31.4918,152.639 -31.4963,152.439 -31.899,152.239 -32.3015,152.037 -32.7038,151.834 -33.1059,151.629 -33.5079,151.424 -33.9096,151.217 -34.3112,151.009 -34.7125,150.799 -35.1137,150.588 -35.5146,150.376 -35.9154,150.162 -36.3159,149.947 -36.7163,149.944 -36.7208,149.941 -36.7252,149.938 -36.7295,149.711 -37.0066,149.484 -37.2834,149.255 -37.5599,149.252 -37.5638,149.248 -37.5675,149.244 -37.5711,149.24 -37.5745,149.235 -37.5777,149.231 -37.5808,149.226 -37.5836,149.221 -37.5862,149.216 -37.5886,149.21 -37.5908,149.205 -37.5928,149.199 -37.5945,149.194 -37.596,148.741 -37.7029,148.287 -37.8082,147.833 -37.912,147.825 -37.9135,147.312 -37.9982,146.799 -38.081,146.285 -38.1618,145.769 -38.2407,145.253 -38.3175,144.736 -38.3925,144.218 -38.4654,143.699 -38.5364,143.18 -38.6054))
+[Habitat::initialize] Done.
+
+[Graph::initialize]
+  Generate population grid and sample assignment
+  Loaded sample coordinates from /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-after-e81b192a0b3b/eems-run-e81b17475b65/eems.coord
+  There are 22 observed demes (out of 30 demes)
+  The population grid has 30 demes and 65 edges
+  There are 96 samples assigned to 22 observed demes
+[Graph::initialize] Done.
+
+[Diffs::initialize]
+[Diffs::initialize] Done.
+
+Initialize EEMS random state
+
+[EEMS::initialize_state]
+  EEMS starts with 41 qtiles and 46 mtiles
+[EEMS::initialize_state] Done.
+
+Input parameters: 
+               datapath = /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-after-e81b192a0b3b/eems-run-e81b17475b65/eems
+               mcmcpath = /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-after-e81b192a0b3b/eems-run-e81b17475b65/data_eems
+               prevpath = 
+               gridpath = 
+               distance = greatcirc
+                diploid = 1
+                 nIndiv = 96
+                 nSites = 1000
+                 nDemes = 50
+                   seed = 17
+            numMCMCIter = 2000
+            numBurnIter = 1000
+            numThinIter = 9
+              negBiSize = 10
+              negBiProb = 0.670000
+             qVoronoiPr = 0.250000
+             mrateShape = 0.000500
+             qrateShape = 0.002000
+             sigmaShape = 0.001000
+             qrateScale = 0.500000
+             mrateScale = 2.000000
+             sigmaScale = 1.000000
+       mSeedsProposalS2 = 0.010000
+       qSeedsProposalS2 = 0.100000
+       mEffctProposalS2 = 0.100000
+       qEffctProposalS2 = 0.001000
+      mrateMuProposalS2 = 0.010000
+
+Initial log prior: 149.94
+Initial log llike: 5648.62
+
+Iteration 1000 of 2000...
+ Ending iteration 1010 with acceptance proportions:
+	(36/56) = 64.29% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(23/72) = 31.94% for proposal type "qBirthDeath"
+	(134/171) = 78.36% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(82/125) = 65.60% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(160/167) = 95.81% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(115/218) = 52.75% for proposal type "mBirthDeath"
+	(36/132) = 27.27% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 255.68
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 51
+          Log prior = 136.03
+          Log llike = 8787.16
+ Ending iteration 1020 with acceptance proportions:
+	(37/57) = 64.91% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(23/72) = 31.94% for proposal type "qBirthDeath"
+	(135/172) = 78.49% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(83/126) = 65.87% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(161/168) = 95.83% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(118/223) = 52.91% for proposal type "mBirthDeath"
+	(37/133) = 27.82% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 257.99
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 50
+          Log prior = 135.59
+          Log llike = 8801.67
+ Ending iteration 1030 with acceptance proportions:
+	(37/57) = 64.91% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(24/73) = 32.88% for proposal type "qBirthDeath"
+	(135/172) = 78.49% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(83/128) = 64.84% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(164/171) = 95.91% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(120/226) = 53.10% for proposal type "mBirthDeath"
+	(37/134) = 27.61% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 257.99
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 48
+          Log prior = 132.57
+          Log llike = 8801.52
+ Ending iteration 1040 with acceptance proportions:
+	(38/58) = 65.52% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(24/73) = 32.88% for proposal type "qBirthDeath"
+	(137/176) = 77.84% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(84/129) = 65.12% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(166/173) = 95.95% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(121/227) = 53.30% for proposal type "mBirthDeath"
+	(38/135) = 28.15% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 259.01
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 49
+          Log prior = 135.80
+          Log llike = 8807.61
+ Ending iteration 1050 with acceptance proportions:
+	(38/58) = 65.52% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(25/74) = 33.78% for proposal type "qBirthDeath"
+	(138/178) = 77.53% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(84/131) = 64.12% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(167/174) = 95.98% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(122/230) = 53.04% for proposal type "mBirthDeath"
+	(39/136) = 28.68% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 265.60
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 50
+          Log prior = 130.78
+          Log llike = 8845.32
+ Ending iteration 1060 with acceptance proportions:
+	(39/59) = 66.10% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(25/76) = 32.89% for proposal type "qBirthDeath"
+	(138/178) = 77.53% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(85/132) = 64.39% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(170/177) = 96.05% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(123/232) = 53.02% for proposal type "mBirthDeath"
+	(40/137) = 29.20% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 265.66
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 49
+          Log prior = 127.86
+          Log llike = 8844.79
+ Ending iteration 1070 with acceptance proportions:
+	(39/59) = 66.10% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(53/69) = 76.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(25/76) = 32.89% for proposal type "qBirthDeath"
+	(138/180) = 76.67% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(86/134) = 64.18% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(173/180) = 96.11% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(124/234) = 52.99% for proposal type "mBirthDeath"
+	(40/138) = 28.99% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 265.66
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 48
+          Log prior = 132.65
+          Log llike = 8845.39
+ Ending iteration 1080 with acceptance proportions:
+	(39/59) = 66.10% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(54/70) = 77.14% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(25/76) = 32.89% for proposal type "qBirthDeath"
+	(140/182) = 76.92% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(88/136) = 64.71% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(174/181) = 96.13% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(127/237) = 53.59% for proposal type "mBirthDeath"
+	(41/139) = 29.50% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 266.94
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 45
+          Log prior = 133.34
+          Log llike = 8852.83
+ Ending iteration 1090 with acceptance proportions:
+	(41/61) = 67.21% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(54/70) = 77.14% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(26/77) = 33.77% for proposal type "qBirthDeath"
+	(141/183) = 77.05% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(88/136) = 64.71% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(177/184) = 96.20% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(127/239) = 53.14% for proposal type "mBirthDeath"
+	(41/140) = 29.29% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 266.94
+         number of qVoronoi tiles = 39
+         number of mVoronoi tiles = 45
+          Log prior = 130.19
+          Log llike = 8852.22
+ Ending iteration 1100 with acceptance proportions:
+	(41/61) = 67.21% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(54/70) = 77.14% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(26/78) = 33.33% for proposal type "qBirthDeath"
+	(142/185) = 76.76% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(89/137) = 64.96% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(179/186) = 96.24% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(129/242) = 53.31% for proposal type "mBirthDeath"
+	(42/141) = 29.79% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 39
+         number of mVoronoi tiles = 45
+          Log prior = 123.05
+          Log llike = 8889.42
+ Ending iteration 1110 with acceptance proportions:
+	(41/61) = 67.21% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(54/70) = 77.14% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/79) = 34.18% for proposal type "qBirthDeath"
+	(144/188) = 76.60% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(92/140) = 65.71% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(180/187) = 96.26% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(129/243) = 53.09% for proposal type "mBirthDeath"
+	(42/142) = 29.58% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 45
+          Log prior = 131.94
+          Log llike = 8889.64
+ Ending iteration 1120 with acceptance proportions:
+	(41/61) = 67.21% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(55/71) = 77.46% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/80) = 33.75% for proposal type "qBirthDeath"
+	(145/189) = 76.72% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(93/141) = 65.96% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(180/187) = 96.26% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(132/248) = 53.23% for proposal type "mBirthDeath"
+	(42/143) = 29.37% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 44
+          Log prior = 131.02
+          Log llike = 8888.02
+ Ending iteration 1130 with acceptance proportions:
+	(41/61) = 67.21% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(55/71) = 77.46% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/81) = 33.33% for proposal type "qBirthDeath"
+	(145/190) = 76.32% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(94/142) = 66.20% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(184/191) = 96.34% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(133/250) = 53.20% for proposal type "mBirthDeath"
+	(42/144) = 29.17% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 43
+          Log prior = 131.75
+          Log llike = 8888.61
+ Ending iteration 1140 with acceptance proportions:
+	(43/63) = 68.25% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(55/71) = 77.46% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/82) = 32.93% for proposal type "qBirthDeath"
+	(145/191) = 75.92% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(94/143) = 65.73% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(186/194) = 95.88% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(135/252) = 53.57% for proposal type "mBirthDeath"
+	(42/144) = 29.17% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 45
+          Log prior = 129.01
+          Log llike = 8899.84
+ Ending iteration 1150 with acceptance proportions:
+	(44/65) = 67.69% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(56/72) = 77.78% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/82) = 32.93% for proposal type "qBirthDeath"
+	(148/194) = 76.29% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(94/143) = 65.73% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(189/197) = 95.94% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(136/253) = 53.75% for proposal type "mBirthDeath"
+	(42/144) = 29.17% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 273.96
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 44
+          Log prior = 130.08
+          Log llike = 8903.88
+ Ending iteration 1160 with acceptance proportions:
+	(44/65) = 67.69% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/74) = 77.03% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/82) = 32.93% for proposal type "qBirthDeath"
+	(150/196) = 76.53% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(95/144) = 65.97% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(191/199) = 95.98% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(137/254) = 53.94% for proposal type "mBirthDeath"
+	(44/146) = 30.14% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 280.74
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 45
+          Log prior = 129.07
+          Log llike = 8939.23
+ Ending iteration 1170 with acceptance proportions:
+	(44/65) = 67.69% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/74) = 77.03% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/82) = 32.93% for proposal type "qBirthDeath"
+	(151/197) = 76.65% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(95/145) = 65.52% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(194/202) = 96.04% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(139/257) = 54.09% for proposal type "mBirthDeath"
+	(45/148) = 30.41% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 284.67
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 43
+          Log prior = 125.46
+          Log llike = 8958.20
+ Ending iteration 1180 with acceptance proportions:
+	(45/66) = 68.18% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(27/83) = 32.53% for proposal type "qBirthDeath"
+	(151/198) = 76.26% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(95/146) = 65.07% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(195/203) = 96.06% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(140/259) = 54.05% for proposal type "mBirthDeath"
+	(45/150) = 30.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 284.67
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 42
+          Log prior = 125.94
+          Log llike = 8958.57
+ Ending iteration 1190 with acceptance proportions:
+	(45/66) = 68.18% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(29/85) = 34.12% for proposal type "qBirthDeath"
+	(154/201) = 76.62% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(95/146) = 65.07% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(196/204) = 96.08% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(142/261) = 54.41% for proposal type "mBirthDeath"
+	(46/152) = 30.26% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 288.68
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 42
+          Log prior = 120.02
+          Log llike = 8977.00
+ Ending iteration 1200 with acceptance proportions:
+	(46/67) = 68.66% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(30/87) = 34.48% for proposal type "qBirthDeath"
+	(155/202) = 76.73% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(96/147) = 65.31% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(198/207) = 95.65% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(144/263) = 54.75% for proposal type "mBirthDeath"
+	(46/152) = 30.26% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 288.68
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 126.36
+          Log llike = 8975.25
+ Ending iteration 1210 with acceptance proportions:
+	(47/68) = 69.12% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(31/88) = 35.23% for proposal type "qBirthDeath"
+	(156/203) = 76.85% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(96/149) = 64.43% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(199/209) = 95.22% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(144/264) = 54.55% for proposal type "mBirthDeath"
+	(46/154) = 29.87% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 288.68
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 42
+          Log prior = 124.79
+          Log llike = 8976.53
+ Ending iteration 1220 with acceptance proportions:
+	(48/70) = 68.57% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(32/89) = 35.96% for proposal type "qBirthDeath"
+	(159/206) = 77.18% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(96/149) = 64.43% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(203/213) = 95.31% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(144/264) = 54.55% for proposal type "mBirthDeath"
+	(46/154) = 29.87% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 288.68
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 121.44
+          Log llike = 8978.64
+ Ending iteration 1230 with acceptance proportions:
+	(49/71) = 69.01% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/75) = 76.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(32/89) = 35.96% for proposal type "qBirthDeath"
+	(160/207) = 77.29% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(96/151) = 63.58% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(206/216) = 95.37% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/267) = 54.68% for proposal type "mBirthDeath"
+	(46/154) = 29.87% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 288.68
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 130.15
+          Log llike = 8978.74
+ Ending iteration 1240 with acceptance proportions:
+	(49/71) = 69.01% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(57/76) = 75.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(33/91) = 36.26% for proposal type "qBirthDeath"
+	(161/208) = 77.40% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(96/152) = 63.16% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(208/218) = 95.41% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/267) = 54.68% for proposal type "mBirthDeath"
+	(48/157) = 30.57% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 299.09
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 42
+          Log prior = 121.11
+          Log llike = 9025.78
+ Ending iteration 1250 with acceptance proportions:
+	(49/71) = 69.01% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(58/78) = 74.36% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(33/91) = 36.26% for proposal type "qBirthDeath"
+	(162/209) = 77.51% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(99/156) = 63.46% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(209/219) = 95.43% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/268) = 54.48% for proposal type "mBirthDeath"
+	(49/158) = 31.01% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 42
+          Log prior = 127.40
+          Log llike = 9041.18
+ Ending iteration 1260 with acceptance proportions:
+	(49/71) = 69.01% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(59/79) = 74.68% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(34/93) = 36.56% for proposal type "qBirthDeath"
+	(163/210) = 77.62% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(100/158) = 63.29% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(211/222) = 95.05% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/268) = 54.48% for proposal type "mBirthDeath"
+	(49/159) = 30.82% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 130.82
+          Log llike = 9040.67
+ Ending iteration 1270 with acceptance proportions:
+	(49/72) = 68.06% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(60/80) = 75.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(36/96) = 37.50% for proposal type "qBirthDeath"
+	(163/211) = 77.25% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(101/159) = 63.52% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(211/222) = 95.05% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/268) = 54.48% for proposal type "mBirthDeath"
+	(49/162) = 30.25% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 127.53
+          Log llike = 9042.06
+ Ending iteration 1280 with acceptance proportions:
+	(51/75) = 68.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(60/81) = 74.07% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(36/96) = 37.50% for proposal type "qBirthDeath"
+	(165/213) = 77.46% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(101/161) = 62.73% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(212/223) = 95.07% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/269) = 54.28% for proposal type "mBirthDeath"
+	(49/162) = 30.25% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 42
+          Log prior = 124.56
+          Log llike = 9039.01
+ Ending iteration 1290 with acceptance proportions:
+	(51/75) = 68.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(60/81) = 74.07% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(37/97) = 38.14% for proposal type "qBirthDeath"
+	(166/215) = 77.21% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(101/162) = 62.35% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(213/224) = 95.09% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(146/272) = 53.68% for proposal type "mBirthDeath"
+	(49/164) = 29.88% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 42
+          Log prior = 125.16
+          Log llike = 9040.52
+ Ending iteration 1300 with acceptance proportions:
+	(51/75) = 68.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(60/81) = 74.07% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/98) = 38.78% for proposal type "qBirthDeath"
+	(166/216) = 76.85% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(101/163) = 61.96% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(215/226) = 95.13% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(147/275) = 53.45% for proposal type "mBirthDeath"
+	(49/166) = 29.52% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 302.92
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 41
+          Log prior = 119.30
+          Log llike = 9040.60
+ Ending iteration 1310 with acceptance proportions:
+	(51/76) = 67.11% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(61/82) = 74.39% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/98) = 38.78% for proposal type "qBirthDeath"
+	(167/219) = 76.26% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(101/163) = 61.96% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(216/227) = 95.15% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(147/277) = 53.07% for proposal type "mBirthDeath"
+	(50/168) = 29.76% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 303.25
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 41
+          Log prior = 128.05
+          Log llike = 9042.63
+ Ending iteration 1320 with acceptance proportions:
+	(51/77) = 66.23% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(61/83) = 73.49% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/98) = 38.78% for proposal type "qBirthDeath"
+	(168/220) = 76.36% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(102/164) = 62.20% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(219/230) = 95.22% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(147/277) = 53.07% for proposal type "mBirthDeath"
+	(53/171) = 30.99% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 320.62
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 41
+          Log prior = 128.62
+          Log llike = 9112.65
+ Ending iteration 1330 with acceptance proportions:
+	(51/77) = 66.23% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(62/84) = 73.81% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/99) = 38.38% for proposal type "qBirthDeath"
+	(170/222) = 76.58% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(102/165) = 61.82% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(220/232) = 94.83% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(149/279) = 53.41% for proposal type "mBirthDeath"
+	(53/172) = 30.81% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 320.62
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 41
+          Log prior = 130.74
+          Log llike = 9112.94
+ Ending iteration 1340 with acceptance proportions:
+	(51/77) = 66.23% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(63/85) = 74.12% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/100) = 38.00% for proposal type "qBirthDeath"
+	(174/227) = 76.65% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(102/165) = 61.82% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(222/234) = 94.87% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(149/279) = 53.41% for proposal type "mBirthDeath"
+	(53/173) = 30.64% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 320.62
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 41
+          Log prior = 132.12
+          Log llike = 9112.86
+ Ending iteration 1350 with acceptance proportions:
+	(52/78) = 66.67% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(64/88) = 72.73% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(38/100) = 38.00% for proposal type "qBirthDeath"
+	(174/227) = 76.65% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(103/166) = 62.05% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(224/236) = 94.92% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(150/281) = 53.38% for proposal type "mBirthDeath"
+	(54/174) = 31.03% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 323.18
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 40
+          Log prior = 122.37
+          Log llike = 9123.45
+ Ending iteration 1360 with acceptance proportions:
+	(53/79) = 67.09% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(64/89) = 71.91% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(39/102) = 38.24% for proposal type "qBirthDeath"
+	(175/228) = 76.75% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(104/167) = 62.28% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(227/239) = 94.98% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(151/282) = 53.55% for proposal type "mBirthDeath"
+	(54/174) = 31.03% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 323.18
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 39
+          Log prior = 122.91
+          Log llike = 9121.79
+ Ending iteration 1370 with acceptance proportions:
+	(54/80) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(65/90) = 72.22% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(39/102) = 38.24% for proposal type "qBirthDeath"
+	(175/229) = 76.42% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(104/169) = 61.54% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(228/241) = 94.61% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(153/285) = 53.68% for proposal type "mBirthDeath"
+	(54/174) = 31.03% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 323.18
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 125.31
+          Log llike = 9128.79
+ Ending iteration 1380 with acceptance proportions:
+	(54/80) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(65/90) = 72.22% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(39/102) = 38.24% for proposal type "qBirthDeath"
+	(178/232) = 76.72% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(105/170) = 61.76% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(231/244) = 94.67% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(153/286) = 53.50% for proposal type "mBirthDeath"
+	(55/176) = 31.25% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 326.36
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 123.56
+          Log llike = 9139.27
+ Ending iteration 1390 with acceptance proportions:
+	(54/80) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/92) = 72.83% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(39/102) = 38.24% for proposal type "qBirthDeath"
+	(179/234) = 76.50% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(106/171) = 61.99% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(231/244) = 94.67% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(154/287) = 53.66% for proposal type "mBirthDeath"
+	(56/180) = 31.11% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 36
+          Log prior = 126.94
+          Log llike = 9161.14
+ Ending iteration 1400 with acceptance proportions:
+	(55/81) = 67.90% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/93) = 72.04% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(39/102) = 38.24% for proposal type "qBirthDeath"
+	(179/235) = 76.17% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(107/173) = 61.85% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(232/245) = 94.69% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(155/289) = 53.63% for proposal type "mBirthDeath"
+	(56/182) = 30.77% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 122.35
+          Log llike = 9160.02
+ Ending iteration 1410 with acceptance proportions:
+	(55/81) = 67.90% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/95) = 70.53% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/105) = 39.05% for proposal type "qBirthDeath"
+	(179/235) = 76.17% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(107/173) = 61.85% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(234/247) = 94.74% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(157/292) = 53.77% for proposal type "mBirthDeath"
+	(56/182) = 30.77% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 35
+          Log prior = 126.18
+          Log llike = 9170.81
+ Ending iteration 1420 with acceptance proportions:
+	(56/84) = 66.67% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/95) = 70.53% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/105) = 39.05% for proposal type "qBirthDeath"
+	(181/237) = 76.37% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(108/174) = 62.07% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(237/250) = 94.80% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(158/293) = 53.92% for proposal type "mBirthDeath"
+	(56/182) = 30.77% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 36
+          Log prior = 126.80
+          Log llike = 9169.33
+ Ending iteration 1430 with acceptance proportions:
+	(58/86) = 67.44% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/95) = 70.53% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/105) = 39.05% for proposal type "qBirthDeath"
+	(183/241) = 75.93% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(108/175) = 61.71% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(238/251) = 94.82% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(158/294) = 53.74% for proposal type "mBirthDeath"
+	(56/183) = 30.60% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 36
+          Log prior = 128.41
+          Log llike = 9171.95
+ Ending iteration 1440 with acceptance proportions:
+	(58/86) = 67.44% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(67/95) = 70.53% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/106) = 38.68% for proposal type "qBirthDeath"
+	(186/244) = 76.23% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(108/175) = 61.71% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(240/253) = 94.86% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(160/297) = 53.87% for proposal type "mBirthDeath"
+	(56/184) = 30.43% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 38
+          Log prior = 125.68
+          Log llike = 9172.89
+ Ending iteration 1450 with acceptance proportions:
+	(58/86) = 67.44% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(68/96) = 70.83% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/107) = 38.32% for proposal type "qBirthDeath"
+	(187/245) = 76.33% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(111/178) = 62.36% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(242/255) = 94.90% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(161/298) = 54.03% for proposal type "mBirthDeath"
+	(56/185) = 30.27% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 39
+          Log prior = 122.94
+          Log llike = 9172.69
+ Ending iteration 1460 with acceptance proportions:
+	(60/88) = 68.18% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(69/97) = 71.13% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/107) = 38.32% for proposal type "qBirthDeath"
+	(188/246) = 76.42% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(113/181) = 62.43% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(243/256) = 94.92% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(163/300) = 54.33% for proposal type "mBirthDeath"
+	(56/185) = 30.27% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 126.43
+          Log llike = 9172.45
+ Ending iteration 1470 with acceptance proportions:
+	(60/88) = 68.18% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(70/98) = 71.43% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(41/107) = 38.32% for proposal type "qBirthDeath"
+	(191/249) = 76.71% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(114/182) = 62.64% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(245/258) = 94.96% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(165/303) = 54.46% for proposal type "mBirthDeath"
+	(56/185) = 30.27% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 332.03
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 127.33
+          Log llike = 9172.10
+ Ending iteration 1480 with acceptance proportions:
+	(61/90) = 67.78% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(72/101) = 71.29% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(42/108) = 38.89% for proposal type "qBirthDeath"
+	(191/249) = 76.71% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(114/182) = 62.64% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(245/258) = 94.96% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(166/305) = 54.43% for proposal type "mBirthDeath"
+	(57/187) = 30.48% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 334.50
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 38
+          Log prior = 123.22
+          Log llike = 9179.80
+ Ending iteration 1490 with acceptance proportions:
+	(62/91) = 68.13% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/102) = 71.57% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(42/109) = 38.53% for proposal type "qBirthDeath"
+	(191/249) = 76.71% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(114/184) = 61.96% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(246/259) = 94.98% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(167/306) = 54.58% for proposal type "mBirthDeath"
+	(58/190) = 30.53% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 340.01
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 37
+          Log prior = 119.97
+          Log llike = 9199.15
+ Ending iteration 1500 with acceptance proportions:
+	(62/91) = 68.13% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/102) = 71.57% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(42/109) = 38.53% for proposal type "qBirthDeath"
+	(193/251) = 76.89% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(114/185) = 61.62% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(247/260) = 95.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(169/309) = 54.69% for proposal type "mBirthDeath"
+	(60/193) = 31.09% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 344.25
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 39
+          Log prior = 120.69
+          Log llike = 9213.62
+ Ending iteration 1510 with acceptance proportions:
+	(62/91) = 68.13% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/103) = 70.87% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/110) = 39.09% for proposal type "qBirthDeath"
+	(193/251) = 76.89% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(116/190) = 61.05% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(247/260) = 95.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(171/312) = 54.81% for proposal type "mBirthDeath"
+	(60/193) = 31.09% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 344.25
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 37
+          Log prior = 122.39
+          Log llike = 9213.02
+ Ending iteration 1520 with acceptance proportions:
+	(62/91) = 68.13% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/103) = 70.87% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/111) = 38.74% for proposal type "qBirthDeath"
+	(194/252) = 76.98% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(116/190) = 61.05% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(250/263) = 95.06% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/315) = 54.60% for proposal type "mBirthDeath"
+	(61/195) = 31.28% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 352.45
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 38
+          Log prior = 111.43
+          Log llike = 9238.18
+ Ending iteration 1530 with acceptance proportions:
+	(62/91) = 68.13% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/104) = 70.19% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/111) = 38.74% for proposal type "qBirthDeath"
+	(196/255) = 76.86% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(116/191) = 60.73% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(251/264) = 95.08% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/317) = 54.26% for proposal type "mBirthDeath"
+	(62/197) = 31.47% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 356.62
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 38
+          Log prior = 120.04
+          Log llike = 9250.01
+ Ending iteration 1540 with acceptance proportions:
+	(63/93) = 67.74% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/104) = 70.19% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/111) = 38.74% for proposal type "qBirthDeath"
+	(199/259) = 76.83% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(118/193) = 61.14% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(251/264) = 95.08% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/318) = 54.09% for proposal type "mBirthDeath"
+	(63/198) = 31.82% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 356.75
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 38
+          Log prior = 118.94
+          Log llike = 9251.89
+ Ending iteration 1550 with acceptance proportions:
+	(64/94) = 68.09% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(73/104) = 70.19% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/112) = 38.39% for proposal type "qBirthDeath"
+	(201/262) = 76.72% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(118/194) = 60.82% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(252/265) = 95.09% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/319) = 53.92% for proposal type "mBirthDeath"
+	(65/200) = 32.50% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 359.46
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 38
+          Log prior = 118.06
+          Log llike = 9259.61
+ Ending iteration 1560 with acceptance proportions:
+	(64/94) = 68.09% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(75/106) = 70.75% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(43/113) = 38.05% for proposal type "qBirthDeath"
+	(203/265) = 76.60% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(118/195) = 60.51% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(253/266) = 95.11% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/319) = 53.92% for proposal type "mBirthDeath"
+	(66/202) = 32.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 360.85
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 38
+          Log prior = 119.49
+          Log llike = 9263.75
+ Ending iteration 1570 with acceptance proportions:
+	(65/96) = 67.71% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(75/107) = 70.09% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(44/115) = 38.26% for proposal type "qBirthDeath"
+	(204/266) = 76.69% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(119/198) = 60.10% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(254/267) = 95.13% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(172/319) = 53.92% for proposal type "mBirthDeath"
+	(66/202) = 32.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 360.85
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 38
+          Log prior = 122.68
+          Log llike = 9265.40
+ Ending iteration 1580 with acceptance proportions:
+	(65/96) = 67.71% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(76/108) = 70.37% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(44/115) = 38.26% for proposal type "qBirthDeath"
+	(208/271) = 76.75% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(119/198) = 60.10% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(256/269) = 95.17% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(173/321) = 53.89% for proposal type "mBirthDeath"
+	(66/202) = 32.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 360.85
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 37
+          Log prior = 120.74
+          Log llike = 9265.51
+ Ending iteration 1590 with acceptance proportions:
+	(66/98) = 67.35% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(76/108) = 70.37% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(44/117) = 37.61% for proposal type "qBirthDeath"
+	(208/271) = 76.75% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(119/199) = 59.80% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(259/272) = 95.22% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(173/321) = 53.89% for proposal type "mBirthDeath"
+	(68/204) = 33.33% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 377.42
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 37
+          Log prior = 121.04
+          Log llike = 9310.32
+ Ending iteration 1600 with acceptance proportions:
+	(67/99) = 67.68% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(76/109) = 69.72% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(45/119) = 37.82% for proposal type "qBirthDeath"
+	(209/272) = 76.84% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(121/201) = 60.20% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(259/272) = 95.22% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(173/323) = 53.56% for proposal type "mBirthDeath"
+	(69/205) = 33.66% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 387.12
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 37
+          Log prior = 122.54
+          Log llike = 9332.40
+ Ending iteration 1610 with acceptance proportions:
+	(68/100) = 68.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(77/110) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(45/120) = 37.50% for proposal type "qBirthDeath"
+	(212/276) = 76.81% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(121/201) = 60.20% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(261/274) = 95.26% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(174/324) = 53.70% for proposal type "mBirthDeath"
+	(69/205) = 33.66% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 387.12
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 36
+          Log prior = 125.36
+          Log llike = 9333.35
+ Ending iteration 1620 with acceptance proportions:
+	(69/101) = 68.32% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(78/111) = 70.27% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(45/120) = 37.50% for proposal type "qBirthDeath"
+	(214/280) = 76.43% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(121/201) = 60.20% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(263/276) = 95.29% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(175/325) = 53.85% for proposal type "mBirthDeath"
+	(70/206) = 33.98% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 390.17
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 35
+          Log prior = 123.62
+          Log llike = 9340.17
+ Ending iteration 1630 with acceptance proportions:
+	(69/101) = 68.32% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(78/111) = 70.27% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(46/121) = 38.02% for proposal type "qBirthDeath"
+	(217/284) = 76.41% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(122/202) = 60.40% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(264/277) = 95.31% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(176/327) = 53.82% for proposal type "mBirthDeath"
+	(70/207) = 33.82% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 390.17
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 34
+          Log prior = 118.83
+          Log llike = 9340.23
+ Ending iteration 1640 with acceptance proportions:
+	(70/102) = 68.63% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(78/111) = 70.27% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(47/123) = 38.21% for proposal type "qBirthDeath"
+	(218/285) = 76.49% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(122/202) = 60.40% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(265/278) = 95.32% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(178/331) = 53.78% for proposal type "mBirthDeath"
+	(71/208) = 34.13% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 397.74
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 34
+          Log prior = 115.59
+          Log llike = 9355.55
+ Ending iteration 1650 with acceptance proportions:
+	(70/102) = 68.63% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(78/112) = 69.64% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(47/123) = 38.21% for proposal type "qBirthDeath"
+	(218/286) = 76.22% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(122/203) = 60.10% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(269/282) = 95.39% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(178/331) = 53.78% for proposal type "mBirthDeath"
+	(71/211) = 33.65% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 397.74
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 34
+          Log prior = 116.15
+          Log llike = 9355.34
+ Ending iteration 1660 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(78/113) = 69.03% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(47/123) = 38.21% for proposal type "qBirthDeath"
+	(219/287) = 76.31% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(124/205) = 60.49% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(272/285) = 95.44% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(178/332) = 53.61% for proposal type "mBirthDeath"
+	(71/212) = 33.49% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 397.74
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 34
+          Log prior = 122.36
+          Log llike = 9355.32
+ Ending iteration 1670 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(79/114) = 69.30% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(47/123) = 38.21% for proposal type "qBirthDeath"
+	(223/291) = 76.63% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(125/207) = 60.39% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(274/287) = 95.47% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(178/332) = 53.61% for proposal type "mBirthDeath"
+	(72/213) = 33.80% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 406.40
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 34
+          Log prior = 115.95
+          Log llike = 9372.10
+ Ending iteration 1680 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(79/114) = 69.30% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(48/125) = 38.40% for proposal type "qBirthDeath"
+	(223/292) = 76.37% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/208) = 60.58% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(277/290) = 95.52% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(179/334) = 53.59% for proposal type "mBirthDeath"
+	(73/214) = 34.11% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 408.67
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 33
+          Log prior = 118.97
+          Log llike = 9375.67
+ Ending iteration 1690 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(79/114) = 69.30% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(48/125) = 38.40% for proposal type "qBirthDeath"
+	(226/295) = 76.61% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/209) = 60.29% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(278/291) = 95.53% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/337) = 53.41% for proposal type "mBirthDeath"
+	(73/216) = 33.80% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 408.67
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 120.18
+          Log llike = 9377.79
+ Ending iteration 1700 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(80/116) = 68.97% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(48/127) = 37.80% for proposal type "qBirthDeath"
+	(227/296) = 76.69% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/209) = 60.29% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(279/293) = 95.22% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/338) = 53.25% for proposal type "mBirthDeath"
+	(74/218) = 33.94% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 410.08
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 121.30
+          Log llike = 9380.45
+ Ending iteration 1710 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(80/117) = 68.38% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(48/128) = 37.50% for proposal type "qBirthDeath"
+	(230/300) = 76.67% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/210) = 60.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(281/295) = 95.25% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/338) = 53.25% for proposal type "mBirthDeath"
+	(75/219) = 34.25% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 412.41
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 114.28
+          Log llike = 9384.10
+ Ending iteration 1720 with acceptance proportions:
+	(71/103) = 68.93% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(81/118) = 68.64% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(48/129) = 37.21% for proposal type "qBirthDeath"
+	(232/303) = 76.57% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/210) = 60.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(283/297) = 95.29% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/340) = 52.94% for proposal type "mBirthDeath"
+	(76/220) = 34.55% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 413.13
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 116.78
+          Log llike = 9385.09
+ Ending iteration 1730 with acceptance proportions:
+	(71/104) = 68.27% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(81/118) = 68.64% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/130) = 37.69% for proposal type "qBirthDeath"
+	(234/305) = 76.72% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/212) = 59.43% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(285/299) = 95.32% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/342) = 52.63% for proposal type "mBirthDeath"
+	(76/220) = 34.55% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 413.13
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 120.58
+          Log llike = 9390.21
+ Ending iteration 1740 with acceptance proportions:
+	(73/106) = 68.87% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(82/119) = 68.91% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/130) = 37.69% for proposal type "qBirthDeath"
+	(236/307) = 76.87% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(126/213) = 59.15% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(285/299) = 95.32% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/343) = 52.48% for proposal type "mBirthDeath"
+	(77/223) = 34.53% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 420.60
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 123.38
+          Log llike = 9405.30
+ Ending iteration 1750 with acceptance proportions:
+	(73/106) = 68.87% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(82/119) = 68.91% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/130) = 37.69% for proposal type "qBirthDeath"
+	(239/311) = 76.85% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(127/215) = 59.07% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(287/301) = 95.35% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/344) = 52.33% for proposal type "mBirthDeath"
+	(78/224) = 34.82% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 426.90
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 123.55
+          Log llike = 9414.17
+ Ending iteration 1760 with acceptance proportions:
+	(73/107) = 68.22% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(82/120) = 68.33% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/130) = 37.69% for proposal type "qBirthDeath"
+	(241/313) = 77.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(127/216) = 58.80% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(289/303) = 95.38% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/346) = 52.02% for proposal type "mBirthDeath"
+	(78/225) = 34.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 426.90
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 119.14
+          Log llike = 9414.02
+ Ending iteration 1770 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(83/121) = 68.60% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/132) = 37.12% for proposal type "qBirthDeath"
+	(242/314) = 77.07% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(127/217) = 58.53% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(291/305) = 95.41% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/347) = 51.87% for proposal type "mBirthDeath"
+	(78/225) = 34.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 426.90
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 127.14
+          Log llike = 9414.71
+ Ending iteration 1780 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(83/121) = 68.60% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/132) = 37.12% for proposal type "qBirthDeath"
+	(244/316) = 77.22% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(128/219) = 58.45% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(293/307) = 95.44% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/350) = 51.43% for proposal type "mBirthDeath"
+	(78/226) = 34.51% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 426.90
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 115.73
+          Log llike = 9415.69
+ Ending iteration 1790 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(83/121) = 68.60% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(49/133) = 36.84% for proposal type "qBirthDeath"
+	(245/318) = 77.04% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(129/220) = 58.64% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(294/308) = 95.45% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/352) = 51.14% for proposal type "mBirthDeath"
+	(79/229) = 34.50% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 433.50
+         number of qVoronoi tiles = 42
+         number of mVoronoi tiles = 32
+          Log prior = 124.11
+          Log llike = 9425.91
+ Ending iteration 1800 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(84/122) = 68.85% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(50/136) = 36.76% for proposal type "qBirthDeath"
+	(247/321) = 76.95% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(131/222) = 59.01% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(295/309) = 95.47% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/352) = 51.14% for proposal type "mBirthDeath"
+	(79/229) = 34.50% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 433.50
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 109.90
+          Log llike = 9425.55
+ Ending iteration 1810 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(84/122) = 68.85% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/137) = 37.23% for proposal type "qBirthDeath"
+	(248/323) = 76.78% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(131/222) = 59.01% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(299/313) = 95.53% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(180/355) = 50.70% for proposal type "mBirthDeath"
+	(79/229) = 34.50% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 433.50
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 32
+          Log prior = 122.24
+          Log llike = 9424.39
+ Ending iteration 1820 with acceptance proportions:
+	(74/109) = 67.89% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(85/123) = 69.11% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/137) = 37.23% for proposal type "qBirthDeath"
+	(250/325) = 76.92% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(132/224) = 58.93% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(301/315) = 95.56% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(181/356) = 50.84% for proposal type "mBirthDeath"
+	(80/231) = 34.63% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 433.97
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 33
+          Log prior = 108.51
+          Log llike = 9426.87
+ Ending iteration 1830 with acceptance proportions:
+	(74/110) = 67.27% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(85/123) = 69.11% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/138) = 36.96% for proposal type "qBirthDeath"
+	(252/327) = 77.06% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(133/226) = 58.85% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(303/317) = 95.58% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(183/358) = 51.12% for proposal type "mBirthDeath"
+	(80/231) = 34.63% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 433.97
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 35
+          Log prior = 113.94
+          Log llike = 9427.64
+ Ending iteration 1840 with acceptance proportions:
+	(75/111) = 67.57% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(85/123) = 69.11% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/139) = 36.69% for proposal type "qBirthDeath"
+	(254/329) = 77.20% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(133/226) = 58.85% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(303/317) = 95.58% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(187/363) = 51.52% for proposal type "mBirthDeath"
+	(81/232) = 34.91% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 436.37
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 33
+          Log prior = 117.35
+          Log llike = 9431.59
+ Ending iteration 1850 with acceptance proportions:
+	(75/111) = 67.57% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(86/124) = 69.35% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/139) = 36.69% for proposal type "qBirthDeath"
+	(255/331) = 77.04% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(134/227) = 59.03% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(304/318) = 95.60% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(188/367) = 51.23% for proposal type "mBirthDeath"
+	(82/233) = 35.19% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 443.14
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 32
+          Log prior = 122.50
+          Log llike = 9440.20
+ Ending iteration 1860 with acceptance proportions:
+	(76/112) = 67.86% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(87/125) = 69.60% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/140) = 36.43% for proposal type "qBirthDeath"
+	(257/334) = 76.95% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(135/229) = 58.95% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(305/319) = 95.61% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(188/367) = 51.23% for proposal type "mBirthDeath"
+	(83/234) = 35.47% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 443.34
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 32
+          Log prior = 119.90
+          Log llike = 9440.31
+ Ending iteration 1870 with acceptance proportions:
+	(76/112) = 67.86% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(88/126) = 69.84% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/140) = 36.43% for proposal type "qBirthDeath"
+	(260/338) = 76.92% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(135/229) = 58.95% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(307/321) = 95.64% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(189/369) = 51.22% for proposal type "mBirthDeath"
+	(84/235) = 35.74% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 442.42
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 33
+          Log prior = 115.92
+          Log llike = 9436.03
+ Ending iteration 1880 with acceptance proportions:
+	(77/113) = 68.14% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(88/126) = 69.84% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(51/141) = 36.17% for proposal type "qBirthDeath"
+	(262/340) = 77.06% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(135/229) = 58.95% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(309/323) = 95.67% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(189/371) = 50.94% for proposal type "mBirthDeath"
+	(85/237) = 35.86% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 447.32
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 33
+          Log prior = 123.50
+          Log llike = 9444.14
+ Ending iteration 1890 with acceptance proportions:
+	(77/113) = 68.14% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(89/127) = 70.08% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(52/144) = 36.11% for proposal type "qBirthDeath"
+	(263/341) = 77.13% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(136/230) = 59.13% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(310/324) = 95.68% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(189/372) = 50.81% for proposal type "mBirthDeath"
+	(85/239) = 35.56% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 447.32
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 33
+          Log prior = 114.04
+          Log llike = 9444.31
+ Ending iteration 1900 with acceptance proportions:
+	(77/113) = 68.14% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(90/128) = 70.31% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(52/144) = 36.11% for proposal type "qBirthDeath"
+	(265/343) = 77.26% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/231) = 59.31% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(311/325) = 95.69% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(190/376) = 50.53% for proposal type "mBirthDeath"
+	(85/240) = 35.42% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 447.32
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 116.50
+          Log llike = 9444.63
+ Ending iteration 1910 with acceptance proportions:
+	(77/114) = 67.54% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(90/128) = 70.31% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(52/144) = 36.11% for proposal type "qBirthDeath"
+	(267/345) = 77.39% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/231) = 59.31% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(313/327) = 95.72% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(190/377) = 50.40% for proposal type "mBirthDeath"
+	(87/244) = 35.66% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 453.64
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 117.91
+          Log llike = 9453.20
+ Ending iteration 1920 with acceptance proportions:
+	(77/115) = 66.96% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(90/129) = 69.77% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(52/144) = 36.11% for proposal type "qBirthDeath"
+	(268/346) = 77.46% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/231) = 59.31% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(317/332) = 95.48% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(190/377) = 50.40% for proposal type "mBirthDeath"
+	(89/246) = 36.18% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 458.06
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 116.62
+          Log llike = 9457.18
+ Ending iteration 1930 with acceptance proportions:
+	(77/115) = 66.96% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(90/129) = 69.77% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(52/144) = 36.11% for proposal type "qBirthDeath"
+	(273/351) = 77.78% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/232) = 59.05% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(320/335) = 95.52% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(190/377) = 50.40% for proposal type "mBirthDeath"
+	(90/247) = 36.44% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 467.34
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 32
+          Log prior = 115.20
+          Log llike = 9469.31
+ Ending iteration 1940 with acceptance proportions:
+	(78/117) = 66.67% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(90/129) = 69.77% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(53/145) = 36.55% for proposal type "qBirthDeath"
+	(274/352) = 77.84% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/234) = 58.55% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(320/335) = 95.52% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(192/379) = 50.66% for proposal type "mBirthDeath"
+	(92/249) = 36.95% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 481.02
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 30
+          Log prior = 120.45
+          Log llike = 9485.28
+ Ending iteration 1950 with acceptance proportions:
+	(79/118) = 66.95% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(91/130) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(54/148) = 36.49% for proposal type "qBirthDeath"
+	(274/352) = 77.84% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/235) = 58.30% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(321/336) = 95.54% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(192/382) = 50.26% for proposal type "mBirthDeath"
+	(92/249) = 36.95% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 481.02
+         number of qVoronoi tiles = 41
+         number of mVoronoi tiles = 30
+          Log prior = 120.68
+          Log llike = 9484.99
+ Ending iteration 1960 with acceptance proportions:
+	(80/119) = 67.23% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(91/130) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(55/150) = 36.67% for proposal type "qBirthDeath"
+	(276/354) = 77.97% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(137/235) = 58.30% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(323/339) = 95.28% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(192/383) = 50.13% for proposal type "mBirthDeath"
+	(93/250) = 37.20% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 482.66
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 30
+          Log prior = 114.46
+          Log llike = 9486.54
+ Ending iteration 1970 with acceptance proportions:
+	(81/120) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(91/130) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(55/151) = 36.42% for proposal type "qBirthDeath"
+	(277/356) = 77.81% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(139/239) = 58.16% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(324/341) = 95.01% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(192/383) = 50.13% for proposal type "mBirthDeath"
+	(93/250) = 37.20% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 482.66
+         number of qVoronoi tiles = 40
+         number of mVoronoi tiles = 30
+          Log prior = 116.78
+          Log llike = 9486.97
+ Ending iteration 1980 with acceptance proportions:
+	(81/120) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(91/130) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(56/152) = 36.84% for proposal type "qBirthDeath"
+	(278/357) = 77.87% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(139/239) = 58.16% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(324/341) = 95.01% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(193/389) = 49.61% for proposal type "mBirthDeath"
+	(93/252) = 36.90% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 482.66
+         number of qVoronoi tiles = 39
+         number of mVoronoi tiles = 31
+          Log prior = 115.89
+          Log llike = 9486.08
+ Ending iteration 1990 with acceptance proportions:
+	(81/120) = 67.50% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(91/130) = 70.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(56/154) = 36.36% for proposal type "qBirthDeath"
+	(281/360) = 78.06% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(139/240) = 57.92% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(326/343) = 95.04% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(193/389) = 49.61% for proposal type "mBirthDeath"
+	(94/254) = 37.01% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 484.31
+         number of qVoronoi tiles = 39
+         number of mVoronoi tiles = 31
+          Log prior = 115.83
+          Log llike = 9488.16
+Iteration 2000 of 2000...
+ Ending iteration 2000 with acceptance proportions:
+	(82/121) = 67.77% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(93/132) = 70.45% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(56/154) = 36.36% for proposal type "qBirthDeath"
+	(285/365) = 78.08% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(139/240) = 57.92% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(326/343) = 95.04% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(193/391) = 49.36% for proposal type "mBirthDeath"
+	(94/254) = 37.01% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 484.31
+         number of qVoronoi tiles = 39
+         number of mVoronoi tiles = 31
+          Log prior = 111.89
+          Log llike = 9487.69
+Final log prior: 111.89
+Final log llike: 9487.69 
+Joining with `by = join_by(id)`
+New names:
+• `x` -> `x...1`
+• `y` -> `y...2`
+• `x` -> `x...3`
+• `y` -> `y...4`
+Generate effective migration surface (posterior mean of m rates). See plots$mrates01 and plots$mrates02.
+Generate effective diversity surface (posterior mean of q rates). See plots$qrates01 and plots$qrates02.
+Generate average dissimilarities within and between demes. See plots$rdist01, plots$rdist02 and plots$rdist03.
+Generate posterior probability trace. See plots$pilog01.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+$mrates01
+
+$mrates02
+
+$qrates01
+
+$qrates02
+
+$rdist01
+
+$rdist02
+
+$rdist03
+
+$pilogl01
+
+Completed: gl.run.eems 
+Warning messages:
+1: `as_data_frame()` was deprecated in tibble 2.0.0.
+ℹ Please use `as_tibble()` (with slightly different semantics) to convert to a
+  tibble, or `as.data.frame()` to convert to a data frame.
+ℹ The deprecated feature was likely used in the reemsplots2 package.
+  Please report the issue at <https://github.com/dipetkov/eems/issues>. 
+2: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.
+ℹ The deprecated feature was likely used in the tibble package.
+  Please report the issue at <https://github.com/tidyverse/tibble/issues>. 
+3: `data_frame()` was deprecated in tibble 1.1.0.
+ℹ Please use `tibble()` instead.
+ℹ The deprecated feature was likely used in the reemsplots2 package.
+  Please report the issue at <https://github.com/dipetkov/eems/issues>. 
+
+I1 rdist03 range (km): 353 3621 
+I1 rdist03 equals great-circle distance between observed demes: TRUE 
+I1 max distance between samples (km): 4006 
+I1 mrates01 x-axis range (degrees): 111.5 155.5 
+I1 observed demes line in log:   There are 22 observed demes (out of 30 demes)   There are 96 samples assigned to 22 observed demes 
+Starting gl.run.eems 
+  EEMS run directory:  /private/var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T/RtmpTgn4iv/round2-habitat-e81b335a3c8e/eems-run-e81b693da8f8 
+  Warning: 3 sample(s) fall outside the habitat and are assigned by EEMS to the closest deme: bc18, bc63, bc80
+Joining with `by = join_by(id)`
+New names:
+• `x` -> `x...1`
+• `y` -> `y...2`
+• `x` -> `x...3`
+• `y` -> `y...4`
+Generate effective migration surface (posterior mean of m rates). See plots$mrates01 and plots$mrates02.
+Generate effective diversity surface (posterior mean of q rates). See plots$qrates01 and plots$qrates02.
+Generate average dissimilarities within and between demes. See plots$rdist01, plots$rdist02 and plots$rdist03.
+Generate posterior probability trace. See plots$pilog01.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Completed: gl.run.eems 
+
+I2 concave habitat run returned 8 plots
+I2 EEMS outer.txt rows: 315 
+null device 
+          1 

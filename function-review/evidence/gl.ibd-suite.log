@@ -1,0 +1,27 @@
+ℹ Testing dartR.spatial
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+gl.ibd-fixes: ...............................................................................
+gl.ibd: ................
+gl.propShared: ..........  Processing genlight object with SNP data
+  Warning: data include individuals that are scored NA across all loci.
+  Consider filtering using gl <- gl.filter.allna(gl)
+........................  Processing genlight object with SNP data
+.
+gl.run.eems-fixes: .....................................................
+gl.run.eems: SS
+
+══ Skipped ═════════════════════════════════════════════════════════════════════
+1. EEMS reference-data baseline is unchanged ('test-gl.run.eems.R:6:3') - Reason: Set DARTR_EEMS_REVIEW=true to run the external-tool baseline
+
+2. the successful SNP path preserves its distance and return baseline ('test-gl.run.eems.R:44:3') - Reason: Sys.getenv("DARTR_EEMS_REVIEW") != "true" is TRUE
+
+══ DONE ════════════════════════════════════════════════════════════════════════
+Warning messages:
+1: package ‘testthat’ was built under R version 4.4.3 
+2: package ‘ade4’ was built under R version 4.4.3 
+3: package ‘ggplot2’ was built under R version 4.4.3 
+4: package ‘dplyr’ was built under R version 4.4.3 
