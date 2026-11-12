@@ -108,7 +108,7 @@ gl.ibd <- function(x = NULL,
     verbose <- gl.check.verbosity(verbose)
     funname <- match.call()[[1]]
     if (is.function(funname)) funname <- "gl.ibd"
-    utils.flag.start(func = funname, verbose = verbose)
+    funname <- utils.flag.start(func = funname, verbose = verbose)
 
     # CHECK INPUT MODE AND DISTANCE IDENTITIES
     supplied <- !is.null(Dgen) && !is.null(Dgeo)

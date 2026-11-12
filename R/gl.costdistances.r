@@ -71,7 +71,7 @@ gl.costdistances <- function(landscape,
     verbose <- gl.check.verbosity(verbose)
     funname <- match.call()[[1]]
     if (is.function(funname)) funname <- "gl.costdistances"
-    utils.flag.start(func = funname, verbose = verbose)
+    funname <- utils.flag.start(func = funname, verbose = verbose)
 
     if (!requireNamespace("gdistance", quietly = TRUE)) {
         stop(error("Install package gdistance to calculate cost distances.\n"))

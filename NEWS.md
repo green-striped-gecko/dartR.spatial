@@ -1,4 +1,9 @@
-# dartR.spatial 1.2.6
+# dartR.spatial 1.2.7
+
+* Functions called through `do.call(fun, ...)` no longer stop with
+  "cannot coerce type 'closure'" at `verbose >= 1`, and functions called as
+  `pkg::fun` print their name in the closing message. Needs the current
+  dartR.base.
 
 * `gl.spatial.autoCorr()`, `gl.run.eems()`, `gl.grm2()` and
   `gl.genleastcost()`: population colours now go to the right populations.

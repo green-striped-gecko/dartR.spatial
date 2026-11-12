@@ -181,7 +181,7 @@ gl.run.eems <- function(x,
   # do.call(gl.run.eems, ...) puts the function itself in the call, which
   # the start and end messages cannot print.
   if (is.function(funname)) funname <- "gl.run.eems"
-  utils.flag.start(func = funname, verbose = verbose)
+  funname <- utils.flag.start(func = funname, verbose = verbose)
 
   # CHECK DEPENDENCIES AND INPUTS BEFORE CREATING FILES
   for (pkg in c("reemsplots2", "sf")) {
