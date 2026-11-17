@@ -8,6 +8,10 @@
   blocks of loci.
 * `gl.kosman()` reads a file-backed object in blocks of loci
   (`dartR.base::utils.fbm.pair.counts()`); the distances are identical.
+* `gl.grm2()`: as `gl.grm()` in dartR.captive, rrBLUP::A.mat's default
+  method is computed in blocks of loci for a file-backed object
+  (`dartR.base::utils.fbm.amat()`); other A.mat options convert explicitly
+  with a warning. Gen-backed objects are unchanged.
 * Needs dartR.base >= 1.2.7.9000 (the exported `utils.fbm.*` helpers).
 
 # dartR.spatial 1.2.7
