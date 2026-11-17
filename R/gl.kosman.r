@@ -87,6 +87,32 @@ gl.kosman <- function(x, verbose = NULL) {
   # For biallelic dosages, |a - b| is the sum over k = 1..ploidy of
   # |[a >= k] - [b >= k]|. Each term is a cross-product of indicator
   # matrices, so no nInd x nInd matrix per locus is needed.
+  if (dartR.base::utils.fbm.has(x)) {
+    # File-backed (diploid, coded 0/1/2): the pairwise counts are added over
+    # blocks of loci read from the backing file
+    # (dartR.base::utils.fbm.pair.counts), so the genotype matrix is never
+    # decoded as a whole. For each pair, L loci are called in both and n1
+    # (n2) of them differ by one (two) allele copies, so the summed
+    # absolute dosage difference is n1 + 2 n2. All sums are whole numbers,
+    # so both matrices are identical to the cross-products below.
+    if (ploidy != 2) {
+      stop(error("Fatal Error: file-backed objects must be diploid\n"))
+    }
+    n <- nInd(x)
+    pc <- dartR.base::utils.fbm.pair.counts(x)
+    sym <- function(v, d) {
+      m <- matrix(0, n, n)
+      m[lower.tri(m)] <- v
+      m <- m + t(m)
+      diag(m) <- d
+      m
+    }
+    diffsum <- sym(pc$n1 + 2 * pc$n2, 0)
+    # the diagonal: loci called in each individual
+    loci.used <- sym(as.numeric(pc$L), dartR.base::utils.fbm.rowwise(x,
+      function(m) rowSums(!is.na(m))))
+    dimnames(loci.used) <- NULL
+  } else {
   mat <- as.matrix(x)
   called <- !is.na(mat)
   mat[!called] <- 0
@@ -101,6 +127,7 @@ gl.kosman <- function(x, verbose = NULL) {
 
   # number of loci called in both individuals
   loci.used <- tcrossprod(called)
+  }
   colnames(loci.used) <- indNames(x)
   rownames(loci.used) <- indNames(x)
 

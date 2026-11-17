@@ -1,3 +1,15 @@
+# dartR.spatial (dev_fbm)
+
+* `gl.ibd()` no longer converts a file-backed object to a genlight: Fst
+  comes from `gl.fst.pop()` (identical to `StAMPP::stamppFst()`), Nei's D
+  from the populations' allele frequencies (passed to
+  `StAMPP::stamppNeisD()`, identical result) and Euclidean distances from
+  pairwise genotype counts (identical to `stats::dist()`), all read in
+  blocks of loci.
+* `gl.kosman()` reads a file-backed object in blocks of loci
+  (`dartR.base::utils.fbm.pair.counts()`); the distances are identical.
+* Needs dartR.base >= 1.2.7.9000 (the exported `utils.fbm.*` helpers).
+
 # dartR.spatial 1.2.7
 
 * Functions called through `do.call(fun, ...)` no longer stop with
