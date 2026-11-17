@@ -1,4 +1,4 @@
-# dartR.spatial (dev_fbm)
+# dartR.spatial 1.3.0
 
 * `gl.ibd()` no longer converts a file-backed object to a genlight: Fst
   comes from `gl.fst.pop()` (identical to `StAMPP::stamppFst()`), Nei's D
