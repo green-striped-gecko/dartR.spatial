@@ -1,3 +1,7 @@
+# Slow file: skipped on CRAN to keep the check time under 10 minutes; runs
+# with devtools::test() and on GitHub Actions.
+skip_on_cran()
+
 # Approved changes from function-review/reports/dartR.spatial/gl.genleastcost.md
 skip_if_not_installed("gdistance")
 skip_if_not_installed("mmod")

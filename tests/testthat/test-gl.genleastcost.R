@@ -1,3 +1,7 @@
+# Slow file: skipped on CRAN to keep the check time under 10 minutes; runs
+# with devtools::test() and on GitHub Actions.
+skip_on_cran()
+
 # Characterisation captured before critical source review at f2cfb52.
 # Snapshots record current behaviour, defects included.
 # Approved snapshot diffs: RasterLayer input now runs (change 1); cost.mats
