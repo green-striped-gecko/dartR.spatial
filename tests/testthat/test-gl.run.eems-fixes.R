@@ -34,7 +34,7 @@ eems_case <- function() {
   }
   environment(f) <- list2env(list(system2 = mock_system),
                              parent = environment(gl.run.eems))
-  plotter <- reemsplots2::make_eems_plots
+  plotter <- getExportedValue("reemsplots2", "make_eems_plots")
   body(plotter) <- quote({
     calls$plots <- calls$plots + 1L
     calls$prob_level <- prob_level
