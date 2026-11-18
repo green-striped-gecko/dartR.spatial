@@ -100,7 +100,7 @@ used.
 Genetic distances between populations are 'D', 'Gst.Nei' and 'Gst.Hedrick'
 (package mmod). Genetic distances between individuals are 'kosman'
 (\code{\link{gl.kosman}}), 'propShared' (one minus the proportion of shared
-alleles, \code{\link{gl.propShared}}) and 'dist' (Euclidean distance between
+alleles, \code{\link[dartR.base]{gl.propShared}}) and 'dist' (Euclidean distance between
 allele counts).
 }
 \examples{

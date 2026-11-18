@@ -1,3 +1,23 @@
+# dartR.spatial 1.3.0
+
+* `gl.propShared()` is back in dartR.base (unchanged), where the CRAN
+  release of dartR.spatial calls it from; `gl.ibd()`, `gl.genleastcost()`
+  and `gl.spatial.autoCorr()` use it from there.
+
+* `gl.ibd()` no longer converts a file-backed object to a genlight: Fst
+  comes from `gl.fst.pop()` (identical to `StAMPP::stamppFst()`), Nei's D
+  from the populations' allele frequencies (passed to
+  `StAMPP::stamppNeisD()`, identical result) and Euclidean distances from
+  pairwise genotype counts (identical to `stats::dist()`), all read in
+  blocks of loci.
+* `gl.kosman()` reads a file-backed object in blocks of loci
+  (`dartR.base::utils.fbm.pair.counts()`); the distances are identical.
+* `gl.grm2()`: as `gl.grm()` in dartR.captive, rrBLUP::A.mat's default
+  method is computed in blocks of loci for a file-backed object
+  (`dartR.base::utils.fbm.amat()`); other A.mat options convert explicitly
+  with a warning. Gen-backed objects are unchanged.
+* Needs dartR.base >= 1.2.7.9000 (the exported `utils.fbm.*` helpers).
+
 # dartR.spatial 1.2.7
 
 * Functions called through `do.call(fun, ...)` no longer stop with

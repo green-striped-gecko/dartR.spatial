@@ -307,11 +307,19 @@ gl.ibd <- function(x = NULL,
         }
         if (is.null(Dgen)) {
             helper.verbose <- if (verbose >= 2) verbose else 0
-            if (distance %in% c("Fst", "D")) {
-                if (methods::.hasSlot(x, "fbm") &&
-                    !is.null(methods::slot(x, "fbm"))) {
-                    x <- gl.fbm2gen(x, verbose = helper.verbose)
+            if (distance %in% c("Fst", "D") &&
+                dartR.base::utils.fbm.has(x)) {
+                # File-backed: not converted to a genlight. Fst from
+                # gl.fst.pop() (Weir & Cockerham, read in blocks of loci;
+                # identical to StAMPP::stamppFst), Nei's D from the
+                # populations' allele frequencies (.neis_d_pop_fbm). Both
+                # are identical to the StAMPP results below.
+                Dgen <- if (distance == "Fst") {
+                    stats::as.dist(gl.fst.pop(x, verbose = 0))
+                } else {
+                    stats::as.dist(.neis_d_pop_fbm(x))
                 }
+            } else if (distance %in% c("Fst", "D")) {
                 class(x) <- "genlight" # StAMPP requires the base class.
                 Dgen <- if (distance == "Fst") {
                     stats::as.dist(StAMPP::stamppFst(x, nboots = 1))
@@ -320,6 +328,9 @@ gl.ibd <- function(x = NULL,
                 }
             } else if (distance == "propShared") {
                 Dgen <- stats::as.dist(1 - gl.propShared(x, verbose = 0))
+            } else if (distance == "euclidean" &&
+                       dartR.base::utils.fbm.has(x)) {
+                Dgen <- .euclidean_dist_fbm(x)
             } else if (distance == "euclidean") {
                 Dgen <- stats::dist(as.matrix(x))
             } else {
@@ -470,4 +481,46 @@ gl.ibd <- function(x = NULL,
     }
     if (verbose >= 1) cat(report("\nCompleted:", funname, "\n\n"))
     return(list(Dgen = Dgen, Dgeo = Dgeo, mantel = manteltest))
+}
+
+## Nei's (1972) D between populations exactly as
+## StAMPP::stamppNeisD(x, pop = TRUE), for a file-backed x that is not
+## converted to a genlight. StAMPP uses the genotypes only through each
+## population's mean allele frequency per locus (colMeans of genotype /
+## ploidy), so it is given a table in its own format with one row per
+## population holding those frequencies, computed in blocks of loci
+## (dartR.base::utils.fbm.colwise). Its frequency matrix, and so every
+## distance, is identical to that from the genotypes. Diploid data (FBM).
+.neis_d_pop_fbm <- function(x) {
+    pops <- unique(as.character(pop(x)))
+    freq <- t(vapply(pops, function(p) {
+        dartR.base::utils.fbm.colwise(x, function(m) {
+            colMeans(m, na.rm = TRUE)
+        }, rows = which(as.character(pop(x)) == p)) / 2
+    }, numeric(nLoc(x))))
+    colnames(freq) <- locNames(x)
+    geno <- data.frame(sample = pops, pop = pops, pop.num = seq_along(pops),
+                       ploidy = 2, format = "freq", freq,
+                       stringsAsFactors = FALSE, check.names = FALSE)
+    row.names(geno) <- NULL
+    StAMPP::stamppNeisD(geno, pop = TRUE)
+}
+
+## Euclidean distances between individuals exactly as
+## stats::dist(as.matrix(x)), for a file-backed x. dist() sums the squared
+## differences over the loci scored in both individuals and, when some are
+## missing, divides the sum by (loci in common / all loci). From the counts
+## of dartR.base::utils.fbm.pair.counts (read in blocks of loci) the sum is
+## n1 + 4 n2 and the loci in common L, all whole numbers, so the distances
+## are identical. The 'call' attribute is the one dist() records.
+.euclidean_dist_fbm <- function(x) {
+    pc <- dartR.base::utils.fbm.pair.counts(x)
+    nc <- nLoc(x)
+    s <- pc$n1 + 4 * pc$n2
+    s <- ifelse(pc$L != nc, s / (pc$L / nc), s)
+    d <- sqrt(s)
+    d[pc$L == 0] <- NA_real_
+    structure(d, Size = nInd(x), Labels = indNames(x), Diag = FALSE,
+              Upper = FALSE, method = "euclidean",
+              call = quote(stats::dist(x = as.matrix(x))), class = "dist")
 }
