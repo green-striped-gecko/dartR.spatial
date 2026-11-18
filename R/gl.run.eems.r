@@ -195,6 +195,9 @@ gl.run.eems <- function(x,
            call. = FALSE)
     }
   }
+  # reemsplots2 is only on GitHub, so it cannot be declared in DESCRIPTION
+  # for CRAN; look it up at run time once the check above has passed.
+  make_eems_plots <- getExportedValue("reemsplots2", "make_eems_plots")
   utils.check.datatype(x, verbose = 0)
   if (!is.logical(diploid) || length(diploid) != 1L || is.na(diploid)) {
     stop(error("diploid must be TRUE or FALSE."), call. = FALSE)
@@ -220,7 +223,7 @@ gl.run.eems <- function(x,
                        "eems_colors")
   if (length(extra) > 0L) {
     extra_names <- names(extra)
-    allowed <- setdiff(names(formals(reemsplots2::make_eems_plots)),
+    allowed <- setdiff(names(formals(make_eems_plots)),
                        c(fixed_plot_args, "..."))
     if (is.null(extra_names) || any(!nzchar(extra_names)) ||
         anyDuplicated(extra_names) || any(!extra_names %in% allowed)) {
@@ -441,7 +444,7 @@ gl.run.eems <- function(x,
   }, add = TRUE)
   plot_output <- utils::capture.output(
     p8 <- withCallingHandlers({
-      plots <- do.call(reemsplots2::make_eems_plots, c(list(
+      plots <- do.call(make_eems_plots, c(list(
         mcmcpath = eems_results, longlat = TRUE, dpi = dpi,
         add_grid = add_grid, col_grid = col_grid,
         add_demes = add_demes, col_demes = col_demes,

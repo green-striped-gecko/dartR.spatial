@@ -1,5 +1,10 @@
 # dartR.spatial 1.3.0
 
+* `reemsplots2` (GitHub only) is no longer listed in `Suggests` and the
+  `Remotes` field is gone, as CRAN accepts neither. `gl.run.eems()` still
+  needs it and asks for `devtools::install_github('dipetkov/reemsplots2')`
+  when it is missing.
+
 * `gl.propShared()` is back in dartR.base (unchanged), where the CRAN
   release of dartR.spatial calls it from; `gl.ibd()`, `gl.genleastcost()`
   and `gl.spatial.autoCorr()` use it from there.
