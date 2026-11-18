@@ -1,5 +1,9 @@
 # dartR.spatial 1.3.0
 
+* `gl.propShared()` is back in dartR.base (unchanged), where the CRAN
+  release of dartR.spatial calls it from; `gl.ibd()`, `gl.genleastcost()`
+  and `gl.spatial.autoCorr()` use it from there.
+
 * `gl.ibd()` no longer converts a file-backed object to a genlight: Fst
   comes from `gl.fst.pop()` (identical to `StAMPP::stamppFst()`), Nei's D
   from the populations' allele frequencies (passed to
