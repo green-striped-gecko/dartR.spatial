@@ -1,3 +1,7 @@
+# Slow file: skipped on CRAN to keep the check time under 10 minutes; runs
+# with devtools::test() and on GitHub Actions.
+skip_on_cran()
+
 # File-backed objects: gl.kosman and gl.ibd read the genotypes in blocks of
 # loci (dartR.base::utils.fbm.pair.counts, utils.fbm.colwise, gl.fst.pop)
 # instead of converting the object to a genlight. Results and messages must
