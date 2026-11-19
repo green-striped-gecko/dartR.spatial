@@ -1,0 +1,159 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+══ Testing test-gl.ibd.R ═══════════════════════════════════════════════════════
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 4 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 5 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 6 ]
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 6 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 6 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 7 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 8 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 9 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 10 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 11 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 12 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 13 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 14 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 14 ]
+[ FAIL 0 | WARN 4 | SKIP 0 | PASS 14 ]
+[ FAIL 0 | WARN 4 | SKIP 0 | PASS 15 ]
+[ FAIL 0 | WARN 4 | SKIP 0 | PASS 16 ]
+
+── Warning ('test-gl.ibd.R:18:9'): IBD reference-data behaviour is unchanged ───
+Removed 1 row containing non-finite outside the scale range (`stat_smooth()`).
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.ibd.R:18:9
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. └─dartR.spatial::gl.ibd(...)
+  6.   ├─base::suppressMessages(print(p3)) at dartR.spatial/R/gl.ibd.r:446:13
+  7.   │ └─base::withCallingHandlers(...)
+  8.   ├─base::print(p3)
+  9.   └─ggplot2 (local) `print.ggplot2::ggplot`(p3)
+ 10.     ├─ggplot2::ggplot_build(x)
+ 11.     └─ggplot2 (local) `ggplot_build.ggplot2::ggplot`(x)
+ 12.       └─ggplot2:::by_layer(...)
+ 13.         ├─rlang::try_fetch(...)
+ 14.         │ ├─base::tryCatch(...)
+ 15.         │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.         │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.         │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.         │ └─base::withCallingHandlers(...)
+ 19.         └─ggplot2 (local) f(l = layers[[i]], d = data[[i]])
+ 20.           └─l$compute_statistic(d, layout)
+ 21.             └─ggplot2 (local) compute_statistic(..., self = self)
+ 22.               └─self$stat$compute_layer(data, self$computed_stat_params, layout)
+ 23.                 └─ggplot2 (local) compute_layer(..., self = self)
+ 24.                   └─ggplot2::remove_missing(...)
+ 25.                     └─cli::cli_warn(msg)
+
+── Warning ('test-gl.ibd.R:18:9'): IBD reference-data behaviour is unchanged ───
+Removed 1 row containing missing values or values outside the scale range
+(`geom_point()`).
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.ibd.R:18:9
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. └─dartR.spatial::gl.ibd(...)
+  6.   ├─base::suppressMessages(print(p3)) at dartR.spatial/R/gl.ibd.r:446:13
+  7.   │ └─base::withCallingHandlers(...)
+  8.   ├─base::print(p3)
+  9.   └─ggplot2 (local) `print.ggplot2::ggplot`(p3)
+ 10.     ├─ggplot2::ggplot_gtable(data)
+ 11.     └─ggplot2 (local) `ggplot_gtable.ggplot2::ggplot_built`(data)
+ 12.       └─ggplot2:::by_layer(...)
+ 13.         ├─rlang::try_fetch(...)
+ 14.         │ ├─base::tryCatch(...)
+ 15.         │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.         │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.         │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.         │ └─base::withCallingHandlers(...)
+ 19.         └─ggplot2 (local) f(l = layers[[i]], d = data[[i]])
+ 20.           └─l$draw_geom(d, layout)
+ 21.             └─ggplot2 (local) draw_geom(..., self = self)
+ 22.               └─self$geom$handle_na(data, self$computed_geom_params)
+ 23.                 └─ggplot2 (local) handle_na(..., self = self)
+ 24.                   └─ggplot2::remove_missing(...)
+ 25.                     └─cli::cli_warn(msg)
+
+── Warning ('test-gl.ibd.R:18:9'): IBD reference-data behaviour is unchanged ───
+Removed 15 rows containing non-finite outside the scale range
+(`stat_smooth()`).
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.ibd.R:18:9
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. └─dartR.spatial::gl.ibd(...)
+  6.   ├─base::suppressMessages(print(p3)) at dartR.spatial/R/gl.ibd.r:446:13
+  7.   │ └─base::withCallingHandlers(...)
+  8.   ├─base::print(p3)
+  9.   └─ggplot2 (local) `print.ggplot2::ggplot`(p3)
+ 10.     ├─ggplot2::ggplot_build(x)
+ 11.     └─ggplot2 (local) `ggplot_build.ggplot2::ggplot`(x)
+ 12.       └─ggplot2:::by_layer(...)
+ 13.         ├─rlang::try_fetch(...)
+ 14.         │ ├─base::tryCatch(...)
+ 15.         │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.         │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.         │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.         │ └─base::withCallingHandlers(...)
+ 19.         └─ggplot2 (local) f(l = layers[[i]], d = data[[i]])
+ 20.           └─l$compute_statistic(d, layout)
+ 21.             └─ggplot2 (local) compute_statistic(..., self = self)
+ 22.               └─self$stat$compute_layer(data, self$computed_stat_params, layout)
+ 23.                 └─ggplot2 (local) compute_layer(..., self = self)
+ 24.                   └─ggplot2::remove_missing(...)
+ 25.                     └─cli::cli_warn(msg)
+
+── Warning ('test-gl.ibd.R:18:9'): IBD reference-data behaviour is unchanged ───
+Removed 15 rows containing missing values or values outside the scale range
+(`geom_point()`).
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.ibd.R:18:9
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. └─dartR.spatial::gl.ibd(...)
+  6.   ├─base::suppressMessages(print(p3)) at dartR.spatial/R/gl.ibd.r:446:13
+  7.   │ └─base::withCallingHandlers(...)
+  8.   ├─base::print(p3)
+  9.   └─ggplot2 (local) `print.ggplot2::ggplot`(p3)
+ 10.     ├─ggplot2::ggplot_gtable(data)
+ 11.     └─ggplot2 (local) `ggplot_gtable.ggplot2::ggplot_built`(data)
+ 12.       └─ggplot2:::by_layer(...)
+ 13.         ├─rlang::try_fetch(...)
+ 14.         │ ├─base::tryCatch(...)
+ 15.         │ │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+ 16.         │ │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+ 17.         │ │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+ 18.         │ └─base::withCallingHandlers(...)
+ 19.         └─ggplot2 (local) f(l = layers[[i]], d = data[[i]])
+ 20.           └─l$draw_geom(d, layout)
+ 21.             └─ggplot2 (local) draw_geom(..., self = self)
+ 22.               └─self$geom$handle_na(data, self$computed_geom_params)
+ 23.                 └─ggplot2 (local) handle_na(..., self = self)
+ 24.                   └─ggplot2::remove_missing(...)
+ 25.                     └─cli::cli_warn(msg)
+
+[ FAIL 0 | WARN 4 | SKIP 0 | PASS 16 ]

@@ -1,0 +1,92 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+  Processing genlight object with SNP data
+=== P1 sign of r in first three classes (strong IBD, expect positive) ===
+Registered S3 methods overwritten by 'ggpp':
+  method                  from   
+  heightDetails.titleGrob ggplot2
+  widthDetails.titleGrob  ggplot2
+Euclidean   r = 0.0891  0.0301  -0.0483
+Simple      r = -0.0696  -0.0239  0.0373
+Absolute    r = -0.0438  -0.0165  0.0211
+propShared  r = 0.122  0.0422  -0.0647
+grm         r = 13.6674  5.0257  -6.8422
+sqEuclid    r = 0.1681  0.0613  -0.0847
+Euclid raw  r = 0.0846  0.0285  -0.0458
+1-Euclid    r = 0.0891  0.0301  -0.0483
+Registered S3 method overwritten by 'gdata':
+  method         from  
+  reorder.factor gplots
+Registered S3 method overwritten by 'genetics':
+  method      from 
+  [.haplotype pegas
+PopGenReport spautocor (sqEuclid) r.uc: 0.1554 0.0487 -0.0974 
+utils.spautocor (sqEuclid) r.uc:         0.1554 0.0487 -0.0974 
+
+=== P2 log(Dgeo + 1), bins = 5 ===
+     Bin   N
+1  2.166  51
+2  4.332   0
+3  6.498  12
+4  8.664 168
+5 10.830 589
+range of log distances: 0 10.829  total pairs: 820 
+
+=== P3 genlight + matrices ===
+Starting gl.spatial.autoCorr 
+  Analysis performed using provided genetic and Euclidean distance matrices. If a genlight object is provided, it is ignored.
+  Analysis performed on the genlight object.
+  Coordinates used from: x@other$latlon (Mercator transformed) 
+  Transformation of Dgeo: Dgeo 
+  Genetic distance: Euclidean 
+  Tranformation of Dgen:  Dgen 
+$TENTERFIELD
+       Bin   N        r.uc Correction            r
+1 16820.00 531 -0.02227520      0.025  0.002724797
+2 33640.00 235 -0.02797174      0.025 -0.002971741
+3 50465.17  54 -0.03941981      0.025 -0.014419805
+
+Completed: gl.spatial.autoCorr 
+       Bin   N
+1 16820.00 531
+2 33640.00 235
+3 50465.17  54
+
+===  P5 matrices without x  ===
+[1] "ERROR: argument \"x\" is missing, with no default"
+
+===  P4 named list, x = NULL  ===
+[1] "ERROR:   Dgeo is a list, but its elements are of different classes. These should be either all matrices or distances\n"
+
+===  P9 matrix input, plot.out = TRUE  ===
+Scale for x is already present.
+Adding another scale for x, which will replace the existing scale.
+Warning messages:
+1: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the dartR.spatial package.
+  Please report the issue at <https://groups.google.com/g/dartr?pli=1>. 
+2: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.
+ℹ The deprecated feature was likely used in the dartR.spatial package.
+  Please report the issue at <https://groups.google.com/g/dartr?pli=1>. 
+
+=== P6 returned Bin values ===
+[1] 16820.00 33640.00 50465.17
+
+=== P11 Mercator / geodesic distance ratio (TENTERFIELD, lat ~ -29) ===
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+  0.000   1.143   1.143   1.121   1.143   1.149      36 
+expected 1/cos(29 deg) = 1.1434 
+
+=== P12 p.one.tail with reps = 19 ===
+[1] 0 0 0 0 0
+
+=== P13 dartR.popgen references in code ===
+[1] "  pkg <- \"dartR.popgen\""
+
+=== P14 new tempdir files: Boots_Pop11c668ff0e8f Perm_Pop11c6611403b3 

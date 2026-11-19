@@ -1,0 +1,198 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+gl.costdistances: .1...2.3.4.5.6...7.8.9.a
+
+══ Failed ══════════════════════════════════════════════════════════════════════
+── 1. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gl-leastcost-genlight'):
+old[20:37] vs new[20:48]
+    [1] 20  6
+    
+    $result_class
+-   [1] "simpleError" "error"       "condition"  
++   [1] "matrix" "array" 
+    
+    $output
+    character(0)
+    
+    $warnings
+-   [1] "some coordinates not found and omitted"
++   character(0)
+and 19 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 2. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gl-rSPDistance-genlight'):
+old[32:36] vs new[32:36]
+    character(0)
+    
+    $error
+-   [1] "'NA' indices are not (yet?) supported for sparse Matrices"
++   [1] "RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).\n"
+    
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 3. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gl-rSPDistance-matrix'):
+old[20:26] vs new[20:26]
+    [1] 20  6
+    
+    $result_class
+-   [1] "matrix" "array" 
++   [1] "simpleError" "error"       "condition"  
+    
+    $output
+    character(0)
+old[31:47] vs new[31:36]
+    $messages
+    character(0)
+    
+-   $result_dimensions
+-   [1] 3 3
+-   
+-   $result_labels
+-   $result_labels[[1]]
+-   [1] "EmmacBrisWive" "EmmacBurdMist" "EmmacBurnBara"
+-   
++   $error
++   [1] "RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).\n"
+and 7 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 4. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gl-commute-genlight'):
+old[21:36] vs new[20:48]
+    [1] 20  6
+    
+    $result_class
+-   [1] "simpleError" "error"       "condition"  
++   [1] "matrix" "array" 
+    
+    $output
+    character(0)
+    
+    $warnings
+-   [1] "some coordinates not found and omitted"
++   character(0)
+and 20 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 5. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gl-commute-matrix'):
+old[43:48] vs new[43:48]
+    
+    
+    $values
+-   [1]   0.0000 285.4674 107.2102 285.4674   0.0000 262.2514 107.2102 262.2514
++   [1]   0.0000 287.4690 109.3904 287.4690   0.0000 263.0809 109.3904 263.0809
+    [9]   0.0000
+    
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 6. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gs-leastcost-genlight'):
+old[20:37] vs new[20:48]
+    [1] 20  6
+    
+    $result_class
+-   [1] "simpleError" "error"       "condition"  
++   [1] "matrix" "array" 
+    
+    $output
+    character(0)
+    
+    $warnings
+-   [1] "some coordinates not found and omitted"
++   character(0)
+and 19 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 7. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gs-rSPDistance-genlight'):
+old[32:36] vs new[32:36]
+    character(0)
+    
+    $error
+-   [1] "'NA' indices are not (yet?) supported for sparse Matrices"
++   [1] "RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).\n"
+    
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 8. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gs-rSPDistance-matrix'):
+old[20:26] vs new[20:26]
+    [1] 20  6
+    
+    $result_class
+-   [1] "matrix" "array" 
++   [1] "simpleError" "error"       "condition"  
+    
+    $output
+    character(0)
+old[31:47] vs new[31:36]
+    $messages
+    character(0)
+    
+-   $result_dimensions
+-   [1] 3 3
+-   
+-   $result_labels
+-   $result_labels[[1]]
+-   [1] "EmmacBrisWive" "EmmacBurdMist" "EmmacBurnBara"
+-   
++   $error
++   [1] "RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).\n"
+and 7 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 9. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their refe
+Snapshot of code has changed (variant 'testset.gs-commute-genlight'):
+old[21:36] vs new[20:48]
+    [1] 20  6
+    
+    $result_class
+-   [1] "simpleError" "error"       "condition"  
++   [1] "matrix" "array" 
+    
+    $output
+    character(0)
+    
+    $warnings
+-   [1] "some coordinates not found and omitted"
++   character(0)
+and 20 more ...
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+── 10. Failure ('test-gl.costdistances.R:46:9'): cost distances retain their ref
+Snapshot of code has changed (variant 'testset.gs-commute-matrix'):
+old[43:48] vs new[43:48]
+    
+    
+    $values
+-   [1]   0.0000 285.4674 107.2102 285.4674   0.0000 262.2514 107.2102 262.2514
++   [1]   0.0000 287.4690 109.3904 287.4690   0.0000 263.0809 109.3904 263.0809
+    [9]   0.0000
+    
+* Run `testthat::snapshot_accept("gl.costdistances")` to accept the change.
+* Run `testthat::snapshot_review("gl.costdistances")` to review the change.
+
+Maximum number of 10 failures reached, some test results may be missing.
+
+══ DONE ════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,561 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+══ Testing test-gl.run.eems.R ══════════════════════════════════════════════════
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ]Using Boost 1_89 (EEMS was tested with version 1_57)
+      Eigen 3.4.0 (EEMS was tested with version 3.2.2)
+
+[Habitat::initialize]
+  Loaded habitat points from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/eems.outer
+  Input habitat: 
+    POLYGON((1.69521e+07 -3.59653e+06,1.69521e+07 -3.59704e+06,1.69521e+07 -3.59756e+06,1.6952e+07 -3.59806e+06,1.6952e+07 -3.59857e+06,1.69519e+07 -3.59907e+06,1.69518e+07 -3.59957e+06,1.69516e+07 -3.60006e+06,1.69514e+07 -3.60054e+06,1.69512e+07 -3.60101e+06,1.6951e+07 -3.60147e+06,1.69508e+07 -3.60192e+06,1.69505e+07 -3.60236e+06,1.69502e+07 -3.60278e+06,1.69499e+07 -3.60319e+06,1.69496e+07 -3.60358e+06,1.69492e+07 -3.60396e+06,1.69489e+07 -3.60431e+06,1.69485e+07 -3.60465e+06,1.69481e+07 -3.60497e+06,1.64814e+07 -3.95413e+06,1.6481e+07 -3.95443e+06,1.64805e+07 -3.95471e+06,1.64801e+07 -3.95497e+06,1.64796e+07 -3.9552e+06,1.64791e+07 -3.95541e+06,1.64786e+07 -3.95559e+06,1.64781e+07 -3.95575e+06,1.64776e+07 -3.95588e+06,1.64771e+07 -3.95598e+06,1.64765e+07 -3.95605e+06,1.6476e+07 -3.9561e+06,1.64755e+07 -3.95612e+06,1.6475e+07 -3.95611e+06,1.64744e+07 -3.95607e+06,1.64739e+07 -3.95601e+06,1.64734e+07 -3.95592e+06,1.64729e+07 -3.9558e+06,1.64724e+07 -3.95565e+06,1.64719e+07 -3.95548e+06,1.64714e+07 -3.95528e+06,1.64709e+07 -3.95506e+06,1.64704e+07 -3.95481e+06,1.647e+07 -3.95454e+06,1.64696e+07 -3.95424e+06,1.64691e+07 -3.95392e+06,1.64687e+07 -3.95358e+06,1.64684e+07 -3.95322e+06,1.6468e+07 -3.95284e+06,1.64676e+07 -3.95244e+06,1.64673e+07 -3.95202e+06,1.57789e+07 -3.01063e+06,1.57786e+07 -3.0102e+06,1.57783e+07 -3.00975e+06,1.57781e+07 -3.00929e+06,1.57779e+07 -3.00882e+06,1.57777e+07 -3.00834e+06,1.57775e+07 -3.00784e+06,1.57773e+07 -3.00734e+06,1.57772e+07 -3.00683e+06,1.57771e+07 -3.00632e+06,1.5777e+07 -3.0058e+06,1.5777e+07 -3.00527e+06,1.5777e+07 -3.00475e+06,1.5777e+07 -3.00423e+06,1.5777e+07 -3.0037e+06,1.57771e+07 -3.00318e+06,1.57772e+07 -3.00267e+06,1.57773e+07 -3.00216e+06,1.57775e+07 -3.00165e+06,1.57776e+07 -3.00116e+06,1.57778e+07 -3.00067e+06,1.57781e+07 -3.0002e+06,1.57783e+07 -2.99974e+06,1.57786e+07 -2.99929e+06,1.57789e+07 -2.99886e+06,1.57792e+07 -2.99844e+06,1.57795e+07 -2.99804e+06,1.57799e+07 -2.99766e+06,1.57803e+07 -2.9973e+06,1.57807e+07 -2.99696e+06,1.57811e+07 -2.99664e+06,1.63662e+07 -2.57125e+06,1.63666e+07 -2.57095e+06,1.63671e+07 -2.57068e+06,1.63675e+07 -2.57042e+06,1.6368e+07 -2.5702e+06,1.63685e+07 -2.57e+06,1.6369e+07 -2.56982e+06,1.63695e+07 -2.56967e+06,1.637e+07 -2.56955e+06,1.63706e+07 -2.56946e+06,1.63711e+07 -2.56939e+06,1.63716e+07 -2.56935e+06,1.63721e+07 -2.56934e+06,1.63727e+07 -2.56936e+06,1.63732e+07 -2.56941e+06,1.63737e+07 -2.56948e+06,1.63742e+07 -2.56958e+06,1.63748e+07 -2.56971e+06,1.63753e+07 -2.56987e+06,1.63758e+07 -2.57005e+06,1.63763e+07 -2.57026e+06,1.63767e+07 -2.5705e+06,1.63772e+07 -2.57076e+06,1.63776e+07 -2.57104e+06,1.63781e+07 -2.57135e+06,1.63785e+07 -2.57168e+06,1.69248e+07 -3.02945e+06,1.69251e+07 -3.02979e+06,1.69255e+07 -3.03016e+06,1.69259e+07 -3.03054e+06,1.69262e+07 -3.03094e+06,1.69265e+07 -3.03135e+06,1.69268e+07 -3.03179e+06,1.69271e+07 -3.03223e+06,1.69273e+07 -3.03269e+06,1.69275e+07 -3.03316e+06,1.69277e+07 -3.03365e+06,1.69279e+07 -3.03414e+06,1.6928e+07 -3.03464e+06,1.69281e+07 -3.03514e+06,1.69282e+07 -3.03566e+06,1.69283e+07 -3.03617e+06,1.69283e+07 -3.03669e+06,1.69521e+07 -3.59653e+06))
+[Habitat::initialize] Done.
+
+[Graph::initialize]
+  Generate population grid and sample assignment
+  Loaded sample coordinates from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/eems.coord
+  There are 6 observed demes (out of 12 demes)
+  The population grid has 12 demes and 23 edges
+  There are 8 samples assigned to 6 observed demes
+[Graph::initialize] Done.
+
+[Diffs::initialize]
+Error: The dissimilarity matrix is not a full-rank distance matrix.
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 2 ]Using Boost 1_89 (EEMS was tested with version 1_57)
+      Eigen 3.4.0 (EEMS was tested with version 3.2.2)
+
+  Will save EEMS output to /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/data_eems/
+[Habitat::initialize]
+  Loaded habitat points from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/eems.outer
+  Input habitat: 
+    POLYGON((1.69521e+07 -3.59653e+06,1.69521e+07 -3.59704e+06,1.69521e+07 -3.59756e+06,1.6952e+07 -3.59806e+06,1.6952e+07 -3.59857e+06,1.69519e+07 -3.59907e+06,1.69518e+07 -3.59957e+06,1.69516e+07 -3.60006e+06,1.69514e+07 -3.60054e+06,1.69512e+07 -3.60101e+06,1.6951e+07 -3.60147e+06,1.69508e+07 -3.60192e+06,1.69505e+07 -3.60236e+06,1.69502e+07 -3.60278e+06,1.69499e+07 -3.60319e+06,1.69496e+07 -3.60358e+06,1.69492e+07 -3.60396e+06,1.69489e+07 -3.60431e+06,1.69485e+07 -3.60465e+06,1.69481e+07 -3.60497e+06,1.64814e+07 -3.95413e+06,1.6481e+07 -3.95443e+06,1.64805e+07 -3.95471e+06,1.64801e+07 -3.95497e+06,1.64796e+07 -3.9552e+06,1.64791e+07 -3.95541e+06,1.64786e+07 -3.95559e+06,1.64781e+07 -3.95575e+06,1.64776e+07 -3.95588e+06,1.64771e+07 -3.95598e+06,1.64765e+07 -3.95605e+06,1.6476e+07 -3.9561e+06,1.64755e+07 -3.95612e+06,1.6475e+07 -3.95611e+06,1.64744e+07 -3.95607e+06,1.64739e+07 -3.95601e+06,1.64734e+07 -3.95592e+06,1.64729e+07 -3.9558e+06,1.64724e+07 -3.95565e+06,1.64719e+07 -3.95548e+06,1.64714e+07 -3.95528e+06,1.64709e+07 -3.95506e+06,1.64704e+07 -3.95481e+06,1.647e+07 -3.95454e+06,1.64696e+07 -3.95424e+06,1.64691e+07 -3.95392e+06,1.64687e+07 -3.95358e+06,1.64684e+07 -3.95322e+06,1.6468e+07 -3.95284e+06,1.64676e+07 -3.95244e+06,1.64673e+07 -3.95202e+06,1.57789e+07 -3.01063e+06,1.57786e+07 -3.0102e+06,1.57783e+07 -3.00975e+06,1.57781e+07 -3.00929e+06,1.57779e+07 -3.00882e+06,1.57777e+07 -3.00834e+06,1.57775e+07 -3.00784e+06,1.57773e+07 -3.00734e+06,1.57772e+07 -3.00683e+06,1.57771e+07 -3.00632e+06,1.5777e+07 -3.0058e+06,1.5777e+07 -3.00527e+06,1.5777e+07 -3.00475e+06,1.5777e+07 -3.00423e+06,1.5777e+07 -3.0037e+06,1.57771e+07 -3.00318e+06,1.57772e+07 -3.00267e+06,1.57773e+07 -3.00216e+06,1.57775e+07 -3.00165e+06,1.57776e+07 -3.00116e+06,1.57778e+07 -3.00067e+06,1.57781e+07 -3.0002e+06,1.57783e+07 -2.99974e+06,1.57786e+07 -2.99929e+06,1.57789e+07 -2.99886e+06,1.57792e+07 -2.99844e+06,1.57795e+07 -2.99804e+06,1.57799e+07 -2.99766e+06,1.57803e+07 -2.9973e+06,1.57807e+07 -2.99696e+06,1.57811e+07 -2.99664e+06,1.63662e+07 -2.57125e+06,1.63666e+07 -2.57095e+06,1.63671e+07 -2.57068e+06,1.63675e+07 -2.57042e+06,1.6368e+07 -2.5702e+06,1.63685e+07 -2.57e+06,1.6369e+07 -2.56982e+06,1.63695e+07 -2.56967e+06,1.637e+07 -2.56955e+06,1.63706e+07 -2.56946e+06,1.63711e+07 -2.56939e+06,1.63716e+07 -2.56935e+06,1.63721e+07 -2.56934e+06,1.63727e+07 -2.56936e+06,1.63732e+07 -2.56941e+06,1.63737e+07 -2.56948e+06,1.63742e+07 -2.56958e+06,1.63748e+07 -2.56971e+06,1.63753e+07 -2.56987e+06,1.63758e+07 -2.57005e+06,1.63763e+07 -2.57026e+06,1.63767e+07 -2.5705e+06,1.63772e+07 -2.57076e+06,1.63776e+07 -2.57104e+06,1.63781e+07 -2.57135e+06,1.63785e+07 -2.57168e+06,1.69248e+07 -3.02945e+06,1.69251e+07 -3.02979e+06,1.69255e+07 -3.03016e+06,1.69259e+07 -3.03054e+06,1.69262e+07 -3.03094e+06,1.69265e+07 -3.03135e+06,1.69268e+07 -3.03179e+06,1.69271e+07 -3.03223e+06,1.69273e+07 -3.03269e+06,1.69275e+07 -3.03316e+06,1.69277e+07 -3.03365e+06,1.69279e+07 -3.03414e+06,1.6928e+07 -3.03464e+06,1.69281e+07 -3.03514e+06,1.69282e+07 -3.03566e+06,1.69283e+07 -3.03617e+06,1.69283e+07 -3.03669e+06,1.69521e+07 -3.59653e+06))
+[Habitat::initialize] Done.
+
+[Graph::initialize]
+  Generate population grid and sample assignment
+  Loaded sample coordinates from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/eems.coord
+  There are 6 observed demes (out of 12 demes)
+  The population grid has 12 demes and 23 edges
+  There are 8 samples assigned to 6 observed demes
+[Graph::initialize] Done.
+
+[Diffs::initialize]
+[Diffs::initialize] Done.
+
+Initialize EEMS random state
+
+[EEMS::initialize_state]
+  EEMS starts with 12 qtiles and 11 mtiles
+[EEMS::initialize_state] Done.
+
+Input parameters: 
+               datapath = /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/eems
+               mcmcpath = /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/data_eems
+               prevpath = 
+               gridpath = 
+               distance = euclidean
+                diploid = 1
+                 nIndiv = 8
+                 nSites = 60
+                 nDemes = 20
+                   seed = 17
+            numMCMCIter = 30
+            numBurnIter = 10
+            numThinIter = 1
+              negBiSize = 10
+              negBiProb = 0.670000
+             qVoronoiPr = 0.250000
+             mrateShape = 0.000500
+             qrateShape = 0.002000
+             sigmaShape = 0.001000
+             qrateScale = 0.500000
+             mrateScale = 2.000000
+             sigmaScale = 1.000000
+       mSeedsProposalS2 = 0.010000
+       qSeedsProposalS2 = 0.100000
+       mEffctProposalS2 = 0.100000
+       qEffctProposalS2 = 0.001000
+      mrateMuProposalS2 = 0.010000
+
+Initial log prior: 59.82
+Initial log llike: 31.57
+
+ Ending iteration 12 with acceptance proportions:
+	(1/1) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(0/1) = 0.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/1) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/5) = 20.00% for proposal type "mBirthDeath"
+	(1/1) = 100.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 8.70
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 59.05
+          Log llike = 38.35
+ Ending iteration 14 with acceptance proportions:
+	(1/1) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(0/1) = 0.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(2/2) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/5) = 20.00% for proposal type "mBirthDeath"
+	(1/2) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 8.70
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 54.53
+          Log llike = 40.47
+ Ending iteration 16 with acceptance proportions:
+	(2/2) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(0/1) = 0.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(2/2) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/5) = 20.00% for proposal type "mBirthDeath"
+	(2/3) = 66.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 11.13
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 60.71
+          Log llike = 39.58
+ Ending iteration 18 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(0/1) = 0.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(2/2) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/5) = 20.00% for proposal type "mBirthDeath"
+	(2/3) = 66.67% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 11.13
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 60.61
+          Log llike = 39.68
+ Ending iteration 20 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(0/1) = 0.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(3/3) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/5) = 20.00% for proposal type "mBirthDeath"
+	(2/4) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 11.13
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 57.49
+          Log llike = 39.14
+ Ending iteration 22 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(1/2) = 50.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(3/3) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/6) = 16.67% for proposal type "mBirthDeath"
+	(2/4) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 11.13
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 57.02
+          Log llike = 41.59
+ Ending iteration 24 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(1/2) = 50.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(3/3) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/7) = 14.29% for proposal type "mBirthDeath"
+	(3/5) = 60.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 10.18
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 58.70
+          Log llike = 41.35
+ Ending iteration 26 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(1/2) = 50.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(4/4) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/7) = 14.29% for proposal type "mBirthDeath"
+	(3/5) = 60.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 10.18
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 57.56
+          Log llike = 41.16
+ Ending iteration 28 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(1/2) = 50.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(4/4) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/9) = 11.11% for proposal type "mBirthDeath"
+	(3/5) = 60.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 10.18
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 58.45
+          Log llike = 41.43
+ Ending iteration 30 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/0) = nan% for proposal type "qBirthDeath"
+	(2/3) = 66.67% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(4/4) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(4/4) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/9) = 11.11% for proposal type "mBirthDeath"
+	(3/5) = 60.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 10.18
+         number of qVoronoi tiles = 12
+         number of mVoronoi tiles = 10
+          Log prior = 57.56
+          Log llike = 41.26
+Final log prior: 57.56
+Final log llike: 41.26
+
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 2 ]
+[ FAIL 0 | WARN 2 | SKIP 0 | PASS 2 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 2 ]Joining with `by = join_by(id)`
+New names:
+• `x` -> `x...1`
+• `y` -> `y...2`
+• `x` -> `x...3`
+• `y` -> `y...4`
+Generate effective migration surface (posterior mean of m rates). See plots$mrates01 and plots$mrates02.
+Generate effective diversity surface (posterior mean of q rates). See plots$qrates01 and plots$qrates02.
+Generate average dissimilarities within and between demes. See plots$rdist01, plots$rdist02 and plots$rdist03.
+Generate posterior probability trace. See plots$pilog01.
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+Coordinate system already present.
+ℹ Adding new coordinate system, which will replace the existing one.
+$mrates01
+
+$mrates02
+
+$qrates01
+
+$qrates02
+
+$rdist01
+
+$rdist02
+
+$rdist03
+
+$pilogl01
+
+
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 3 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 4 ]Using Boost 1_89 (EEMS was tested with version 1_57)
+      Eigen 3.4.0 (EEMS was tested with version 3.2.2)
+
+[Habitat::initialize]
+  Loaded habitat points from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/snp_baseline.outer
+  Input habitat: 
+    POLYGON((1.66144e+07 -4.50995e+06,1.66144e+07 -4.51047e+06,1.66144e+07 -4.51099e+06,1.66144e+07 -4.51151e+06,1.66143e+07 -4.51203e+06,1.66142e+07 -4.51254e+06,1.66141e+07 -4.51305e+06,1.66139e+07 -4.51355e+06,1.66137e+07 -4.51404e+06,1.66135e+07 -4.51452e+06,1.66133e+07 -4.51499e+06,1.66131e+07 -4.51545e+06,1.66128e+07 -4.51589e+06,1.66125e+07 -4.51632e+06,1.66122e+07 -4.51673e+06,1.66118e+07 -4.51713e+06,1.66115e+07 -4.51751e+06,1.66111e+07 -4.51787e+06,1.66107e+07 -4.51821e+06,1.66103e+07 -4.51852e+06,1.66099e+07 -4.51882e+06,1.66094e+07 -4.51909e+06,1.6609e+07 -4.51934e+06,1.66085e+07 -4.51957e+06,1.6608e+07 -4.51977e+06,1.66075e+07 -4.51994e+06,1.6607e+07 -4.52009e+06,1.66065e+07 -4.52021e+06,1.6606e+07 -4.52031e+06,1.66055e+07 -4.52038e+06,1.6605e+07 -4.52042e+06,1.66044e+07 -4.52043e+06,1.56085e+07 -4.52336e+06,1.56079e+07 -4.52334e+06,1.56074e+07 -4.5233e+06,1.56068e+07 -4.52322e+06,1.56063e+07 -4.52312e+06,1.56057e+07 -4.52298e+06,1.35497e+07 -3.93834e+06,1.35492e+07 -3.93818e+06,1.35487e+07 -3.938e+06,1.35482e+07 -3.93779e+06,1.35477e+07 -3.93756e+06,1.28025e+07 -3.54317e+06,1.2802e+07 -3.54292e+06,1.28016e+07 -3.54264e+06,1.28011e+07 -3.54233e+06,1.28007e+07 -3.54201e+06,1.28003e+07 -3.54166e+06,1.28e+07 -3.5413e+06,1.27996e+07 -3.54091e+06,1.27993e+07 -3.54051e+06,1.2799e+07 -3.54009e+06,1.27987e+07 -3.53965e+06,1.27984e+07 -3.5392e+06,1.27982e+07 -3.53874e+06,1.27979e+07 -3.53827e+06,1.27978e+07 -3.53778e+06,1.27976e+07 -3.53728e+06,1.27974e+07 -3.53678e+06,1.27973e+07 -3.53627e+06,1.27972e+07 -3.53575e+06,1.27972e+07 -3.53523e+06,1.27971e+07 -3.53471e+06,1.27971e+07 -3.53419e+06,1.27972e+07 -3.53367e+06,1.27972e+07 -3.53315e+06,1.27973e+07 -3.53263e+06,1.27974e+07 -3.53212e+06,1.27975e+07 -3.53161e+06,1.27977e+07 -3.53111e+06,1.27979e+07 -3.53062e+06,1.27981e+07 -3.53014e+06,1.27983e+07 -3.52967e+06,1.27986e+07 -3.52921e+06,1.27988e+07 -3.52877e+06,1.27991e+07 -3.52834e+06,1.27995e+07 -3.52793e+06,1.27998e+07 -3.52754e+06,1.28002e+07 -3.52717e+06,1.28006e+07 -3.52681e+06,1.32159e+07 -3.163e+06,1.32163e+07 -3.16268e+06,1.32167e+07 -3.16237e+06,1.32171e+07 -3.16209e+06,1.32175e+07 -3.16183e+06,1.3218e+07 -3.1616e+06,1.32184e+07 -3.16138e+06,1.32189e+07 -3.16119e+06,1.32194e+07 -3.16102e+06,1.32198e+07 -3.16087e+06,1.64928e+07 -2.26522e+06,1.64933e+07 -2.2651e+06,1.64938e+07 -2.265e+06,1.64943e+07 -2.26493e+06,1.64949e+07 -2.26488e+06,1.64954e+07 -2.26487e+06,1.64959e+07 -2.26488e+06,1.64964e+07 -2.26492e+06,1.6497e+07 -2.26499e+06,1.64975e+07 -2.26508e+06,1.6498e+07 -2.2652e+06,1.64985e+07 -2.26535e+06,1.6499e+07 -2.26552e+06,1.64995e+07 -2.26572e+06,1.65e+07 -2.26595e+06,1.65004e+07 -2.2662e+06,1.65009e+07 -2.26647e+06,1.65013e+07 -2.26677e+06,1.65017e+07 -2.26709e+06,1.65021e+07 -2.26743e+06,1.65025e+07 -2.2678e+06,1.65029e+07 -2.26818e+06,1.65032e+07 -2.26858e+06,1.65035e+07 -2.269e+06,1.65038e+07 -2.26943e+06,1.65041e+07 -2.26988e+06,1.65044e+07 -2.27034e+06,1.65046e+07 -2.27082e+06,1.65048e+07 -2.2713e+06,1.6505e+07 -2.2718e+06,1.65051e+07 -2.2723e+06,1.65052e+07 -2.27282e+06,1.65053e+07 -2.27333e+06,1.65054e+07 -2.27386e+06,1.65054e+07 -2.27438e+06,1.66144e+07 -4.50995e+06))
+[Habitat::initialize] Done.
+
+[Graph::initialize]
+  Generate population grid and sample assignment
+  Loaded sample coordinates from /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/snp_baseline.coord
+  There are 5 observed demes (out of 10 demes)
+  The population grid has 10 demes and 17 edges
+  There are 12 samples assigned to 5 observed demes
+[Graph::initialize] Done.
+
+[Diffs::initialize]
+[Diffs::initialize] Done.
+
+Initialize EEMS random state
+
+[EEMS::initialize_state]
+  EEMS starts with 10 qtiles and 12 mtiles
+[EEMS::initialize_state] Done.
+
+Input parameters: 
+               datapath = /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/snp_baseline
+               mcmcpath = /var/folders/gp/_vh7q5qs5qdckqqpqfx9y4lm0000gn/T//RtmpFdhpCo/data_snp_baseline
+               prevpath = 
+               gridpath = 
+               distance = euclidean
+                diploid = 1
+                 nIndiv = 12
+                 nSites = 200
+                 nDemes = 20
+                   seed = 17
+            numMCMCIter = 40
+            numBurnIter = 10
+            numThinIter = 2
+              negBiSize = 10
+              negBiProb = 0.670000
+             qVoronoiPr = 0.250000
+             mrateShape = 0.000500
+             qrateShape = 0.002000
+             sigmaShape = 0.001000
+             qrateScale = 0.500000
+             mrateScale = 2.000000
+             sigmaScale = 1.000000
+       mSeedsProposalS2 = 0.010000
+       qSeedsProposalS2 = 0.100000
+       mEffctProposalS2 = 0.100000
+       qEffctProposalS2 = 0.001000
+      mrateMuProposalS2 = 0.010000
+
+Initial log prior: 58.21
+Initial log llike: -38.28
+
+ Ending iteration 13 with acceptance proportions:
+	(1/1) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(3/3) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/1) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(0/0) = nan% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/1) = 0.00% for proposal type "mBirthDeath"
+	(1/3) = 33.33% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 17.31
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 56.36
+          Log llike = -28.27
+ Ending iteration 16 with acceptance proportions:
+	(1/1) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(5/5) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/1) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(0/0) = nan% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/1) = 0.00% for proposal type "mBirthDeath"
+	(2/4) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 17.05
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 57.17
+          Log llike = -27.61
+ Ending iteration 19 with acceptance proportions:
+	(2/2) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(1/1) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(5/5) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/1) = 100.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(0/0) = nan% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/2) = 0.00% for proposal type "mBirthDeath"
+	(2/5) = 40.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 17.05
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 53.83
+          Log llike = -29.33
+ Ending iteration 22 with acceptance proportions:
+	(2/2) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(5/5) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/2) = 50.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(1/1) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/2) = 0.00% for proposal type "mBirthDeath"
+	(2/5) = 40.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 17.05
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 54.54
+          Log llike = -27.49
+ Ending iteration 25 with acceptance proportions:
+	(2/2) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(6/6) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/3) = 33.33% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/2) = 0.00% for proposal type "mBirthDeath"
+	(2/5) = 40.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 17.05
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 56.87
+          Log llike = -29.05
+ Ending iteration 28 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(6/6) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/3) = 33.33% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "mBirthDeath"
+	(3/6) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 14.80
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 12
+          Log prior = 55.87
+          Log llike = -28.67
+ Ending iteration 31 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(2/2) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(6/6) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/5) = 20.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(2/2) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/4) = 25.00% for proposal type "mBirthDeath"
+	(3/6) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 14.80
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 13
+          Log prior = 57.58
+          Log llike = -28.63
+ Ending iteration 34 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(3/3) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(7/7) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/5) = 20.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(3/3) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(1/4) = 25.00% for proposal type "mBirthDeath"
+	(3/6) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 14.80
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 13
+          Log prior = 57.20
+          Log llike = -28.75
+ Ending iteration 37 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(3/3) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(8/8) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/5) = 20.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(4/4) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(2/5) = 40.00% for proposal type "mBirthDeath"
+	(3/6) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 14.80
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 14
+          Log prior = 55.90
+          Log llike = -30.03
+ Ending iteration 40 with acceptance proportions:
+	(3/3) = 100.00% for proposal type "qTileRate",		 with proposal variance "qEffctProposalS2"
+	(4/4) = 100.00% for proposal type "qTileMove",		 with proposal variance "qSeedsProposalS2"
+	(0/3) = 0.00% for proposal type "qBirthDeath"
+	(8/8) = 100.00% for proposal type "mTileRate",		 with proposal variance "mEffctProposalS2"
+	(1/5) = 20.00% for proposal type "mMeanRate",		 with proposal variance "mrateMuProposalS2"
+	(5/5) = 100.00% for proposal type "mTileMove",		 with proposal variance "mSeedsProposalS2"
+	(2/6) = 33.33% for proposal type "mBirthDeath"
+	(3/6) = 50.00% for proposal type "degrees of freedom"
+ and effective degrees of freedom = 14.80
+         number of qVoronoi tiles = 10
+         number of mVoronoi tiles = 14
+          Log prior = 57.56
+          Log llike = -30.29
+Final log prior: 57.56
+Final log llike: -30.29
+Starting gl.colors 
+Selected color type dis 
+Completed: gl.colors 
+$mrates01
+
+$mrates02
+
+$qrates01
+
+$qrates02
+
+$rdist01
+
+$rdist02
+
+$rdist03
+
+$pilogl01
+
+
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 5 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 6 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 7 ]
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 8 ]
+
+── Warning ('test-gl.run.eems.R:20:5'): EEMS reference-data baseline is unchanged ──
+`as_data_frame()` was deprecated in tibble 2.0.0.
+ℹ Please use `as_tibble()` (with slightly different semantics) to convert to a
+  tibble, or `as.data.frame()` to convert to a data frame.
+ℹ The deprecated feature was likely used in the reemsplots2 package.
+  Please report the issue at <https://github.com/dipetkov/eems/issues>.
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.run.eems.R:20:5
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. ├─dartR.spatial::gl.run.eems(...)
+  6. │ └─reemsplots2::make_eems_plots(...) at dartR.spatial/R/gl.run.eems.r:401:5
+  7. │   └─reemsplots2:::read_dimns(mcmcpath[1], longlat, dpi) at reemsplots2/R/make_eems_plots.R:83:3
+  8. │     ├─as_data_frame(outer) %>% setNames(c("x", "y")) at reemsplots2/R/help_process.R:54:3
+  9. │     └─tibble::as_data_frame(outer)
+ 10. └─stats::setNames(., c("x", "y"))
+
+── Warning ('test-gl.run.eems.R:20:5'): EEMS reference-data baseline is unchanged ──
+The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.
+ℹ The deprecated feature was likely used in the tibble package.
+  Please report the issue at <https://github.com/tidyverse/tibble/issues>.
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.run.eems.R:20:5
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. ├─dartR.spatial::gl.run.eems(...)
+  6. │ └─reemsplots2::make_eems_plots(...) at dartR.spatial/R/gl.run.eems.r:401:5
+  7. │   └─reemsplots2:::read_dimns(mcmcpath[1], longlat, dpi) at reemsplots2/R/make_eems_plots.R:83:3
+  8. │     ├─as_data_frame(outer) %>% setNames(c("x", "y")) at reemsplots2/R/help_process.R:54:3
+  9. │     └─tibble::as_data_frame(outer)
+ 10. │       ├─tibble::as_tibble(x, ...)
+ 11. │       └─tibble:::as_tibble.matrix(x, ...)
+ 12. └─stats::setNames(., c("x", "y"))
+
+── Warning ('test-gl.run.eems.R:20:5'): EEMS reference-data baseline is unchanged ──
+`data_frame()` was deprecated in tibble 1.1.0.
+ℹ Please use `tibble()` instead.
+ℹ The deprecated feature was likely used in the reemsplots2 package.
+  Please report the issue at <https://github.com/dipetkov/eems/issues>.
+Backtrace:
+     ▆
+  1. ├─base::tryCatch(...) at test-gl.run.eems.R:20:5
+  2. │ └─base (local) tryCatchList(expr, classes, parentenv, handlers)
+  3. │   └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
+  4. │     └─base (local) doTryCatch(return(expr), name, parentenv, handler)
+  5. ├─dartR.spatial::gl.run.eems(...)
+  6. │ └─reemsplots2::make_eems_plots(...) at dartR.spatial/R/gl.run.eems.r:401:5
+  7. │   └─reemsplots2:::read_dimns(mcmcpath[1], longlat, dpi) at reemsplots2/R/make_eems_plots.R:83:3
+  8. │     ├─data_frame(id = ipmap) %>% count(id) at reemsplots2/R/help_process.R:55:3
+  9. │     └─tibble::data_frame(id = ipmap)
+ 10. └─dplyr::count(., id)
+
+[ FAIL 0 | WARN 3 | SKIP 0 | PASS 8 ]

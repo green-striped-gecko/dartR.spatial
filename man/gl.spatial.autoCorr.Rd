@@ -5,7 +5,7 @@
 \title{Spatial autocorrelation following Smouse and Peakall 1999}
 \usage{
 gl.spatial.autoCorr(
-  x,
+  x = NULL,
   Dgeo = NULL,
   Dgen = NULL,
   coordinates = "latlon",
@@ -27,20 +27,23 @@ gl.spatial.autoCorr(
 )
 }
 \arguments{
-\item{x}{Name of the genlight object containing the SNP data [required].}
+\item{x}{Name of the genlight object containing the SNP or SilicoDArT data.
+If provided, Dgen and Dgeo are ignored [default NULL].}
 
-\item{Dgeo}{Geographic distance matrix if no genlight object is provided.
-This is typically an Euclidean distance but it can be any meaningful 
-(geographical) distance metrics [default NULL].}
+\item{Dgeo}{Geographic distance matrix, dist object or list of them (one per
+population, in the same order as Dgen; list names are used as population
+names) if no genlight object is provided.
+ This is typically an Euclidean distance but it can be any meaningful 
+ (geographical) distance metrics [default NULL].}
 
-\item{Dgen}{Genetic distance matrix if no genlight object is provided
-[default NULL].}
+\item{Dgen}{Genetic distance matrix, dist object or list of them (one per
+population) if no genlight object is provided [default NULL].}
 
 \item{coordinates}{Can be either 'latlon', 'xy' or a two column data.frame
 with column names 'lat','lon', 'x', 'y')  Coordinates are provided via
-\code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. If latlon
-data will be projected to meters using Mercator system [google maps] or if
-xy then distance is directly calculated on the coordinates [default "latlon"].}
+\code{gl@other$latlon} ['latlon'] or via \code{gl@other$xy} ['xy']. For
+latlon, geodesic distances in metres are calculated; for xy, Euclidean
+distances are calculated on the coordinates [default "latlon"].}
 
 \item{Dgen_method}{Method to calculate genetic distances. See details
 [default "Euclidean"].}
@@ -70,7 +73,7 @@ of no spatial structure should be carried out [default TRUE].}
 \item{bootstrap}{Whether bootstrap calculations to compute the 95\% 
 confidence intervals around r should be carried out [default TRUE].}
 
-\item{plot.theme}{Theme for the plot. See details [default NULL].}
+\item{plot.theme}{Theme for the plot. See details [default theme_dartR()].}
 
 \item{plot.colors.pop}{A color palette for populations or a list with
 as many colors as there are populations in the dataset [default NULL].}
@@ -80,15 +83,18 @@ the r estimates [default "red"].}
 
 \item{plot.out}{Specify if plot is to be produced [default TRUE].}
 
-\item{plot.file}{Name for the RDS binary file to save (base name only, exclude extension) [default NULL]
-temporary directory (tempdir) [default FALSE].}
+\item{plot.file}{Name for the RDS binary file to save (base name only,
+exclude extension) [default NULL].}
 
 \item{plot.dir}{Directory in which to save files [default = working directory]}
 
-\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,}
+\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
+brief progress messages; 3, progress and results summary; 5, full report
+[default 2, unless specified using gl.set.verbosity].}
 }
 \value{
-Returns a data frame with the following columns:
+Returns a list with one data frame per population (named by
+population), each with the following columns:
 \enumerate{
 \item Bin  The distance classes
 \item N The number of pairwise comparisons within each distance class
@@ -141,21 +147,28 @@ If the input is a genlight object, the function calculates the linear
 distance
 for \code{Dgeo} and the relevant \code{Dgen} matrix (see \code{Dgen_method}) 
 for each population. 
-When the method selected is a genetic similarity matrix (e.g. "simple" 
-distance), the matrix is internally transformed with \code{1 - Dgen} so that 
-positive values of autocorrelation coefficients indicates more related 
-individuals similarly as implemented in GenAlEx. If the user provide the 
-distance matrices, care must be taken in interpreting the results because
-similarity matrix will generate negative values for closely related 
-individuals.
+Genetic distances are used as distances, so that positive
+autocorrelation coefficients indicate more related individuals, as in
+GenAlEx. The Euclidean distance is squared, as in Smouse and Peakall (1999)
+and GenAlEx. Similarity matrices are converted to distances: 'propShared'
+as \code{1 - Dgen} and 'grm' (a relationship matrix G) as
+\code{G[i,i] + G[j,j] - 2 * G[i,j]}. If the user provides the matrices,
+\code{Dgen} must be a distance: a similarity matrix will generate negative
+values for closely related individuals.
 
-If \code{max(Dgeo)>1000} (e.g. the geographic distances are in thousands of 
-metres), values are divided by 1000 (in the example before these would then 
-become km) to facilitate readability of the plots.
+With \code{coordinates = "latlon"} (or a lat/lon data.frame), geographic
+distances are geodesic distances in metres (package terra). With 'xy' or an
+x/y data.frame, they are Euclidean distances in the coordinate units.
+
+If \code{max(Dgeo)>1000} (e.g. the geographic distances are in thousands of
+metres), the distance class labels in the plot are divided by 1000 (in the
+example before these would then become km) to facilitate readability. The
+returned table keeps the original units.
 
 If \code{bins} is of length = 1 it is interpreted as the number of (even)
-bins to use. In this case the starting point is always the minimum value in 
-the distance matrix, and the last is the maximum. If it is a numeric vector 
+bins to use. In this case the first class starts at the minimum value in
+the distance matrix, the classes have equal width, and the last ends at the
+maximum. If it is a numeric vector 
 of length>1, it is interpreted as the breaking points. In this case, the 
 first has to be the lowest value, and the last has to be the highest. There 
 are no internal checks for this and it is user responsibility to ensure that
@@ -165,7 +178,8 @@ outside the range provided will be dropped. The number of bins will be
 
 The permutation constructs the 95\% confidence intervals around the null
 hypothesis of no spatial structure (this is a two-tail test). The same data
-are also used to calculate the probability of the one-tail test (See 
+are also used to calculate the probability of the one-tail test as
+(number of permutations at least as extreme + 1) / (reps + 1) (See
 references below for details).
 
 Bootstrap calculations are skipped and \code{NA} is returned when the number 
@@ -203,8 +217,6 @@ res <- gl.spatial.autoCorr(platypus.gl, bins=seq(0,10000,2000))
 test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
 res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
-test <- gl.keep.pop(platypus.gl,pop.list = "TENTERFIELD")
-res <- gl.spatial.autoCorr(test, bins=seq(0,10000,2000),CI.color = "green")
 }
 \references{
 \itemize{
@@ -227,7 +239,13 @@ dispersal drive fine-scale genetic structure in white-winged choughs.
 Molecular Ecology 17, 4346-4358.
 }
 }
-\author{
-Carlo Pacioni, Bernd Gruber & Luis Mijangos 
-(Post to \url{https://groups.google.com/d/forum/dartr})
+\seealso{
+Other spatial analysis functions: 
+\code{\link{gl.costdistances}()},
+\code{\link{gl.genleastcost}()}
 }
+\author{
+Author(s): Carlo Pacioni, Bernd Gruber & Luis Mijangos. Custodian:
+Carlo Pacioni -- Post to \url{https://groups.google.com/d/forum/dartr}
+}
+\concept{spatial analysis functions}

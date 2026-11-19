@@ -1,0 +1,292 @@
+{
+  "ordered_matrices": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "reordered_geographic_matrix": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": -0.3290398126464,
+    "p": 0.95,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "aligned_reference_r": 1,
+  "different_sample_sets": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "matrix_transform": {
+    "error": "arguments imply differing number of rows: 36, 15",
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "no_inputs": {
+    "error": "object 'ta' not found",
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "only_one_distance": {
+    "error": "object 'ta' not found",
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "two_samples": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": "NA",
+    "p": "NA",
+    "output": [],
+    "warnings": [],
+    "messages": ["'nperm' >= set of all permutations: complete enumeration.\n", "Set of permutations < 'minperm'. Generating entire set.\n"]
+  },
+  "constant_distance": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": "NA",
+    "p": "NA",
+    "output": [],
+    "warnings": ["the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "the standard deviation is zero", "essentially perfect fit: summary may be unreliable"],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "infinite_genetic_distance": {
+    "error": "NA/NaN/Inf in 'y'",
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "missing_genetic_distance": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "missing_geographic_distance": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "provided_distances_and_x": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "provided_distances_and_x_without_coordinates": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": [],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "provided_matrices_with_single_population_x": {
+    "error": "You specified a population based distance, but there is either no population or only a single population specified within your genlight object. Check via table(pop(genlight)).\n",
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "partial_matrix_input": {
+    "error": "arguments imply differing number of rows: 36, 15",
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "individual_reference": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": -0.4720980414931,
+    "p": 0.95,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "reordered_coordinate_table": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": -0.101633191765,
+    "p": 0.45,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "reordered_coordinate_max_distance_change": 13.954965108455,
+  "missing_coordinate": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": -0.2875815418683,
+    "p": 0.75,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "missing_coordinate_distance_A_C": 0,
+  "original_coordinate_distance_A_C": 4,
+  "unknown_distance": {
+    "error": "argument is of length zero",
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "euclidean_SNP": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.2658143445045,
+    "p": 0.1,
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "independent_Euclidean_max_error": 0,
+  "documented_gl_dist_ind_max_difference": 0.1420804814403,
+  "Euclidean_pair_1_2": [1.490711985, 1.414213562373],
+  "fixed_permutation_reference": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": -0.09800017475498,
+    "p": 0.55,
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "independent_Mantel": [-0.09800017475498, 0.55, 0, 0],
+  "method_Fst": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.2396497876104,
+    "p": 0.15,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "method_D": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.5827277481566,
+    "p": 0.1,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "method_propShared": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.3160700904474,
+    "p": 0.05,
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "method_euclidean": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.3845186161957,
+    "p": 0.05,
+    "output": [],
+    "warnings": [],
+    "messages": []
+  },
+  "method_kosman": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.3160700904474,
+    "p": 0.05,
+    "output": "Starting gl.kosman ",
+    "warnings": [],
+    "messages": []
+  },
+  "default_transformations": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.2396497876104,
+    "p": 0.15,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "default_Fst_matches_untransformed_StAMPP": true,
+  "plot_false_still_constructs_plot": "injected plot-construction failure",
+  "missing_dismo_result": -1,
+  "verbose_1": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.05,
+    "output": ["Starting gl.ibd ", "Analysis performed using provided genetic and Euclidean distance matrices. If a genlight object is provided, it is ignored.", "  Coordinates used from: Dgeo provided. ", "  Transformation of Dgeo: Dgeo ", "  Genetic distance: Dgen provided ", "  Tranformation of Dgen:  Dgen ", "", "Mantel statistic based on Pearson's product-moment correlation ", "", "Call:", "vegan::mantel(xdis = Dgen, ydis = Dgeo, permutations = permutations,      na.rm = TRUE) ", "", "Mantel statistic r:     1 ", "      Significance: 0.05 ", "", "Upper quantiles of permutations (null model):", "  90%   95% 97.5%   99% ", "0.505 0.557 0.644 0.696 ", "Permutation: free", "Number of permutations: 719", "", "", "Completed: gl.ibd ", ""],
+    "warnings": "essentially perfect fit: summary may be unreliable",
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "verbose_0_kosman": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.7418592517218,
+    "p": 0.1,
+    "output": "Starting gl.kosman ",
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "function_object_call_verbose_1": "cannot coerce type 'closure' to vector of type 'character'",
+  "ordinary_euclidean": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.783793524846,
+    "p": 0.1,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "FBM_euclidean": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 0.783793524846,
+    "p": 0.1,
+    "output": [],
+    "warnings": [],
+    "messages": "Set of permutations < 'minperm'. Generating entire set.\n"
+  },
+  "ordinary_Fst": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.5,
+    "output": [],
+    "warnings": [],
+    "messages": ["'nperm' >= set of all permutations: complete enumeration.\n", "Set of permutations < 'minperm'. Generating entire set.\n"]
+  },
+  "FBM_Fst": {
+    "class": "list",
+    "names": ["Dgen", "Dgeo", "mantel"],
+    "statistic": 1,
+    "p": 0.5,
+    "output": ["Starting gl.fbm2gen ", "Completed: gl.fbm2gen "],
+    "warnings": [],
+    "messages": ["'nperm' >= set of all permutations: complete enumeration.\n", "Set of permutations < 'minperm'. Generating entire set.\n"]
+  },
+  "FBM_vs_ordinary": [true, true],
+  "FBM_input_preserved": true
+}

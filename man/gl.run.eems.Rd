@@ -29,6 +29,7 @@ gl.run.eems(
   plot.file = NULL,
   verbose = NULL,
   cleanup = TRUE,
+  habitat = NULL,
   ...
 )
 }
@@ -38,12 +39,16 @@ gl.run.eems(
 \item{eems.path}{Path to the folder containing the eems executable
 [default working directory ("./")].}
 
-\item{buffer}{Buffer distance for all the elements [default 10000].}
+\item{buffer}{Distance in metres by which the convex hull of the sampling
+locations is expanded to form the habitat. Measured on the ground at any
+latitude. Ignored when habitat is supplied [default 10000].}
 
 \item{nDemes}{The approximate number of demes in the population graph 
 [default 500].}
 
-\item{diploid}{Whether the organism is diploid [default TRUE].}
+\item{diploid}{Whether the organism is diploid. TRUE requires ploidy 2
+for every individual; FALSE requires ploidy 1. Input must represent SNP
+allele dosages, not dominant presence/absence markers [default TRUE].}
 
 \item{numMCMCIter}{Number of MCMC iterations [default 10000].}
 
@@ -81,21 +86,30 @@ from low to high [default NULL].}
 as many colors as there are populations in the dataset
 [default gl.colors("dis")].}
 
-\item{out.dir}{Path where to save the output file. Use outpath=getwd() or 
-out.dir='.' when calling this function to direct output files to your 
-working or current directory [default tempdir(), mandated by CRAN].}
+\item{out.dir}{Existing directory for output. Each call creates a unique
+eems-run-* subdirectory containing data_eems/ and eems.log. Relative paths
+are resolved from the calling directory. Results in tempdir() last only
+for the R session [default tempdir()].}
 
 \item{plot.dir}{Directory to save the plot RDS files 
 [default as specified by the global working directory or tempdir()].}
 
 \item{plot.file}{Name for the RDS binary file to save (base name only, 
-exclude extension) [default NULL].}
+exclude extension); NULL disables RDS saving [default NULL].}
 
 \item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2, 
 progress log; 3, progress and results summary; 5, full report 
 [default NULL, unless specified using gl.set.verbosity].}
 
-\item{cleanup}{Whether to delete intermediate files [default TRUE].}
+\item{cleanup}{Whether to delete this run's input and parameter files
+after success. Raw EEMS results and logs are retained; failed runs retain
+all files for diagnosis [default TRUE].}
+
+\item{habitat}{Habitat outline for EEMS: an sf or sfc polygon in any
+coordinate reference system (transformed to longitude/latitude), or a
+two-column matrix of longitude and latitude in decimal degrees. It must be
+a single polygon without holes. NULL uses the convex hull of the sampling
+locations expanded by buffer [default NULL].}
 
 \item{...}{Extra parameters to add to function reemsplots2::make_eems_plots.}
 }
@@ -151,14 +165,25 @@ Choose the number of demes to match geographic scale: 100–250 for local or
 island studies and 300–500 for continental datasets. Run time grows 
 cubically with number of demes, so anything above 1000 rarely pays off. 
 
-Draw the habitat polygon with a small buffer (in meters), so every sample 
-sits at least one grid spacing inside the edge. A 5–10 % expansion of the 
-sample bounding box (or a few kilometers for fine‑scale work) is usually 
-adequate.
+Coordinates are passed to EEMS as longitude/latitude with great-circle
+distance, so maps are returned in degrees and the rdist03 plot shows
+distances in kilometres.
 
-For plots, use a raster resolution of 600 dpi, this is publication‑quality. 
-Drop to 300 dpi for quick diagnostics. Higher detail—higher resolution 
-affects file size, not the inference itself.
+By default the habitat is the convex hull of the sampling locations,
+expanded by buffer (in metres), so every sample sits at least one grid
+spacing inside the edge. A 5–10 % expansion of the sample bounding box
+(or a few kilometers for fine‑scale work) is usually adequate. When the
+hull covers unsuitable areas, for example land between sampling sites of a
+marine species, supply the habitat outline with habitat. EEMS does not
+check that samples fall inside the habitat: each sample is assigned to the
+closest deme, and the function warns when samples fall outside.
+
+The dpi argument controls sampling of the contour grid in reemsplots2,
+not the dots per inch of an exported image. Higher values increase grid
+resolution and plotting work without changing EEMS inference. Set image
+dimensions and export DPI separately when saving a rendered plot.
+Routine messages are suppressed at verbose = 0; diagnostic plots are
+displayed at verbose >= 3. All eight plots are returned at every level.
 }
 \examples{
  \dontrun{

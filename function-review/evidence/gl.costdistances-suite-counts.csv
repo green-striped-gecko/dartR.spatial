@@ -1,0 +1,41 @@
+"file","test","nb","failed","skipped","warning","passed"
+"test-gl.costdistances-fixes.R","mean resistance and commute match independent graph calculations (F1 F6)",27,0,FALSE,0,27
+"test-gl.costdistances-fixes.R","grounded, repeated and single-cell locations retain order (F6)",11,0,FALSE,0,11
+"test-gl.costdistances-fixes.R","genlight centres are named lon-lat and projected without mutation (F2)",8,0,FALSE,0,8
+"test-gl.costdistances-fixes.R","invalid observations and resistance fail before omission (F3)",24,0,FALSE,0,24
+"test-gl.costdistances-fixes.R","barriers retain least-cost Inf and diagnose disconnected walks (F3)",6,0,FALSE,0,6
+"test-gl.costdistances-fixes.R","geographic correction follows the method (F4)",2,0,FALSE,0,2
+"test-gl.costdistances-fixes.R","theta is optional and numerical RSP failure is explicit (F5)",12,0,FALSE,0,12
+"test-gl.costdistances-fixes.R","dependency errors, verbosity and closure calls behave consistently (F8 F9 F10)",8,0,FALSE,0,8
+"test-gl.costdistances-fixes.R","small file-backed inputs agree and retain genotype metadata (F2)",3,0,FALSE,0,3
+"test-gl.costdistances.R","cost distances retain their reference-data baseline",24,0,FALSE,0,24
+"test-gl.ibd-fixes.R","labelled pairs align without changing their identities (F1)",9,0,FALSE,0,9
+"test-gl.ibd-fixes.R","explicit coordinate identities align and invalid coordinates fail (F1 F2)",13,0,FALSE,0,13
+"test-gl.ibd-fixes.R","distance forms and Mantel preconditions are checked (F3)",23,0,FALSE,0,23
+"test-gl.ibd-fixes.R","provided distances bypass irrelevant genlight inputs (F4)",3,0,FALSE,0,3
+"test-gl.ibd-fixes.R","unused plotting and projection dependencies are bypassed (F5 F7)",4,0,FALSE,0,4
+"test-gl.ibd-fixes.R","display and saving preserve numerical results (F5)",6,0,FALSE,0,6
+"test-gl.ibd-fixes.R","verbosity and function-object calls follow the documented levels (F8 F9)",7,0,FALSE,0,7
+"test-gl.ibd-fixes.R","numerical engines retain independent Euclidean and Mantel results (F6)",7,0,FALSE,0,7
+"test-gl.ibd-fixes.R","small file-backed inputs preserve ordinary results and stay quiet (F8)",7,0,FALSE,0,7
+"test-gl.ibd.R","IBD reference-data behaviour is unchanged",16,0,FALSE,0,16
+"test-gl.propShared.R","returned object is a full symmetric similarity matrix, not a half-empty one",7,0,FALSE,0,7
+"test-gl.propShared.R","numeric anchors on testset.gl[1:8, 1:60]",1,0,FALSE,0,1
+"test-gl.propShared.R","statistic is 1 - mean(|g_i - g_j|)/2 with pairwise-complete NA omission",2,0,FALSE,0,2
+"test-gl.propShared.R","pairs with no overlapping calls return NaN, not an error or 1",4,0,FALSE,0,4
+"test-gl.propShared.R","SilicoDArT data is accepted although the dosage halving does not apply",2,0,FALSE,0,2
+"test-gl.propShared.R","non-genlight input fails late with an opaque S4 dispatch error",1,0,FALSE,0,1
+"test-gl.propShared.R","function has no verbose argument and prints nothing on success",2,0,FALSE,0,2
+"test-gl.propShared.R","edge cases: one and two individuals",4,0,FALSE,0,4
+"test-gl.propShared.R","duplicate individual names produce duplicate dimnames",3,0,FALSE,0,3
+"test-gl.propShared.R","roxygen @name does not match the function name",4,0,FALSE,0,4
+"test-gl.propShared.R","gl.propShared equals 1 - gl.dist.ind(method = 'simple') cell for cell",4,0,FALSE,0,4
+"test-gl.propShared.R","overlap equivalence holds under missing data",1,0,FALSE,0,1
+"test-gl.run.eems-fixes.R","failed and incomplete runs cannot reach old plots (F1)",9,0,FALSE,0,9
+"test-gl.run.eems-fixes.R","cleanup preserves unrelated files, prior runs and results (F2)",11,0,FALSE,0,11
+"test-gl.run.eems-fixes.R","ploidy and dependency checks fail before running (F3/F8)",8,0,FALSE,0,8
+"test-gl.run.eems-fixes.R","relative paths, spaces and NULL plot saving work (F4/F5/F7)",10,0,FALSE,0,10
+"test-gl.run.eems-fixes.R","plot extras are used or rejected before execution (F6)",6,0,FALSE,0,6
+"test-gl.run.eems-fixes.R","quiet mode logs routine diagnostics without printing them (F9)",9,0,FALSE,0,9
+"test-gl.run.eems.R","EEMS reference-data baseline is unchanged",1,0,TRUE,0,0
+"test-gl.run.eems.R","the successful SNP path preserves its distance and return baseline",1,0,TRUE,0,0

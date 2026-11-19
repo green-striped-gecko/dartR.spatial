@@ -1,0 +1,23 @@
+{
+  "real_SNP_run": ["mrates01", "mrates02", "qrates01", "qrates02", "rdist01", "rdist02", "rdist03", "pilogl01"],
+  "input_unchanged": true,
+  "default_plot_file_NULL_saves_RDS": true,
+  "raw_output_copied": true,
+  "distance_max_absolute_error": 1.110223024625e-15,
+  "distance_first_six": [0.8557326446, 0.8637326446, 0.892231405, 0.7093690083, 0.7554599174, 0.832096281],
+  "failed_process_still_returns": ["mrates01", "mrates02", "qrates01", "qrates02", "rdist01", "rdist02", "rdist03", "pilogl01"],
+  "failed_process_reuses_unchanged_output": true,
+  "dots_forwarded": [],
+  "process_failure_reaches_plotter": true,
+  "space_in_filename_command": "./runeems_snps --params param_review output.ini --seed 17",
+  "space_in_filename_exit_status": 1,
+  "SilicoDArT_ploidy": 1,
+  "SilicoDArT_ini_diploid": "diploid = TRUE",
+  "relative_outdir_caller_files": 0,
+  "relative_outdir_written_under_tempdir": false,
+  "cleanup_deletes_unrelated_matching_file": true,
+  "cleanup_deletes_default_raw_results": true,
+  "missing_sf_result": -1,
+  "missing_coordinates_error": ["mrates01", "mrates02", "qrates01", "qrates02", "rdist01", "rdist02", "rdist03", "pilogl01"],
+  "identical_coordinates_error": "IllegalArgumentException: Invalid number of points in LinearRing found 2 - must be 0 or >= 3"
+}

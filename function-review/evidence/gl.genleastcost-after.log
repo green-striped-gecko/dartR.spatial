@@ -1,0 +1,87 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+===  P1 RasterLayer input  ===
+raster::raster(fric) hasValues: FALSE 
+
+===  P2 kosman  ===
+
+=== P3 propShared ===
+gen.mat[2,1] = 0.31  gl.propShared[2,1] = 0.69  1 - propShared = 0.31 
+within-pop mean gen.mat: 0.272  between A-C mean: 0.4242 
+theta = 1: RSP produced non-finite distances. Check cost scale and choose theta explicitly (a smaller theta may avoid underflow).
+
+=== P4 theta ===
+identical (theta=1, or 0.0001 if 1 errors) vs theta=0.001: FALSE 
+gl.costdistances theta=0.001 [2,1]: 1456.433  vs glc: 1456.433 
+
+===  P5 pathtype='least'  ===
+[1] "ERROR: Fatal Error: pathtype must be leastcost, commute or rSPDistance\n"
+
+===  P5b NN=5  ===
+[1] "ERROR: Fatal Error: NN must be 4, 8, 16 or 'bishop'. NN=8 is the most commonly used option; if linear features are tested you may want to consider NN=4.\n"
+
+===  P6 no coordinates  ===
+[1] "ERROR: Fatal Error: No coordinates found. Provide projected coordinates in x@other$xy or lon/lat columns in x@other$latlon\n"
+P7 leastcost: glc[2,1]=670.8746  gl.costdistances[2,1]=670.8746  max rel diff=0.0000
+P7 commute: glc[2,1]=21028.0890  gl.costdistances[2,1]=21028.0890  max rel diff=0.0000
+P7b transition(1/x[2]) symmetric: TRUE 
+
+===  P9 two-layer SpatRaster  ===
+cost.mats: 2 base double 
+
+===  P9b RasterStack  ===
+$gen.mat
+          A          B          C
+A 0.0000000 0.21877166 0.18687196
+B 0.2187717 0.00000000 0.08648195
+C 0.1868720 0.08648195 0.00000000
+
+$eucl.mat
+         A         B         C
+A   0.0000 232.35683 212.06416
+B 232.3568   0.00000  20.87023
+C 212.0642  20.87023   0.00000
+
+$cost.matnames
+[1] "layer"
+
+$cost.mats
+$cost.mats$layer
+         A        B        C
+A   0.0000 670.8746 590.0470
+B 670.8746   0.0000 105.2276
+C 590.0470 105.2276   0.0000
+
+
+$pathlength.mats
+list()
+
+$paths
+list()
+
+null device 
+          1 
+
+=== P10 plotpath=FALSE: PDF bytes written: 3611 
+
+=== P11 ===
+mmod labels: B C A  glc labels: B C A 
+       B      C      A
+B 0.0000 0.0598 0.1572
+C 0.0598 0.0000 0.1308
+A 0.1572 0.1308 0.0000
+[1] 0
+A-B original: 0.1572  A-B reordered: 0.1572 
+
+===  P12 SilicoDArT  ===
+[1] "ERROR: Fatal Error: inappropriate object passed to function, found SilicoDArT expecting SNP\n"
+
+=== P13 verbose=0 output ===
+
+===  P14 lonlat raster  ===
+No projected coordinates in @other$xy found. Hence will use latlons (if provided), which are not projected, hence there might be distortions if the area covered is large or close to the poles. Be aware your resistance layer and coordinates in the genlight object need to have the same coordinate system.
+glc cost A-B: 253535  gl.costdistances (metres): 253535  geodesic km: 239.5 

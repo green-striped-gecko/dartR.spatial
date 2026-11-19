@@ -1,0 +1,31 @@
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+testset.gl : max |diff| vs independent = 7.285839e-17 
+testset.gs : max |diff| vs independent = 1.526557e-16 
+possums.gl : max |diff| vs independent = 1.110223e-16 
+
+===  P1 mixed ploidy  ===
+[1] "ERROR: the condition has length > 1"
+
+===  P2 no shared loci  ===
+         AA010915 UC_00126
+AA010915        0       NA
+UC_00126      NaN        0
+
+===  P3 verbose=3  ===
+Starting gl.kosman 
+
+===  P4 matrix input  ===
+[1] "ERROR: No valid genlight/dartR object provided!!"
+[1] "ERROR: No valid genlight/dartR object provided!!"
+
+P5 class: list | names: kosman nloci 
+P6 nInd=81 nLoc=250: 0.08 s, peak 23656155 MB
+P6 nInd=81 nLoc=1000: 1.04 s, peak 43798460 MB
+          used  (Mb) gc trigger  (Mb) limit (Mb) max used  (Mb)
+Ncells 5670803 302.9   10835578 578.7         NA  5670803 302.9
+Vcells 9178462  70.1   30270456 231.0      65536  9178462  70.1
+P7 vectorised nLoc=1000: 0.03 s, peak 17641019 MB, max diff 0, nloci equal FALSE

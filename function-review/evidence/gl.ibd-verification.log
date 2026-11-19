@@ -1,0 +1,37 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+Starting gl.ibd 
+Set of permutations < 'minperm'. Generating entire set.
+  Coordinates used from: x@other$latlon (Mercator transformed) 
+  Transformation of Dgeo: Dgeo 
+  Genetic distance: Fst 
+  Transformation of Dgen: Dgen 
+
+Mantel statistic based on Pearson's product-moment correlation 
+
+Call:
+vegan::mantel(xdis = Dgen, ydis = Dgeo, permutations = permutations,      na.rm = FALSE) 
+
+Mantel statistic r: 0.2396 
+      Significance: 0.15 
+
+Upper quantiles of permutations (null model):
+  90%   95% 97.5%   99% 
+0.269 0.418 0.467 0.496 
+Permutation: free
+Number of permutations: 23
+
+
+Completed: gl.ibd 
+
+null device 
+          1 
+All five valid method fixtures retain exactly the original distances, Mantel statistics and p-values.

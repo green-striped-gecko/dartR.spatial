@@ -1,0 +1,36 @@
+/Users/mijangos/dartr2shiny/input_generator/dartR.spatial/gl.ibd.r:90:#' ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
+/Users/mijangos/dartr2shiny/input_generator/dartR.spatial/gl.ibd.r:93:#' ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop', 
+/Users/mijangos/dartr2shiny/input_generator/dartR.spatial/gl.ibd.r:97:#' ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
+/Users/mijangos/dartr2shiny/input_generator/dartR.spatial/gl.ibd.r:99:gl.ibd <- function(x = NULL,
+/Users/mijangos/dartR.spatial/R/gl.ibd.r:82:#' ibd <- gl.ibd(bandicoot.gl[,1:100], Dgeo_trans='log(Dgeo)' ,
+/Users/mijangos/dartR.spatial/R/gl.ibd.r:85:#' ibd <- gl.ibd(bandicoot.gl[1:10,], distance='euclidean', paircols='pop',
+/Users/mijangos/dartR.spatial/R/gl.ibd.r:89:#' ibd <- gl.ibd(bandicoot.gl[,1:100], paircols='pop')
+/Users/mijangos/dartR.spatial/R/gl.ibd.r:91:gl.ibd <- function(x = NULL,
+/Users/mijangos/dartR.spatial/R/gl.ibd.r:108:    if (is.function(funname)) funname <- "gl.ibd"
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:14:  app / view / Fun_gl.ibd,
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:22:  app / view / Doc_gl.ibd,
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:38:    "Fixed Differences" = "Fun_gl.fixed.diff", "Isolation By Distance" = "Fun_gl.ibd", 
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:155:            condition = "input.selected_subtab_GeneFlow == 'Fun_gl.ibd'",
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:167:                     Doc_gl.ibd$ui(ns("Doc_gl.ibd"))
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:176:                     Fun_gl.ibd$ui(ns("Fun_gl.ibd"))
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:179:            id = "tab_gl.ibd"
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:290:    Doc_gl.ibd$server("Doc_gl.ibd")
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:291:    Fun_gl.ibd$server("Fun_gl.ibd")
+/Users/mijangos/dartr2shiny/shiny_fun/TabGeneFlow.R:292:    Fun_gl.ibd_contexts <- Fun_gl.ibd$contexts()
+/Users/mijangos/dartr2shiny/shiny_fun/Doc_gl.ibd.R:43:                          'static/articles/gl.ibd.pdf')
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:1:box::use(dartR.spatial[gl.ibd],
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:142:      tmp.name <- paste0("gl.ibd","_",basename(tempfile()))
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:146:      log_info("Starting",namespace = "dartr_shiny::dartR.spatial::gl.ibd")      
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:153:          expr = gl.ibd(x = MyData, distance = input$distance, permutations = input$permutations, plot.theme = global$plot.themes[[session$userData$PlotTheme()]]))
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:163:        log_info("Analysis complete",namespace = "dartr_shiny::dartR.spatial::gl.ibd")
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:166:      session$userData$gl.ibd <- MyData
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:168:        plot_tmp <- save_plot(fun.name = "gl.ibd",
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:182:              funn.funn <- paste0("Myibd <- gl.ibd(x = MyData, ",', distance = "',input$distance,'"', ", permutations = ",input$permutations,")")
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:200:        log_info("Returning result",namespace = "dartr_shiny::dartR.spatial::gl.ibd")
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:204:        log_error("Analysis failed or returned no data - returning NULL",namespace = "dartr_shiny::dartR.spatial::gl.ibd")
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:219:  if (is.null(session$userData$gl.ibd)) {
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:235:    "gl.ibd","_",
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:240:    res.fun <-  session$userData$gl.ibd
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:241:    tmp.tbl <- tempfile(pattern = paste0("gl.ibd","_table_"), fileext = ".csv")
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:282:  if (is.null(session$userData$gl.ibd)) {
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.ibd.R:311:  # res.tbl <- session$userData$gl.ibd

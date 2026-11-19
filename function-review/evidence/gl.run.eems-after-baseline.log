@@ -1,0 +1,53 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+
+══ Testing test-gl.run.eems.R ══════════════════════════════════════════════════
+
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 0 ]
+[ FAIL 0 | WARN 0 | SKIP 0 | PASS 1 ]
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 1 ]
+[ FAIL 1 | WARN 0 | SKIP 0 | PASS 2 ]
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 2 ]
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 3 ]
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 4 ]
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 5 ]
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 6 ]
+
+── Failure ('test-gl.run.eems.R:38:5'): EEMS reference-data baseline is unchanged ──
+Snapshot of code has changed (variant 'testset.gl'):
+old[17:21] vs new[17:21]
+    [1] "simpleError" "error"       "condition"  
+    
+    $result
+-   [1] "Each EEMS output folder should include rdistJtDobsJ.txt"
++   [1] "EEMS failed (exit status 1). See log: <run>/eems.log"
+    
+* Run `testthat::snapshot_accept("gl.run.eems")` to accept the change.
+* Run `testthat::snapshot_review("gl.run.eems")` to review the change.
+
+── Failure ('test-gl.run.eems.R:38:5'): EEMS reference-data baseline is unchanged ──
+Snapshot of code has changed (variant 'testset.gs'):
+old[14:22] vs new[14:21]
+    [1] 60  8
+    
+    $result_class
+-   [1] "list"
++   [1] "simpleError" "error"       "condition"  
+    
+    $result
+-   [1] "mrates01" "mrates02" "qrates01" "qrates02" "rdist01"  "rdist02"  "rdist03" 
+-   [8] "pilogl01"
++   [1] "diploid = TRUE requires input ploidy 2 for every individual."
+    
+* Run `testthat::snapshot_accept("gl.run.eems")` to accept the change.
+* Run `testthat::snapshot_review("gl.run.eems")` to review the change.
+
+[ FAIL 2 | WARN 0 | SKIP 0 | PASS 6 ]

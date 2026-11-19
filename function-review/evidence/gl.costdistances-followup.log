@@ -1,0 +1,35 @@
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Warning messages:
+1: package ‘ade4’ was built under R version 4.4.3 
+2: package ‘ggplot2’ was built under R version 4.4.3 
+3: package ‘dplyr’ was built under R version 4.4.3 
+4: package ‘testthat’ was built under R version 4.4.3 
+$modern_is_lonlat
+[1] TRUE
+
+$legacy_is_lonlat
+[1] TRUE
+
+$modern_cost
+[1] 111319.5
+
+$legacy_cost
+[1] 111319.5
+
+$upstream_last_cell_error
+[1] "subscript out of bounds"
+
+$high_latitude_wrapper
+[1]  0.00000 41.03418 67.22255 41.03418  0.00000 41.49263 67.22255 41.49263
+[9]  0.00000
+
+$high_latitude_random_walk_correction
+[1]  71.40384 109.11881  54.77118
+
+$missing_population_result
+[1]       0 1922405 1096435 1922405       0 2542379 1096435 2542379       0
+

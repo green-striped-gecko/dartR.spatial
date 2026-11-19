@@ -1,0 +1,372 @@
+{
+  "uniform_leastcost": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 2, 3, 2, 0, 1, 3, 1, 0]
+  },
+  "uniform_rSPDistance": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 2.0472429748740435, 3.046177367976457, 2.0472429748740435, 0, 1.0944859497480874, 3.0461773679764574, 1.0944859497480879, 0]
+  },
+  "uniform_commute": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 21, 29.000000000000004, 21, 0, 14.000000000000004, 29.000000000000004, 14.000000000000004, 0]
+  },
+  "commute_last_cell": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "error in evaluating the argument 'x' in selecting a method for function 'as.matrix': subscript out of bounds"
+  },
+  "independent_uniform": {
+    "leastcost_max_error": 0,
+    "commute_max_error": 2.1316282072803006e-14,
+    "effective_resistance_A_C": 1.2083333333333344,
+    "commute_A_C": 29.000000000000004,
+    "graph_volume": 24
+  },
+  "symmetric_landscape": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 9, 10, 9, 0, 1, 10, 1, 0]
+  },
+  "symmetric_reference": [0, 5, 10, 5, 0, 5, 10, 5, 0],
+  "symmetric_gdistance_reference": [0, 5, 10, 5, 0, 5, 10, 5, 0],
+  "geographic_equator": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [2, 2],
+    "labels": [
+      ["A", "B"],
+      ["A", "B"]
+    ],
+    "values": [0, 111319.49079327358, 111319.49079327358, 0]
+  },
+  "geographic_reference_metres": 111319.49079327357,
+  "geographic_preserved_crs": [0, 111319.49079327358, 111319.49079327358, 0],
+  "genlight_lat_lon": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": ["some coordinates not found and omitted", "some coordinates not found and omitted"],
+    "messages": [],
+    "error": "replacement has length zero"
+  },
+  "genlight_lon_lat": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 662682.58063758013, 1066478.1423180692, 662682.58063758013, 0, 410843.39167613606, 1066478.1423180692, 410843.391676136, 0]
+  },
+  "input_unchanged": true,
+  "genlight_projected_landscape": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": ["some coordinates not found and omitted", "some coordinates not found and omitted"],
+    "messages": [],
+    "error": "replacement has length zero"
+  },
+  "unknown_method": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "object 'cd.mat' not found"
+  },
+  "invalid_NN": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "directions should be one of: 4, 8, 16, \"bishop\", or a matrix"
+  },
+  "NA_NN": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "missing value where TRUE/FALSE needed"
+  },
+  "missing_method": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "missing value where TRUE/FALSE needed"
+  },
+  "one_point": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [1, 1],
+    "labels": [
+      "A",
+      "A"
+    ],
+    "values": 0
+  },
+  "no_points": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [0, 0],
+    "values": []
+  },
+  "missing_coordinate": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": ["some coordinates not found and omitted", "some coordinates not found and omitted", "number of items to replace is not a multiple of replacement length"],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 3, 3, 0, 0, 3, 3, 0, 0]
+  },
+  "outside_raster": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": ["some coordinates not found and omitted", "some coordinates not found and omitted", "number of items to replace is not a multiple of replacement length"],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 3, 3, 0, 0, 3, 3, 0, 0]
+  },
+  "duplicate_labels": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "A", "C"],
+      ["A", "A", "C"]
+    ],
+    "values": [0, 2, 3, 2, 0, 1, 3, 1, 0]
+  },
+  "three_columns": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "coordinates given as a matrix, but the matrix does not have two columns"
+  },
+  "non_numeric": {
+    "class": ["Rcpp::not_compatible", "C++Error", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "Not compatible with requested type: [type=character; target=double]."
+  },
+  "resistance_0": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  },
+  "resistance_-1": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": "transition function gives negative values",
+    "messages": [],
+    "error": "At vendor/cigraph/src/paths/dijkstra.c:126 : Weights must not be negative, got -1. Invalid value"
+  },
+  "resistance_Inf": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, "Inf", "Inf", "Inf", 0, "Inf", "Inf", "Inf", 0]
+  },
+  "resistance_NA": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, "Inf", "Inf", "Inf", 0, "Inf", "Inf", "Inf", 0]
+  },
+  "barrier_leastcost": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [2, 2],
+    "values": [0, "Inf", "Inf", 0]
+  },
+  "barrier_rSPDistance": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [2, 2],
+    "values": [0, "NaN", "NaN", 0]
+  },
+  "barrier_commute": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": "CHOLMOD warning 'not positive definite' at file 'Cholesky/t_cholmod_rowfac_worker.c', line 449",
+    "messages": [],
+    "error": "error in evaluating the argument 'x' in selecting a method for function 'as.matrix': LU factorization of .gCMatrix failed: out of memory or near-singular"
+  },
+  "missing_crs": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 2, 3, 2, 0, 1, 3, 1, 0]
+  },
+  "multi_layer_raster": {
+    "class": ["simpleError", "error", "condition"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "error": "unable to find an inherited method for function ‘transition’ for signature ‘x = \"RasterStack\"’"
+  },
+  "rsp_kilometre_cells": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, "NaN", "NaN", "NaN", 0, "NaN", "NaN", "NaN", 0]
+  },
+  "rsp_smaller_theta": [0, 2047.2429748740442, 3046.1773679764565, 2047.2429748740444, 0, 1094.4859497480875, 3046.1773679764574, 1094.4859497480879, 0],
+  "missing_dependency": {
+    "class": "numeric",
+    "output": "Package gdistance  needed for this function to work. Please install it.",
+    "warnings": [],
+    "messages": [],
+    "values": -1
+  },
+  "no_population_verbose_0": {
+    "class": ["matrix", "array"],
+    "output": ["No population definition provided, hence I will calculate ", "                    costdistances between individuals"],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [6, 6],
+    "labels": [
+      ["AA010915", "AA011723", "AA012411", "AA013214", "AA032760", "UC_00126"],
+      ["AA010915", "AA011723", "AA012411", "AA013214", "AA032760", "UC_00126"]
+    ],
+    "values": [0, 1206047.4912531984, 1478608.2620237193, 919523.88466904103, 804123.18807987159, 818020.23779826309, 1206047.4912531984, 0, 1206109.2315452469, 615320.15089531697, 409217.64913953445, 388027.2534549351, 1478608.2620237193, 1206109.2315452469, 0, 590789.08064992982, 1291292.3629094083, 1559092.2280102591, 919523.88466904114, 615320.15089531697, 590789.08064992994, 0, 710327.94765610702, 983322.11464172474, 804123.1880798717, 409217.64913953445, 1291292.3629094081, 710327.94765610714, 0, 278188.46887038439, 818020.2377982632, 388027.2534549351, 1559092.2280102586, 983322.11464172462, 278188.46887038439, 0]
+  },
+  "verbose_1": {
+    "class": ["matrix", "array"],
+    "output": ["Starting fun ", "Completed: fun "],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 2, 3, 2, 0, 1, 3, 1, 0]
+  },
+  "verbose_3": {
+    "class": ["matrix", "array"],
+    "output": ["Starting fun ", "Completed: fun "],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 2, 3, 2, 0, 1, 3, 1, 0]
+  },
+  "function_object_call": "cannot coerce type 'closure' to vector of type 'character'",
+  "documented_example": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [10, 10],
+    "labels": [
+      ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+      ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
+    ],
+    "values": [0, 332.24978336205629, 282.27922061357901, 207.26702730475893, 307.20815280171365, 90.396969619669974, 268.69343417595206, 191.539105243401, 245.40916292849016, 243.99494936611705, 332.24978336205623, 0, 51.142135623730937, 256.92388155425152, 122.74011537017755, 356.04877323527961, 151.98275605729694, 284.30865786510185, 110.0538238691623, 128.4264068711928, 282.27922061357896, 51.142135623730937, 0, 206.95331880577424, 83.083261120685179, 306.07821048680233, 192.58073580374369, 261.09545442950531, 90.112698372208058, 78.455844122715689, 207.2670273047589, 256.92388155425135, 206.95331880577402, 0, 227.78174593052034, 231.06601717798236, 308.30865786510191, 330.9482681718913, 225.6101730552665, 213.95331880577407, 307.20815280171342, 122.74011537017753, 83.083261120685151, 227.78174593052034, 0, 331.00714267493686, 235.50966799187844, 303.45079348883297, 132.46803743153538, 120.811183182043, 90.396969619669974, 356.04877323527967, 306.07821048680239, 231.0660171779823, 331.00714267493703, 0, 307.27922061357913, 279.9360748630711, 269.20815280171354, 267.79393923934043, 268.69343417595195, 151.98275605729685, 192.58073580374366, 308.30865786510174, 235.50966799187822, 307.27922061357879, 0, 193.68124086713195, 103.87005768508877, 125.87005768508877, 191.53910524340105, 284.30865786510168, 261.09545442950525, 330.94826817189136, 303.4507934888328, 279.93607486307127, 193.68124086713203, 0, 184.88225099390871, 186.53910524340108, 245.40916292848999, 110.05382386916229, 90.112698372208044, 225.61017305526667, 132.46803743153538, 269.20815280171337, 103.87005768508877, 184.88225099390868, 0, 22, 243.99494936611688, 128.4264068711928, 78.455844122715675, 213.95331880577424, 120.81118318204301, 267.79393923934026, 125.87005768508877, 186.53910524340114, 22, 0]
+  },
+  "small_FBM": {
+    "class": ["matrix", "array"],
+    "output": [],
+    "warnings": [],
+    "messages": [],
+    "dimensions": [3, 3],
+    "labels": [
+      ["A", "B", "C"],
+      ["A", "B", "C"]
+    ],
+    "values": [0, 662682.58063758013, 1066478.1423180692, 662682.58063758013, 0, 410843.39167613606, 1066478.1423180692, 410843.391676136, 0]
+  },
+  "FBM_matches": true
+}

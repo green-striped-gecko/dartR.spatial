@@ -1,0 +1,47 @@
+ℹ Updating dartR.spatial documentation
+Registered S3 method overwritten by 'pegas':
+  method      from
+  print.amova ade4
+ℹ Loading dartR.spatial
+Loading required package: dartR.base
+Loading required package: adegenet
+Loading required package: ade4
+Warning: package ‘ade4’ was built under R version 4.4.3
+
+   /// adegenet 2.1.12 is loaded ////////////
+
+   > overview: '?adegenet'
+   > tutorials/doc/questions: 'adegenetWeb()' 
+   > bug reports/feature requests: adegenetIssues()
+
+
+Loading required package: ggplot2
+Warning: package ‘ggplot2’ was built under R version 4.4.3
+Loading required package: dplyr
+Warning: package ‘dplyr’ was built under R version 4.4.3
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Loading required package: dartR.data
+**** Welcome to dartR.data [Version 1.2.5 ] ****
+
+**** Welcome to dartR.base [Version 1.2.3 ] ****
+
+
+Attaching package: ‘dartR.base’
+
+The following objects are masked from ‘package:adegenet’:
+
+    glMean, glSum
+
+**** Welcome to dartR.spatial [Version 1.2.3 ] ****
+
+Writing 'gl.ibd.Rd'

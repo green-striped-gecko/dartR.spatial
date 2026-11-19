@@ -1,0 +1,4 @@
+/Users/mijangos/dartR.spatial/R/gl.costdistances.r:59:#'   cd <- gl.costdistances(landscape.sim, xy, method = "leastcost", NN = 8)
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.costdistances.R:143:          expr = gl.costdistances(landscape = input$landscape, locs = input$locs, method = input$method, NN = input$NN))
+/Users/mijangos/dartr2shiny/shiny_fun/Fun_gl.costdistances.R:163:              funn.funn <- paste0("Mycostdistances <- gl.costdistances(",", landscape = ",input$landscape, ", locs = ",input$locs, ', method = "',input$method,'"', ", NN = ",input$NN,")")
+/Users/mijangos/dartr2shiny/input_generator/dartR.spatial/gl.costdistances.r:27:#' cd <- gl.costdistances(landscape.sim, xy, method='leastcost', NN=8)

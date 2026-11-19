@@ -1,0 +1,12 @@
+{
+  "reordered_distances": [1, 0.05],
+  "coordinate_alignment": [-0.4720980414931, -0.4720980414931, 0],
+  "missing_coordinate": "Non-finite coordinates for individuals: C.\n",
+  "unchanged_Fst": [0, 0, 0, 0],
+  "unchanged_D": [0, 0, 0, 0],
+  "unchanged_propShared": [0, 0, 0, 0],
+  "unchanged_euclidean": [0, 0, 0, 0],
+  "unchanged_kosman": [0, 0, 0, 0],
+  "verbose_3_plot": "completed",
+  "documented_examples": "all three completed (19 permutations)"
+}

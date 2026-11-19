@@ -7,19 +7,57 @@
 gl.kosman(x, verbose = NULL)
 }
 \arguments{
-\item{x}{genlight/dartR object with a unique ploidy}
+\item{x}{Name of the genlight object containing the SNP or SilicoDArT data,
+with a single ploidy across individuals [required].}
 
-\item{verbose}{verbosity of the function.}
+\item{verbose}{Verbosity: 0, silent or fatal errors; 1, begin and end; 2,
+brief progress messages; 3, progress and results summary; 5, full report
+[default 2, unless specified using gl.set.verbosity].}
 }
 \value{
-returns a matrix of [dimensions nInd(x) x nInd(x)] of kosman distances between individuals,
+A list with two nInd(x) x nInd(x) matrices, with individual names
+as row and column names. Only the lower triangle and the diagonal are
+filled; the upper triangle is NA.
+\itemize{
+\item kosman -- Kosman distances between individuals.
+\item nloci -- number of loci called in both individuals, used for each
+distance; the diagonal holds the number of loci called in that individual.
+}
+Use \code{as.dist(result$kosman)} to obtain a dist object.
 }
 \description{
-This script calculates an individual based distance matrix.
+This function calculates the Kosman and Leonard (2005) distance between
+each pair of individuals.
+}
+\details{
+For each locus, the distance between two individuals is the absolute
+difference in allele dosage divided by the ploidy (0, 0.5 or 1 for diploid
+SNPs). The Kosman distance is the mean of these values over the loci called
+in both individuals, so missing data are handled pair by pair.
+
+All individuals must have the same ploidy. SilicoDArT data (ploidy 1) are
+treated as haploid, so the distance is the proportion of shared called
+loci at which presence/absence differs.
+
+Pairs of individuals with no called loci in common get a distance of NaN.
 }
 \examples{
 #use only five individuals and seven loci
 gg <- gl.kosman(possums.gl[1:5,14:21])
 gg$kosman
 gg$nloci
+
 }
+\references{
+\itemize{
+\item Kosman, E., & Leonard, K. J. (2005). Similarity coefficients for
+molecular markers in studies of genetic relationships between individuals
+for haploid, diploid, and polyploid species. Molecular Ecology, 14(2),
+415-424.
+}
+}
+\author{
+Author(s): Bernd Gruber. Custodian: Bernd Gruber -- Post to
+\url{https://groups.google.com/d/forum/dartr}
+}
+\concept{distance}
